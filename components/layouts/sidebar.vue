@@ -64,6 +64,7 @@
 }
 .detail-menu-sidebar{
     color: whitesmoke;
+    text-align: center;
 }
 .menu-list-item:before {
     content: "";
