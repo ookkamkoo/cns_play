@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json files to the working directory
 COPY package*.json ./
 # Install app dependencies
-RUN npm install
+# RUN npm install
 # Copy the rest of your application code into the container's working directory
 COPY  . . 
 # Build the Nuxt.js application
