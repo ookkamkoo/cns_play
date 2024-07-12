@@ -36,7 +36,7 @@
   open.value = false;
   };
 </script>
-<style scoped>
+<style>
     #components-layout-demo-top-side-2 .logo {
     float: left;
     width: 120px;
@@ -63,6 +63,7 @@
     }
     .small-main-detail{
       margin: 1rem 1rem;
+      width: 100% !important;
     }
     .small-header{
     padding: 0 0.5rem;
