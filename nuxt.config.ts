@@ -7,9 +7,9 @@ export default defineNuxtConfig({
     port: 3002, // default: 3000
   },
   runtimeConfig: {
-    apiServer: "https://backend.scbbbb.com/",
     public: {
       apiBase: '',
+      apiServer: "https://backend.scbbbb.com/",
     }
   },
   hooks: {
