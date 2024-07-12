@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiServer: process.env.backendUrl,
+      apiServer: process.env.apiServer
     }
   },
   hooks: {
