@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: `${process.env.BASE_URL}:3002`,
-      apiServer: `${process.env.BASE_URL}:3001`
+      apiBase: `${process.env.BASE_URL}`,
+      apiServer: `${process.env.BACKEND_URL}`
     }
   },
   hooks: {
