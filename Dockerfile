@@ -3,12 +3,12 @@
 FROM node:20.11-alpine as build
 # Set the working directory inside the container
 WORKDIR /usr/src/app
-    # Copy package.json and package-lock.json files to the working directory
-    COPY frontend/package*.json ./
+# Copy package.json and package-lock.json files to the working directory
+COPY package*.json ./
 # Install app dependencies
 RUN npm install
 # Copy the rest of your application code into the container's working directory
-COPY frontend .
+COPY  . . 
 # Build the Nuxt.js application
 RUN npm run build
 # Stage for serving the built application
