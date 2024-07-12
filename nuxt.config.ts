@@ -15,9 +15,8 @@ export default defineNuxtConfig({
     'pages:extend' (pages) {
       function setMiddleware (pages: NuxtPage[]) {
         for (const page of pages) {
-          if (/* some condition */ true) {
+          if (true) {
             page.meta ||= {}
-            // Note that this will override any middleware set in `definePageMeta` in the page
             page.meta.middleware = ['auth']
           }
           if (page.children) {
