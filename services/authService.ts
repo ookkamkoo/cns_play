@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useRuntimeConfig } from '#app'; // Adjust import path as needed
 import { memberStore } from '~/store/index';
 import type { MemberDetail } from '~/store/typeMember';
 
