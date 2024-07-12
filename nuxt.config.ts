@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: '',
-      apiServer: "https://backend.scbbbb.com/",
+      apiServer: "https://backend.scbbbb.com",
     }
   },
   hooks: {
