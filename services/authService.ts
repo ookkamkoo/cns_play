@@ -28,7 +28,7 @@ export interface CheckTokenResponse {
 export async function login(username: string, password: string): Promise<LoginResponse> {
   const config = useRuntimeConfig();
   const url = config.public.apiServer;
-  console.log("config = "+config.public);
+  console.log("config =", JSON.stringify(config));
   console.log("url = "+url);
 
   try {
