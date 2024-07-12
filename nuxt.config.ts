@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: '',
-      apiServer: "https://backend.scbbbb.com",
+      apiBase: `${process.env.NUXT_PUBLIC_API_BASE}`,
+      apiServer: `${process.env.NUXT_API_PUBLIC_SERVER}`
     }
   },
   hooks: {
