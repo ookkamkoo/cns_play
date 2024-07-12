@@ -1,8 +1,8 @@
 <template>
-    <a-modal v-model:open="openLogin" :footer="null">
+    <a-modal v-model:open="openLogin" :footer="null" :class="{'login-small':!screens.md}">
       <FormLogin :closeModal="closeModalLogin"/>
     </a-modal>
-    <a-modal v-model:open="openRegister" :footer="null">
+    <a-modal v-model:open="openRegister" :footer="null" :class="{'login-small':!screens.md}">
       <FormRegister :closeModal="closeModalRegister"/>
     </a-modal>
     <a-layout>
@@ -57,7 +57,6 @@
     function closeModalRegister() {
         openRegister.value = false;
     }
-
   </script>
   <style>
   #components-layout-demo-top-side-2 .logo {
@@ -115,5 +114,12 @@
     border-radius: 15px;
     margin: 0 5px;
     color: whitesmoke;
+  }
+  .login-size{
+    width: 100% !important;
+  }
+  .login-small{
+    margin: 0 auto;
+    max-width:100vw !important;
   }
   </style>

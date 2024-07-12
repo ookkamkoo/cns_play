@@ -11,10 +11,10 @@
             </NuxtLink>
         </div>
         <a-space v-if="member.login">
-            <a-button type="primary" shape="round" ghost :size="'large'" class="login" @click="props.showModalLogin">
+            <a-button type="primary" shape="round" ghost :size="buttonSize" class="login" @click="props.showModalLogin">
                 ลงชื่อเข้าใช้
             </a-button>
-            <a-button type="primary" shape="round" :size="'large'" class="register" @click="props.showModalRegister">
+            <a-button type="primary" shape="round" :size="buttonSize" class="register" @click="props.showModalRegister">
                 สมัครใช้งาน
             </a-button>
         </a-space>
@@ -102,10 +102,14 @@
     import { getToken,logout } from '~/auth/authToken';
     import type { MenuProps } from 'ant-design-vue';
     import { memberStore } from '~/store/index';
-
+    type SizeType = 'small' | 'middle' | 'large';
+    
+    const buttonSize = ref<SizeType>('large');
     const member = memberStore();
     // console.log(member.memberDetail.username);
-    
+    const checkScreenSize = () => {
+      buttonSize.value = window.innerWidth >= 768 ? 'large' : 'middle'; // Adjust based on your breakpoint
+    };
     
     // const headerLogin = ref(true)
     // const router = useRouter();
@@ -118,6 +122,14 @@
         console.log('click', e);
     };
 
+    onMounted(() => {
+      window.addEventListener('resize', checkScreenSize);
+      checkScreenSize(); // Initial check
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', checkScreenSize);
+    });
 
     // const loginShow = () =>{
     //     const token = getToken();

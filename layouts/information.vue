@@ -1,7 +1,7 @@
 <template>
     <a-layout>
       <a-layout-header class="header" :class="{'small-header':!screens.md}">
-        <LayoutsHeader :showDrawer="showDrawer"/>
+        <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
       </a-layout-header>
       <a-layout class="main">
         <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
@@ -20,13 +20,16 @@
   import { Grid } from 'ant-design-vue';  
   const useBreakpoint = Grid.useBreakpoint;
   const open = ref<boolean>(false);
+  let showModalLogin: (() => void);
+  let showModalRegister: (() => void);
 
   const screens = useBreakpoint();
 
   const showDrawer = () => {
-  console.log("open");
-  open.value = true;
+    console.log("open");
+    open.value = true;
   };
+
 
   const onClose = () => {
   console.log("close");

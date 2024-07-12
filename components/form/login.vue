@@ -108,4 +108,9 @@
 .login-input {
     margin: 0 5px !important;
   }
+
+.ant-modal-content{
+    width: 100% !important; 
+    margin: 0 auto !important;
+}
 </style>
