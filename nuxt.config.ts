@@ -4,11 +4,11 @@ export default defineNuxtConfig({
   modules: ["@ant-design-vue/nuxt", "@pinia/nuxt"],
   css: ['~/assets/scss/_sets.scss'],
   devServer: {
-    port: 3002, // default: 3000
+    port: 3002,
   },
   runtimeConfig: {
     public: {
-      apiServer: process.env.BACKEND_URL || 'https://default-backend-url.com',
+      apiServer: process.env.backendUrl,
     }
   },
   hooks: {
