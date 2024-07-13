@@ -27,8 +27,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
               
               if(check){
                 
-                //   return navigateTo('/list-game/PG%20Soft');
-                  return navigateTo('/information/deposit');
+                  return navigateTo('/list-game/PG%20Soft');
+                //   return navigateTo('/information/deposit');
               }else{
                 // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
                 logout();
