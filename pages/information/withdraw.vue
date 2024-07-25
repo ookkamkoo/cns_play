@@ -1,73 +1,96 @@
 <template>
+    <a-modal v-model:open="openAddTrue" :footer="null">
+      <FormAddTruewallet :closeModal="closeModalAddtrue"/>
+    </a-modal>
+    <a-modal v-model:open="open" :footer="null">
+      <FormWithdrow :closeModal="closeModal"/>
+    </a-modal>
     <h3>ถอนเงิน</h3>
     <a-flex class="info-withdrow" wrap="wrap">
-        <a-col :span="24" :md="8">
+        <a-col :span="24" :md="12" :xl="8">
             <div class="m-1 info-withdrow-list">
-                <div class="info-withdrow-title">ยอดคงเหลือ</div>
+                <div class="info-withdrow-title">จำนวนเงิน</div>
                 <div class="info-withdrow-amount-title my-1">คงเหลือ</div>
-                <div class="info-withdrow-amount center my-1"> 0.00</div>
+                <div class="info-withdrow-amount center my-1">{{ member.memberDetail.balance.toFixed(2) }}</div>
                 <a-col :span="24">
-                    <div class="info-bank-coppy center my-2">
+                    <div class="info-bank-coppy center my-2" @click="showModal()">
                         <CopyOutlined /> ถอนเงิน
                     </div>
                 </a-col>
             </div>
         </a-col>
-        <a-col :span="24" :md="8">
+        <!-- <a-col :span="24" :md="12" :xl="8">
             <div class="m-1 info-withdrow-list">
-                <div class="info-withdrow-title">ยอดคงเหลือ</div>
+                <div class="info-withdrow-title">จำนวนเหรียญ</div>
                 <div class="info-withdrow-amount-title my-1">คงเหลือ</div>
-                <div class="info-withdrow-amount center my-1"> 0.00</div>
+                <div class="info-withdrow-amount center my-1"> {{ member.memberDetail.balance_event }}</div>
                 <a-col :span="24">
                     <div class="info-bank-coppy center my-2">
-                        <CopyOutlined /> ถอนเงิน
+                        <CopyOutlined /> เล่นเกมส์
                     </div>
                 </a-col>
             </div>
-        </a-col>
+        </a-col> -->
     </a-flex>
     <h3>บัญชีที่ลูกค้าลงทะเบียน</h3>
     <a-flex wrap="wrap">
-      <a-col :span="24" :md="12" class="my-1">
+      <a-col :span="24" :md="24" :xl="12" class="my-1">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
                   :preview="false"
-                  src="https://play.1million.social/th/scb.png"
+                  :src="member.memberDetail.bank.image"
                 />
               </a-col>
               <a-col :span="16" :md="12" :lg="16">
                 <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
+                  <span class="bank-title">ธนาคาร : </span> {{ member.memberDetail.bank.name }}
                 </div>
                 <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
+                  <span class="name-title">ชื่อบัญชี : </span> {{ member.memberDetail.firstname }} {{ member.memberDetail.lastname }}
                 </div>
                 <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
+                  <span class="bank-number-title">เลขบัญชี : </span> {{ member.memberDetail.bank_no }} 
                 </div>
               </a-col>
           </a-flex>
       </a-col>
-      <a-col :span="24" :md="12" class="my-1">
-          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
+      <a-col :span="24" :md="24" :xl="12" class="my-1">
+        <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
                   :preview="false"
-                  src="https://play.1million.social/th/truewallet.png"
+                  :src="member.memberDetail.bank_true.image"
                 />
               </a-col>
               <a-col :span="16" :md="12" :lg="16">
                 <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
+                  <span class="bank-title">ธนาคาร : </span> {{ member.memberDetail.bank_true.name }}
                 </div>
                 <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
+                  <span class="name-title">ชื่อบัญชี : </span> {{ member.memberDetail.firstname }} {{ member.memberDetail.lastname }}
                 </div>
                 <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
+                  <span class="bank-number-title">เลขบัญชี : </span> {{ member.memberDetail.bank_true_no }} 
+                </div>
+              </a-col>
+          </a-flex>
+          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-else>
+              <a-col :span="8" :md="12" :lg="8"  class="center info-image">
+                <a-image
+                  :width="60"
+                  :preview="false"
+                  src="https://cdn-fastplay.sgp1.cdn.digitaloceanspaces.com/banks/TRUEMONEY.png"
+                />
+              </a-col>
+              <a-col :span="16" :md="12" :lg="16">
+                <div class="bank">
+                  <span class="bank-title">ธนาคาร : </span> ทรูมันนี่วอลเล็ท
+                </div>
+                <div class="my-1">
+                    <a-button ghost @click="showModalAddtrue()">เพิ่มบัญชี</a-button>
                 </div>
               </a-col>
           </a-flex>
@@ -75,9 +98,33 @@
     </a-flex>
 </template>
 <script setup lang="ts">
-definePageMeta({
-  layout: 'information'
-})
+  import { memberStore } from "~/store/index";
+  const open = ref<boolean>(false);
+  const openAddTrue = ref<boolean>(false);
+
+  const member = memberStore();
+
+  const showModal = () => {
+    open.value = true;
+  };
+
+  const closeModal = () => {
+    open.value = false;
+  };
+
+  const showModalAddtrue = () => {
+    openAddTrue.value = true;
+  };
+
+  const closeModalAddtrue = () => {
+    openAddTrue.value = false;
+  };
+
+  
+  definePageMeta({
+    layout: 'information'
+  })
+
 </script>
 <style scoped>
 .info-withdrow-list{

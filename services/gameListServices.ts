@@ -18,7 +18,7 @@ export async function getProviderGameList(data:string): Promise<getResponse> {
     };
 
     try {
-        const response = await axios.get<getResponse>(`${url}/getProviderGameList/${data}`, { headers });
+        const response = await axios.get<getResponse>(`${url}/api/getProviderGameList/${data}`, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
@@ -34,7 +34,7 @@ export async function getGameList(data:string): Promise<getResponse> {
     };
 
     try {
-        const response = await axios.get<getResponse>(`${url}/getGameList/${data}`, { headers });
+        const response = await axios.get<getResponse>(`${url}/api/getGameList/${data}`, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
@@ -55,7 +55,7 @@ export async function launchGameService(code:string,provider:string): Promise<ge
     }
     
     try {
-        const response = await axios.post<getResponse>(`${url}/launchGames/${provider}`,body, { headers });
+        const response = await axios.post<getResponse>(`${url}/api/launchGames/${provider}`,body, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;

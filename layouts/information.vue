@@ -5,7 +5,7 @@
       </a-layout-header>
       <a-layout class="main">
         <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
-        <a-layout-sider class="sidebar" v-if="screens.md">
+        <a-layout-sider class="sidebar" :class="{'small-sidebar':!screens.md}" v-if="screens.md">
           <LayoutsInformationSidebar/>
         </a-layout-sider>
         <a-layout style="padding: 0 0px 10px" class="main-detail" :class="{'small-main-detail':!screens.md}">
@@ -32,8 +32,8 @@
 
 
   const onClose = () => {
-  console.log("close");
-  open.value = false;
+    console.log("close");
+    open.value = false;
   };
 </script>
 <style scoped>
@@ -46,8 +46,8 @@
     }
     .sidebar{
       flex: 0 0 0 !important;
-      max-width: 400px !important;
-      min-width: 400px !important;
+      max-width: 350px !important;
+      min-width: 360px !important;
       width: 400px !important;
       margin: 3rem 1rem 3rem 3rem;
     }

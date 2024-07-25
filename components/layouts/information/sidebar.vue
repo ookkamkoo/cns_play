@@ -42,13 +42,17 @@
                 <NuxtLink to="/information/deposit" class="button-info-link">
                     <div class="button-info button-info-deposit">
                         <BankOutlined />
-                        ฝากเงิน
+                        <span>
+                            ฝากเงิน
+                        </span>
                     </div>
                 </NuxtLink>
                 <NuxtLink to="/information/withdraw" class="button-info-link">
                     <div class="button-info button-info-withdrow">
                         <AuditOutlined />
-                        ถอนเงิน
+                        <span>
+                            ถอนเงิน
+                        </span>
                     </div>
                 </NuxtLink>
             </a-flex>
@@ -113,6 +117,7 @@ const handleNotifyClick = () => {
 .button-info-deposit{
     background: #FF9100FF;
     color: whitesmoke;
+    border: 1px solid #FF9100FF;
 }
 .sidebar-info-amount{
     padding: 1rem 0;

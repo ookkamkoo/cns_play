@@ -1,4 +1,7 @@
 <template>
+    <a-modal v-model:open="openAddTrue" :footer="null">
+      <FormAddTruewallet :closeModal="closeModal"/>
+    </a-modal>
     <h3>ฝากเงิน</h3>
     <div class="my-2 info-warning">
       <h4>คำเตือน</h4>
@@ -10,82 +13,28 @@
       </div>
     </div>
     <a-row class="my-3">
-      <a-col :span="24" :md="12" class="my-1">
+      <a-col :span="24" :md="24" :xl="12"  class="my-1" v-for="value in bankSystem">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
                   :preview="false"
-                  src="https://play.1million.social/th/scb.png"
+                  :src="value.bank.image"
                 />
               </a-col>
               <a-col :span="16" :md="12" :lg="16">
                 <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
+                  <span class="bank-title">ธนาคาร : </span> {{value.bank.name}}
                 </div>
                 <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
+                  <span class="name-title">ชื่อบัญชี : </span> {{value.name}}
                 </div>
                 <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
+                  <span class="bank-number-title">เลขบัญชี : </span> {{value.book_number}} 
                 </div>
               </a-col>
-              <a-col :span="24">
-                <div class="info-bank-coppy center my-1">
-                  <CopyOutlined /> คัดลอก
-                </div>
-              </a-col>
-          </a-flex>
-      </a-col>
-      <a-col :span="24" :md="12" class="my-1">
-          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
-              <a-col :span="8" :md="12" :lg="8"  class="center info-image">
-                <a-image
-                  :width="60"
-                  :preview="false"
-                  src="https://play.1million.social/th/ttb.png"
-                />
-              </a-col>
-              <a-col :span="16" :md="12" :lg="16">
-                <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
-                </div>
-                <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
-                </div>
-                <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
-                </div>
-              </a-col>
-              <a-col :span="24">
-                <div class="info-bank-coppy center my-1">
-                  <CopyOutlined /> คัดลอก
-                </div>
-              </a-col>
-          </a-flex>
-      </a-col>
-      <a-col :span="24" :md="12" class="my-1">
-          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
-              <a-col :span="8" :md="12" :lg="8"  class="center info-image">
-                <a-image
-                  :width="60"
-                  :preview="false"
-                  src="https://play.1million.social/th/truewallet.png"
-                />
-              </a-col>
-              <a-col :span="16" :md="12" :lg="16">
-                <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
-                </div>
-                <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
-                </div>
-                <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
-                </div>
-              </a-col>
-              <a-col :span="24">
-                <div class="info-bank-coppy center my-1">
+              <a-col :span="24" class="coppy-book-number">
+                <div class="info-bank-coppy center my-1" @click="coppyBookNumber(value.book_number)">
                   <CopyOutlined /> คัดลอก
                 </div>
               </a-col>
@@ -94,46 +43,63 @@
     </a-row>
     <h3>บัญชีที่ลูกค้าลงทะเบียน</h3>
     <a-flex wrap="wrap">
-      <a-col :span="24" :md="12">
+      <a-col :span="24" :md="24" :xl="12" class="my-1">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
                   :preview="false"
-                  src="https://play.1million.social/th/scb.png"
+                  :src="member.memberDetail.bank.image"
                 />
               </a-col>
               <a-col :span="16" :md="12" :lg="16">
                 <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
+                  <span class="bank-title">ธนาคาร : </span> {{ member.memberDetail.bank.name }}
                 </div>
                 <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
+                  <span class="name-title">ชื่อบัญชี : </span> {{ member.memberDetail.firstname }} {{ member.memberDetail.lastname }}
                 </div>
                 <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
+                  <span class="bank-number-title">เลขบัญชี : </span> {{ member.memberDetail.bank_no }} 
                 </div>
               </a-col>
           </a-flex>
       </a-col>
-      <a-col :span="24" :md="12">
-          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
+      <a-col :span="24" :md="24" :xl="12" class="my-1">
+          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
                   :preview="false"
-                  src="https://play.1million.social/th/truewallet.png"
+                  :src="member.memberDetail.bank_true.image"
                 />
               </a-col>
               <a-col :span="16" :md="12" :lg="16">
                 <div class="bank">
-                  <span class="bank-title">ธนาคาร : </span> ไทยพาณิชย์
+                  <span class="bank-title">ธนาคาร : </span> {{ member.memberDetail.bank_true.name }}
                 </div>
                 <div class="name">
-                  <span class="name-title">ชื่อบัญชี : </span>ธนากร สุขจิต
+                  <span class="name-title">ชื่อบัญชี : </span> {{ member.memberDetail.firstname }} {{ member.memberDetail.lastname }}
                 </div>
                 <div class="bank-number">
-                  <span class="bank-number-title">เลขบัญชี : </span>3804526060 
+                  <span class="bank-number-title">เลขบัญชี : </span> {{ member.memberDetail.bank_true_no }} 
+                </div>
+              </a-col>
+          </a-flex>
+          <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-else>
+              <a-col :span="8" :md="12" :lg="8"  class="center info-image">
+                <a-image
+                  :width="60"
+                  :preview="false"
+                  src="https://cdn-fastplay.sgp1.cdn.digitaloceanspaces.com/banks/TRUEMONEY.png"
+                />
+              </a-col>
+              <a-col :span="16" :md="12" :lg="16">
+                <div class="bank">
+                  <span class="bank-title">ธนาคาร : </span> ทรูมันนี่วอลเล็ท
+                </div>
+                <div class="my-1">
+                    <a-button ghost @click="showModalAddtrue()">เพิ่มบัญชี</a-button>
                 </div>
               </a-col>
           </a-flex>
@@ -141,6 +107,41 @@
     </a-flex>
 </template>
 <script setup lang="ts">
+import { getBankSystem } from "~/services/bankService";
+import type { BankSystem } from "~/services/bankService";
+import { Alert } from '~/components/alert/alertComponent';
+import { memberStore } from '~/store/index';
+
+const member = memberStore();
+
+const bankSystem = ref<BankSystem[]>([]);
+const openAddTrue = ref<boolean>(false);
+
+const showModalAddtrue = () => {
+  openAddTrue.value = true;
+};
+  
+onMounted( async() => {
+  var data = await getBankSystem();
+  console.log(data);
+  if(data.status="success"){
+    bankSystem.value = data.data
+  }
+});
+
+const coppyBookNumber = async(data:string) =>{
+  try {
+    await navigator.clipboard.writeText(data);
+    Alert("success","Coppy data success.")
+  } catch (err) {
+    Alert("error","Coppy fail.")
+  }
+}
+
+const closeModal = () => {
+  openAddTrue.value = false;
+};
+
 definePageMeta({
   layout: 'information'
 })
@@ -170,5 +171,8 @@ definePageMeta({
 }
 .info-warning{
   color: rgb(249, 68, 68);
+}
+.coppy-book-number{
+  margin-top: 1rem;
 }
 </style>

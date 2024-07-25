@@ -108,7 +108,7 @@
     const member = memberStore();
     // console.log(member.memberDetail.username);
     const checkScreenSize = () => {
-      buttonSize.value = window.innerWidth >= 768 ? 'large' : 'middle'; // Adjust based on your breakpoint
+      buttonSize.value = window.innerWidth >= 768 ? 'large' : 'middle';
     };
     
     // const headerLogin = ref(true)

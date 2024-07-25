@@ -11,27 +11,25 @@
               </h2>
               <div class="game-recommend my-4">
                   <a-row>
-                      <a-col :span="12" :md="8" :lg="4" :xl="2" class="game-recommend-item" v-for="game,index in gameRecommend">
-                        {{index + 1}}
-                        <div>{{game.name}}</div>
-                          <div class="game-recommend-item-detail"  @click="launchGame(game.code,provider)" v-if="game.isActive">
-                              <a-image
-                                  width="100%"
-                                  :preview="false"
-                                  :src="game.imageUrl"
-                              />
-                              <div class="overlay"></div>
-                              <span class="name">
-                                  <span>{{game.name}}</span>
-                              </span>
-                              <div class="provider-name">PGSOFT</div>
-                              <div class="box-play">
-                                  <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
-                              </div>
-                              <div class="hot" v-if="index<=10">
-                                  <img src="https://play.1million.social/image/fire.gif">
-                              </div>
-                          </div>
+                      <a-col :span="12" :md="8" :lg="4" :xl="4" class="game-recommend-item" v-for="game,index in gameRecommend">
+                        <div class="game-recommend-item-detail"  @click="launchGame(game.code,provider)" v-if="game.isActive">
+                            <a-image
+                                width="100%"
+                                :preview="false"
+                                :src="game.imageUrl"
+                            />
+                            <div class="overlay"></div>
+                            <span class="name">
+                                <span>{{game.name}}</span>
+                            </span>
+                            <div class="provider-name">PGSOFT</div>
+                            <div class="box-play">
+                                <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                            </div>
+                            <div class="hot" v-if="index<=10">
+                                <img src="https://play.1million.social/image/fire.gif">
+                            </div>
+                        </div>
                       </a-col>
                   </a-row>
               </div>
@@ -50,16 +48,16 @@
   const screens = useBreakpoint();
 
   interface GameList {
-  id: string;
-  imageUrl: string;
-  isActive: boolean;
-  loby: boolean;
-  name: string;
-  priority: number;
-  productCode: string;
-  provider: string;
-  type: string;
-  code: string;
+    id: string;
+    imageUrl: string;
+    isActive: boolean;
+    loby: boolean;
+    name: string;
+    priority: number;
+    productCode: string;
+    provider: string;
+    type: string;
+    code: string;
 }
 
   const route = useRoute();

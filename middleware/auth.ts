@@ -25,13 +25,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
               const check = await checkToken(token);
               console.log(check);
               
-              if(check){
-                
-                  return navigateTo('/list-game/PG%20Soft');
-                //   return navigateTo('/information/deposit');
-              }else{
-                // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
+              if(!check){
                 logout();
+                // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
+              }else{
+                //   return navigateTo('/list-game/PG%20Soft');
+                //   return navigateTo('/information/return-credit');
               }
           }
       }

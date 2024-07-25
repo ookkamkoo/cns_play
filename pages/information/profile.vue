@@ -1,4 +1,7 @@
 <template>
+    <a-modal v-model:open="open" :footer="null">
+      <FormAddTruewallet :closeModal="closeModal"/>
+    </a-modal>
     <h3>ข้อมูลส่วนตัว</h3>
     <a-flex class="profile" wrap="wrap">
         <a-col :span="24" :md="12" class="my-1">
@@ -56,7 +59,7 @@
                 </div>
               </a-col>
           </a-flex>
-          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap">
+          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
@@ -64,7 +67,7 @@
                   :src="member.memberDetail.bank_true.image"
                 />
               </a-col>
-              <a-col :span="16" :md="12" :lg="16">
+              <a-col :span="16" :md="12" :lg="16" >
                 <div class="bank">
                   <span class="bank-title">ธนาคาร : </span> {{member.memberDetail.bank_true.name}}
                 </div>
@@ -73,6 +76,23 @@
                 </div>
                 <div class="bank-number">
                   <span class="bank-number-title">เลขบัญชี : </span>{{member.memberDetail.bank_true_no}} 
+                </div>
+              </a-col>
+          </a-flex>
+          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-else>
+              <a-col :span="8" :md="12" :lg="8"  class="center info-image">
+                <a-image
+                  :width="60"
+                  :preview="false"
+                  src="https://cdn-fastplay.sgp1.cdn.digitaloceanspaces.com/banks/TRUEMONEY.png"
+                />
+              </a-col>
+              <a-col :span="16" :md="12" :lg="16">
+                <div class="bank">
+                  <span class="bank-title">ธนาคาร : ทรูมันนี่วอลเล็ท</span>
+                </div>
+                <div class="my-1">
+                    <a-button ghost @click="showModal()">เพิ่มบัญชี</a-button>
                 </div>
               </a-col>
           </a-flex>
@@ -103,21 +123,22 @@
                     <a-input v-model:value="formState.reNewPassword" />
                 </a-col>
             </a-flex>
-            <a-col :span="24" class="center">
-                <a-button type="primary" >บันทึก</a-button>
+            <a-col :span="24" class="center my-2">
+                <a-button type="primary" class="addProfile" @click="setPasswordNewCheck()">บันทึกข้อมูล</a-button>
             </a-col>
         </a-col>
     </a-flex>
 </template>
 <script setup lang="ts">
     import { memberStore } from '~/store/index';
+    import { changePasswordMember } from '~/services/memberServices';
     import dayjs from 'dayjs';
+    import { Alert } from '~/components/alert/alertComponent';
+    const open = ref<boolean>(false);
+    const route = useRoute()
+    const action = route.query.action
 
     const member = memberStore();
-
-    definePageMeta({
-    layout: 'information'
-    })
 
     const formState = reactive<any>({
         password: '',
@@ -129,10 +150,47 @@
         const { firstname, lastname } = member.memberDetail;
         return `${firstname} ${lastname}`;
     });
+
     const formattedCreatedAt = computed(() => {
         const createdAt = member.memberDetail.created_at;
         return dayjs(createdAt).format('YYYY-MM-DD HH:mm:ss');
     });
+
+    const showModal = () => {
+        open.value = true;
+    };
+
+    const closeModal = () => {
+        open.value = false;
+    };
+    const setPasswordNewCheck = () =>{
+        if(formState.password != '' && formState.newPassword != '' && formState.reNewPassword != ''){
+            if(formState.newPassword == formState.reNewPassword ){
+                setPasswordNew();
+            }else{
+                Alert("error","กรุณากรอกรหัสผ่านให้ตรงกัน.")
+            }
+        }else{
+            Alert("error","กรุณากรอกข้อมูลให้ครบ.")
+        }
+    }
+    const setPasswordNew = async() =>{
+        var data = await changePasswordMember(formState);
+        if(data.status == 'success'){
+            Alert("success","เปลี่ยนรหัสผ่านเรียบร้อยเเล้ว.")
+        }else{
+            Alert("error",data.error)
+        }
+    }
+    onMounted(() => {
+        if(action == 'addTrue'){
+            open.value = true
+        }
+    });
+
+    definePageMeta({
+        layout: 'information'
+    })
 </script>
 <style scoped>
 .profile label{
@@ -149,5 +207,8 @@
 .read-only{
     cursor: not-allowed;
     background-color: rgb(199, 199, 199);
+}
+.addProfile{
+    background-color: #FF9100FF;
 }
 </style>

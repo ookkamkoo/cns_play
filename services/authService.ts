@@ -32,7 +32,7 @@ export async function login(username: string, password: string): Promise<LoginRe
   console.log("url = "+url);
 
   try {
-    const response = await axios.post<LoginResponse>(`${url}/login`, { username, password });
+    const response = await axios.post<LoginResponse>(`${url}/api/login`, { username, password });
     if(response.data.status == 'success'){
       if(await checkToken(response.data.data.token)){
         response.data
@@ -50,7 +50,7 @@ export async function checkToken(token: string): Promise<boolean> {
 
   try {
     const response = await axios.get<CheckTokenResponse>(
-      `${url}/check-token`,
+      `${url}/api/check-token`,
       {
         headers: {
           Authorization: `Bearer ${token}`

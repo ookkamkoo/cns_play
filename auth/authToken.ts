@@ -1,4 +1,6 @@
 import { memberStore } from '~/store/index';
+
+// Initialize member store instance
 const member = memberStore();
 
 export interface TokenResponse {
@@ -42,8 +44,9 @@ export function removeToken(): void {
   }
 }
 
+// Function to handle logout
 export function logout(): void {
   removeToken();
-  member.setMemberLogin(true)
+  member.setMemberLogin(false);
   console.log(member.login);
 }
