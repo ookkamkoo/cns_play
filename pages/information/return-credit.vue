@@ -7,8 +7,9 @@
                     <div class="info-withdrow-title">โบนัสยอดเสีย</div>
                     <div class="info-withdrow-amount-title my-1">เครดิต</div>
                     <div class="info-withdrow-amount center my-1"> {{refunds}}</div>
+                    <div class="center">สามารถรับได้ {{dateDetail==''?'ทุกวัน':dateDetail}} {{typeRefundLostSet == "1"?"รับอัตโนมัติ":"ลูกค้ากดรับเองด้วยตัวเอง"}}</div>
                     <a-col :span="24">
-                        <div class="info-bank-coppy center my-2" @click="getBobus">
+                        <div class="info-bank-coppy center my-2" :class="{ 'disabled': !dateTypeToday }" @click="getBobus">
                             <DollarCircleOutlined /> รับโบนัส
                         </div>
                     </a-col>
@@ -22,13 +23,10 @@
                     - รับโบนัสคืนเครดิตได้วันละครั้งเท่านั้น                                                                                                              
                 </p>
                 <p>
-                    - โบนัสยอดคืนจะเป็นยอดคืน วันต่อวัน                                                                                                   
+                    - โบนัสยอดคืนจะเป็นยอดคืน {{dateDetail}} {{typeRefundLostSet == "1"?"รับอัตโนมัติ":"ลูกค้ากดรับเองด้วยตัวเอง"}}                                                                         
                 </p>
                 <p>
                     - โบนัสวันก่อนจะไม่ถูกมาคำนวณในวันนี้                                                                                                        
-                </p>
-                <p>
-                    - โบนัสยอดคืนจะถูกรีเซ็ตเที่ยงคืนของทุกวัน                                                        
                 </p>
                 <p class="mb-3 text-danger">
                     -* กรุณามากดรับเครดิตคืนเวลา 00:00 น. เพื่อให้ได้รับเครดิตสูงสุด *                                                
@@ -69,7 +67,7 @@
     import { getRefundCreditServices,confirmRefundCreditServices } from "~/services/refundServices";
     import type { RefundItem } from "~/services/refundServices";
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-    import { memberStore } from '~/store/index';
+    // import { memberStore } from '~/store/index';
     import dayjs from 'dayjs';
     import { Alert } from "~/components/alert/alertComponent";
     import { checkToken } from '~/services/authService';
@@ -78,13 +76,16 @@
     const dataList = ref<RefundItem[]>([]);
     const refunds = ref<string>('0.00')
     const allRecord = ref<number>(0);
+    const dateTypeToday = ref<boolean>(false);
+    const dateDetail = ref<string>("");
+    const typeRefundLostSet = ref<string>("1");
     const [modal, contextHolder] = Modal.useModal();
     
     definePageMeta({
         layout: 'information'
     })
 
-    const member = memberStore();
+    // const member = memberStore();
 
     const dynamicColumns = computed(() => {
         return [
@@ -105,6 +106,9 @@
         if(data.status = 'success'){
             dataList.value = data.data.dataList
             allRecord.value = data.data.dataList.length
+            dateTypeToday.value = data.data.dateTypeToday
+            dateDetail.value = data.data.dateDetail
+            typeRefundLostSet.value = data.data.typeRefundLostSet
             refunds.value = Math.abs(Number(data.data.refund)).toFixed(2);
         }
     }
@@ -116,7 +120,11 @@
             content: h('div', 'หากคุณต้องการรับโบนัส กรุณากดยืนยัน'),
             onOk() {
                 return confirmRefundCreditServices().then((data) => {
-                    Alert("success","คุณได้รับยอดเสียเรียบร้อยเเล้ว")
+                    if(data.status == "success"){
+                        Alert("success","คุณได้รับยอดเสียเรียบร้อยเเล้ว")
+                    }else{
+                        Alert("error", data.error);
+                    }
                     getRefundCredit();
                     const token = getToken();
                     if (token) {
@@ -145,5 +153,11 @@
     }
     .info-withdrow-amount{
         font-size: 18px;
+    }
+    .disabled {
+        pointer-events: none;
+        background-color: #FF9100FF;
+        opacity: 0.5;  
+        cursor: not-allowed;
     }
 </style>

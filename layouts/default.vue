@@ -57,6 +57,15 @@
     function closeModalRegister() {
         openRegister.value = false;
     }
+
+    const route = useRoute()
+    if(route.query.register === 'true'){
+      showModalRegister();
+    }
+
+    if(route.query.login === 'true'){
+      showModalLogin();
+    }
   </script>
   <style>
   #components-layout-demo-top-side-2 .logo {

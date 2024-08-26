@@ -101,100 +101,35 @@
   </template>
   <script lang="ts" setup>
   import { Grid } from 'ant-design-vue';
-    const gameRecommend = [
-        {
-            id: 1,
-            name: 'Cash Mania',
-            image: 'https://play.1million.social/play/img_pg/Cash%20Mania.webp',
-        },
-        {
-            id: 2,
-            name: 'Gemstones Gold',
-            image: 'https://play.1million.social/play/img_pg/Gemstones%20Gold.webp',
-        },
-        {
-            id: 3,
-            name: 'Fortune Dragon',
-            image: 'https://play.1million.social/play/img_pg/Fortune%20Dragon.webp',
-        },
-        {
-            id: 4,
-            name: 'Dragon Hatch 2',
-            image: 'https://play.1million.social/play/img_pg/Dragon%20Hatch%202.webp',
-        },
-        {
-            id: 5,
-            name: "Werewolf's Hunt",
-            image: "https://play.1million.social/play/img_pg/Werewolf's%20Hunt.webp",
-        },
-        {
-            id: 6,
-            name: 'Tsar Treasures',
-            image: 'https://play.1million.social/play/img_pg/Tsar%20Treasures.webp',
-        },
-        {
-            id: 7,
-            name: 'Mafia Mayhem',
-            image: 'https://play.1million.social/play/img_pg/Mafia%20Mayhem.webp',
-        },
-        {
-            id: 8,
-            name: 'Forge of Wealth',
-            image: 'https://play.1million.social/play/img_pg/Forge%20of%20Wealth.webp',
-        },
-        {
-            id: 1,
-            name: 'Cash Mania',
-            image: 'https://play.1million.social/play/img_pg/Cash%20Mania.webp',
-        },
-        {
-            id: 2,
-            name: 'Gemstones Gold',
-            image: 'https://play.1million.social/play/img_pg/Gemstones%20Gold.webp',
-        },
-        {
-            id: 3,
-            name: 'Fortune Dragon',
-            image: 'https://play.1million.social/play/img_pg/Fortune%20Dragon.webp',
-        },
-        {
-            id: 4,
-            name: 'Dragon Hatch 2',
-            image: 'https://play.1million.social/play/img_pg/Dragon%20Hatch%202.webp',
-        },
-        {
-            id: 5,
-            name: "Werewolf's Hunt",
-            image: "https://play.1million.social/play/img_pg/Werewolf's%20Hunt.webp",
-        },
-        {
-            id: 6,
-            name: 'Tsar Treasures',
-            image: 'https://play.1million.social/play/img_pg/Tsar%20Treasures.webp',
-        },
-        {
-            id: 7,
-            name: 'Mafia Mayhem',
-            image: 'https://play.1million.social/play/img_pg/Mafia%20Mayhem.webp',
-        },
-        {
-            id: 8,
-            name: 'Forge of Wealth',
-            image: 'https://play.1million.social/play/img_pg/Forge%20of%20Wealth.webp',
-        },
-        {
-            id: 1,
-            name: 'Cash Mania',
-            image: 'https://play.1million.social/play/img_pg/Cash%20Mania.webp',
-        },
-        {
-            id: 2,
-            name: 'Gemstones Gold',
-            image: 'https://play.1million.social/play/img_pg/Gemstones%20Gold.webp',
-        },
-        ]
+  import { getGameRecommend } from '~/services/gameListServices';
+    interface GameList {
+        id: string;
+        image: string;
+        is_active: boolean;
+        loby: boolean;
+        name: string;
+        priority: number;
+        productCode: string;
+        provider: string;
+        type: string;
+        code: string;
+    }
+
+    const gameRecommend = ref<GameList[]>([])
     const useBreakpoint = Grid.useBreakpoint;
     const screens = useBreakpoint();
+    
+    onMounted( () => {
+        getRecomend();
+    });
+
+    const getRecomend = async() =>{
+        var data = await getGameRecommend();
+        // console.log(data);
+        if(data.status="success"){
+            gameRecommend.value = data.data
+        }
+    }
   </script>
   <style scoped>
     .elementor-background-overlay{

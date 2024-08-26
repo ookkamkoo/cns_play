@@ -19,9 +19,12 @@ export interface GetRefundResponse {
     data: {
         dataList: RefundItem[];
         refund: number;
+        dateTypeToday: boolean;
+        dateDetail: string;
+        typeRefundLostSet: string;
     };
     message: string;
-    error?: string;
+    error: string;
     time: string;
 }
 

@@ -23,7 +23,7 @@ export const sidebarItems = [
     {name: 'คืนยอดเสีย',path:'/cashback',image:"/img/cashback.png" },
     {name: 'ฝากประจำ',path:'/dailytopup',image:"/img/dailytopup.png" },
     {name: 'กงล้อ',path:'/wheel',image:"/img/wheel.png" },
-    {name: 'เเนะนำเพื่อน',path:'/affiliated',image:"/img/affiliated.png" },
+    {name: 'เเนะนำเพื่อน',path:'/recommend',image:"/img/affiliated.png" },
 ];
 
 
@@ -35,8 +35,8 @@ export const menuList = [
     {name: 'โปรโมชั่น',path:'/information/promotion',icon: GiftOutlined,show:1 },
     {name: 'คืนยอดเสีย',path:'/information/return-credit',icon: DollarOutlined,show:1},
     {name: 'ประวัติการทำรายการ',path:'/information/transaction',icon: ClockCircleOutlined,show:1 },
-    {name: 'เเนะนำเพื่อน',path:'/information/affiliate',icon: UsergroupAddOutlined,show:1 },
+    {name: 'เเนะนำเพื่อน',path:'/information/recommend',icon: UsergroupAddOutlined,show:1 },
     {name: 'ประกาศ',path:'/information/notify',icon:SoundOutlined,show:3},
     {name: 'ติดต่อเรา',path:'https://line.me/R/ti/p/@090ezasd?oat_content=url',icon: CommentOutlined,show:1},
-    {name: 'ออกจากระบบ',path:'/dailytopup',icon: LogoutOutlined,show:0 },
+    {name: 'ออกจากระบบ',path:'#',icon: LogoutOutlined,show:0 },
 ];

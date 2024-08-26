@@ -50,7 +50,27 @@
         </div>
         <div class="sidebar-menu-list">
           <a-flex v-for="item in menuList">
-            <NuxtLink :to="item.path" exact class="link-sidebar">
+            <NuxtLink  class="link-sidebar" @click="LogoutSystem()"  v-if="item.name == 'ออกจากระบบ'">
+              <a-flex :align="'center'" class="sidebar-menu-list-detail" >
+                <a-col :span="6" class="sidebar-menu-list-icon">
+                  <component :is="item.icon" />
+                </a-col>
+                <a-col :span="18">
+                  {{item.name}}
+                </a-col>
+              </a-flex>
+            </NuxtLink>
+            <a :href="item.path" target="_blank" class="link-sidebar"  v-else-if="item.name == 'ติดต่อเรา'">
+              <a-flex :align="'center'" class="sidebar-menu-list-detail" >
+                <a-col :span="6" class="sidebar-menu-list-icon">
+                  <component :is="item.icon" />
+                </a-col>
+                <a-col :span="18">
+                  {{item.name}}
+                </a-col>
+              </a-flex>
+            </a>
+            <NuxtLink :to="item.path" exact class="link-sidebar" v-else>
               <a-flex :align="'center'" class="sidebar-menu-list-detail" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
                 <a-col :span="6" class="sidebar-menu-list-icon">
                   <component :is="item.icon" />
@@ -68,6 +88,7 @@
   import { ref } from 'vue';
   import type { DrawerProps } from 'ant-design-vue';
   import { menuList } from '~/data/data';
+  import { logout } from '~/auth/authToken';
   const placement = ref<DrawerProps['placement']>('left');
   import { memberStore } from '~/store/index';
 
@@ -78,7 +99,10 @@
       onClose:Function,
       open:boolean
     }>();
-
+    const LogoutSystem = () =>{
+      logout();
+      props.onClose();
+    }
   </script>
   <style>
   .sidebar-menu-close{

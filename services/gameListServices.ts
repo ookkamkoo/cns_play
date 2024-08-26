@@ -25,6 +25,22 @@ export async function getProviderGameList(data:string): Promise<getResponse> {
     }
 }
 
+export async function getGameRecommend(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.apiServer;
+    
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/api/getGameRecommend`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function getGameList(data:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.apiServer;

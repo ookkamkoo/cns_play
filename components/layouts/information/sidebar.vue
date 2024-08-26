@@ -59,7 +59,17 @@
         </div>
         <div class="sidebar-info-detail mt-2">
             <a-flex v-for="item in menuList">
-                <NuxtLink :to="item.path" v-if="item.show == 1" class="sidebar-menu-list-link">
+                <a :href="item.path" target="_blank" v-if="item.show == 1 && item.name == 'ติดต่อเรา'" class="sidebar-menu-list-link">
+                    <a-flex class="sidebar-menu-list-detail" :align="'center'" >
+                        <a-col :span="4" class="sidebar-menu-list-icon">
+                            <component :is="item.icon" />
+                        </a-col>
+                        <a-col :span="20">
+                            {{item.name}}
+                        </a-col>
+                    </a-flex>
+                </a>
+                <NuxtLink :to="item.path" v-if="item.show == 1 && item.name != 'ติดต่อเรา'" class="sidebar-menu-list-link">
                     <a-flex class="sidebar-menu-list-detail" :align="'center'" >
                         <a-col :span="4" class="sidebar-menu-list-icon">
                             <component :is="item.icon" />

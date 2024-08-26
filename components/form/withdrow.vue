@@ -75,7 +75,7 @@
       </a-col>
       <a-col :span="24" class="my-2">
         <a-flex :justify="'center'" :align="'center'">
-            <a-button size="large" type="primary" class="mx-1" style="width: 100%;" danger @click="porps.closeModal">ยกเลิก</a-button>
+            <a-button size="large" type="primary" class="mx-1" style="width: 100%;" danger @click="props.closeModal">ยกเลิก</a-button>
             <a-button size="large" type="primary" class="mx-1" style="width: 100%;" @click="confirmWithdraw()">ถอนเงิน</a-button>
         </a-flex>
       </a-col>
@@ -90,7 +90,7 @@ const isClicked2 = ref(false);
 
 const member = memberStore();
 
-const porps = defineProps({
+const props = defineProps({
   closeModal: Function
 });
 
@@ -137,10 +137,14 @@ const confirmWithdraw = () =>{
     withdraw();
   }
 }
+
 const withdraw = async() => {
   var data = await withdrawServices(formState.amount,formState.withdraw_with);
   if(data.status == 'success'){
-    
+      Alert("success","ทำรายการถอนเงินเรียบร้อย")
+      if (props.closeModal) {
+        props.closeModal();
+      }
   }else{
     Alert("error",data.error);
   }

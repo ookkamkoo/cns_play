@@ -1,14 +1,15 @@
 import type { NuxtPage } from 'nuxt/schema'
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@ant-design-vue/nuxt", "@pinia/nuxt"],
+  modules: ["@pinia/nuxt","@ant-design-vue/nuxt"],
   css: ['~/assets/scss/_sets.scss'],
   devServer: {
     port: 3002,
   },
   runtimeConfig: {
     public: {
-      apiServer: process.env.apiServer
+      apiServer: process.env.apiServer,
+      baseUrl: process.env.baseUrl
     }
   },
   hooks: {

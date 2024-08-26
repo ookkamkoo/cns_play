@@ -64,7 +64,7 @@
                                     <span class="topBar-username"> 0652837588 </span>
                                 </div> -->
                                 <div class="mobile-header-detail-name header-detail-name-border">
-                                    <span class="text-white "> <span class="textCreditMainBalance"> 0.00</span></span>
+                                    <span class="text-white "> <span class="textCreditMainBalance"> {{member.memberDetail.balance.toFixed(2)}}</span></span>
                                     <span class="refresh-amount">
                                         <SyncOutlined :spin="refreshAmount"/>
                                     </span>
@@ -99,7 +99,7 @@
 </template>
 <script lang="ts" setup>
     import { Grid } from 'ant-design-vue';
-    import { getToken,logout } from '~/auth/authToken';
+    import { logout } from '~/auth/authToken';
     import type { MenuProps } from 'ant-design-vue';
     import { memberStore } from '~/store/index';
     type SizeType = 'small' | 'middle' | 'large';
