@@ -70,7 +70,7 @@
     const error = ref('')
     const formState = reactive<any>({
         username: '0623373061',
-        password: 'aa123456',
+        password: 'aa112233',
     });
 
     const props = defineProps<{
