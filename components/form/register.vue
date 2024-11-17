@@ -69,7 +69,7 @@
                     <a-input v-model:value="formState.book_bank" placeholder="กรอกเลขบัญชี" size="large" :maxlength="15"/>
                 </a-form-item>
                 </a-col>
-                <a-col class="my-1" :span="24">
+                <a-col class="my-1" :span="24" v-if="member.settingDefault.registerTruewallet == 'true'">
                 <label><b>ทรูวอเล็ต (ถ้ามี)</b></label>
                 <a-select ref="selectTrue" v-model:value="formState.bankTrueId" style="width: 100%" size="large">
                     <template v-for="option in optionsBank" :key="option.name">
@@ -82,7 +82,7 @@
                     </template>
                 </a-select>
                 </a-col>
-                <a-col :span="24" class="my-1">
+                <a-col :span="24" class="my-1" v-if="member.settingDefault.registerTruewallet == 'true'">
                     <label for="เลขบัญชีทรูวอเล็ต">เลขบัญชีทรูวอเล็ต (ถ้ามี)</label>
                     <a-form-item name="book_true_no" :rules="[{ required: true, message: 'กรุณากรอกเลขบัญชีทรูวอเล็ต' }]" class="register-input-0">
                         <a-input v-model:value="formState.book_true_no" placeholder="กรอกเลขบัญชีทรูวอเล็ต" size="large" :maxlength="15"/>
@@ -176,6 +176,9 @@
   import { ref, reactive, onMounted } from 'vue';
   import { getDetailconfigMember,getNameServices } from '~/services/memberServices';
   import { Alert } from '../alert/alertComponent';
+  import { register } from '~/services/authService';
+  import { memberStore } from '~/store/index';
+  const member = memberStore();
   
   const optionsBank = ref<any[]>([]);
   const optionsMarketing = ref<any[]>([]);
@@ -198,10 +201,15 @@
     line_id:'',
     re_password:'',
   });
+
+  const props = defineProps<{
+        closeModal: () => void
+    }>();
   
   const prev = (data :string) => {
         activeKey.value =  data;
   };
+
   const next = async(data :string) => {
     if(activeKey.value == '1'){
         if (formState.username == ''){
@@ -236,6 +244,7 @@
             Alert('error','กรุณากรอกรหัสผ่าน')
         }else{
             activeKey.value =  data;
+            handleSubmit();
         }
     }
   };
@@ -265,8 +274,10 @@
         getNameSuccess.value = true
         if(memberSetting.value.config_value == "true"){
             getName.value = false
+            getNameSuccess.value = true
         }else{
             getName.value = true
+            getNameSuccess.value = false
         }
       }
     } catch (error) {
@@ -289,6 +300,21 @@
         return false
     }
 }
+const handleSubmit = async () => {
+    try {
+        const data = await register(formState);
+        console.log(data);
+        if (data.status === 'success') {
+            Alert('success','คุณได้ทำการสมัครสมาชิกเรียบร้อยเเล้ว')
+            props.closeModal();
+        }else{
+            console.error('Error fetching user roles:', data.message);
+            Alert("error", data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching user roles:', error);
+    }
+};
   
   </script>
   

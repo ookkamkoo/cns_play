@@ -7,7 +7,7 @@
                         :width="60"
                         :preview="false"
                         class="sidbar-menu-icon"
-                        src="https://image.1million.social/image/ranking/1694756812100.png"
+                        :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
                     />
                 </a-col>
                 <a-col :span="18">
@@ -59,7 +59,7 @@
         </div>
         <div class="sidebar-info-detail mt-2">
             <a-flex v-for="item in menuList">
-                <a :href="item.path" target="_blank" v-if="item.show == 1 && item.name == 'ติดต่อเรา'" class="sidebar-menu-list-link">
+                <a :href="`https://line.me/R/ti/p/${member.settingDefault.websiteLine}?oat_content=url`" target="_blank" v-if="item.show == 1 && item.name == 'ติดต่อเรา'" class="sidebar-menu-list-link">
                     <a-flex class="sidebar-menu-list-detail" :align="'center'" >
                         <a-col :span="4" class="sidebar-menu-list-icon">
                             <component :is="item.icon" />
@@ -98,9 +98,10 @@ import { menuList } from '~/data/data';
 import { memberStore } from '~/store/index';
 
 const member = memberStore();
+const config = useRuntimeConfig()
 
 const handleNotifyClick = () => {
-  console.log('Notify item clicked');
+    member.setMemberNotify(true);
 };
 
 </script>

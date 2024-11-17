@@ -3,7 +3,7 @@
       <FormAddTruewallet :closeModal="closeModalAddtrue"/>
     </a-modal>
     <a-modal v-model:open="open" :footer="null">
-      <FormWithdrow :closeModal="closeModal"/>
+      <FormWithdraw :closeModal="closeModal"/>
     </a-modal>
     <h3>ถอนเงิน</h3>
     <a-flex class="info-withdrow" wrap="wrap">
@@ -56,7 +56,7 @@
               </a-col>
           </a-flex>
       </a-col>
-      <a-col :span="24" :md="24" :xl="12" class="my-1">
+      <a-col :span="24" :md="24" :xl="12" class="my-1" v-if="member.settingDefault.registerTruewallet == 'true'">
         <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
@@ -98,14 +98,19 @@
     </a-flex>
 </template>
 <script setup lang="ts">
-  import { memberStore } from "~/store/index";
+  import { Alert } from "~/components/alert/alertComponent";
+import { memberStore } from "~/store/index";
   const open = ref<boolean>(false);
   const openAddTrue = ref<boolean>(false);
 
   const member = memberStore();
 
   const showModal = () => {
-    open.value = true;
+    if(member.settingDefault.withdrawStatus == "false"){
+      Alert("error","ระบบเงินยังไม่พร้อมใช้งาน.")
+    }else{
+      open.value = true;
+    }
   };
 
   const closeModal = () => {

@@ -4,6 +4,11 @@ export const Alert = (status: string,text: string) => {
       title: 'การดำเนินการเรียบร้อย',
       content: text,
     });
+  }else if(status == "warning"){
+    return Modal.warning({
+      title: 'เเจ้งเตือน!',
+      content: text,
+    });
   }else if(status == "error"){
     return Modal.error({
       title: 'เกิดข้อผิดพลาด!',

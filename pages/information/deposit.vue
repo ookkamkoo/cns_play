@@ -3,6 +3,19 @@
       <FormAddTruewallet :closeModal="closeModal"/>
     </a-modal>
     <h3>ฝากเงิน</h3>
+    <div class="center gray" v-if="member.settingDefault.depositStatus == 'true'">
+        ระบบฝากเงินยังไม่ได้เปิดใช้งาน
+    </div>
+    <div class="my-2">
+      <h4>รายละเอียด</h4>
+      <div>
+        - ฝากเงินขั้นต่ำ {{member.settingDefault.depositMin}} - {{member.settingDefault.depositMax}} บาท ต่อครั้ง
+      </div>
+      <div v-if="member.settingDefault.depositFee == '1'">
+        - ค่าธรรมเนียมการฝาก {{member.settingDefault.typeDepositFeeAmountOrPerCent}} <span v-if="member.settingDefault.typeDepositFeeAmountOrPerCent == '1'">%</span> <span v-else>บาท</span>  ต่อครั้ง
+        - ค่าธรรมเนียมการฝาก {{member.settingDefault.depostDetail}}
+      </div>
+    </div>
     <div class="my-2 info-warning">
       <h4>คำเตือน</h4>
       <div>
@@ -12,7 +25,7 @@
         - กรณีฝากเงิน ให้เข้าเมนูฝากเงินของระบบเพื่อคัดลอกเลขบัญชีเท่านั้น เมื่อระบบเปลี่ยนบัญชีใหม่แล้ว ห้ามโอนไปบัญชีเดิมเด็ดขาด
       </div>
     </div>
-    <a-row class="my-3">
+    <a-row class="my-3" v-if="bankSystem && bankSystem.length > 0">
       <a-col :span="24" :md="24" :xl="12"  class="my-1" v-for="value in bankSystem">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
@@ -65,7 +78,7 @@
               </a-col>
           </a-flex>
       </a-col>
-      <a-col :span="24" :md="24" :xl="12" class="my-1">
+      <a-col :span="24" :md="24" :xl="12" class="my-1" v-if="member.settingDefault.registerTruewallet == 'true'">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
@@ -174,5 +187,8 @@ definePageMeta({
 }
 .coppy-book-number{
   margin-top: 1rem;
+}
+.gray{
+  color: #ffffff94;
 }
 </style>

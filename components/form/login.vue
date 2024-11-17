@@ -48,7 +48,7 @@
                 </a-col>
                 <a-col :span="24" class="my-1">
                     <a-flex justify="center">
-                        <a-button type="primary" shape="round" size="large" class="mx-1 login" @click="props.closeModal">
+                        <a-button type="primary" shape="round" size="large" class="mx-1 login" @click="() => props.closeModal()">
                             ยกเลิก
                         </a-button>
                         <a-button type="primary" shape="round" size="large" class="mx-1 register" html-type="submit" @click="handleSubmit">
@@ -61,8 +61,8 @@
     </a-form>
 </template>
 <script lang="ts" setup>
-    import { login,checkToken } from '~/services/authService';
-    import { setToken,setUsername } from '~/auth/authToken';
+    import { login } from '~/services/authService';
+    import { setToken,setUsername,setID } from '~/auth/authToken';
     import { memberStore } from '~/store/index';
 
     const member = memberStore();
@@ -84,11 +84,13 @@
             if (data.status === 'success') {
                 setToken(data.data.token);
                 setUsername(data.data.username);
+                setID(data.data.id);
                 member.setMemberLogin(false);
+                member.setMemberNotify(true);
                 props.closeModal();
             }else{
                 member.setMemberLogin(true);
-                error.value = data.message
+                error.value = data.message +' '+ data.error
             }
         } catch (error) {
             console.error('Error fetching user roles:', error);

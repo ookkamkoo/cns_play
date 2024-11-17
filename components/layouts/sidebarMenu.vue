@@ -12,7 +12,7 @@
                 <a-image
                     :width="50"
                     :preview="false"
-                    src="https://image.1million.social/image/imageList/1707495347305.png"
+                    :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
                 />
                 <CloseCircleOutlined  class="sidebar-menu-close" @click="props.onClose"/>
             </a-flex>
@@ -24,7 +24,7 @@
                       :width="50"
                       :preview="false"
                       class="sidbar-menu-icon"
-                      src="https://image.1million.social/image/ranking/1694756812100.png"
+                      :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
                   />
                 </a-col>
                 <a-col :span="18">
@@ -60,7 +60,7 @@
                 </a-col>
               </a-flex>
             </NuxtLink>
-            <a :href="item.path" target="_blank" class="link-sidebar"  v-else-if="item.name == 'ติดต่อเรา'">
+            <a :href="`https://line.me/R/ti/p/${member.settingDefault.websiteLine}?oat_content=url`" target="_blank" class="link-sidebar"  v-else-if="item.name == 'ติดต่อเรา'">
               <a-flex :align="'center'" class="sidebar-menu-list-detail" >
                 <a-col :span="6" class="sidebar-menu-list-icon">
                   <component :is="item.icon" />
@@ -70,6 +70,16 @@
                 </a-col>
               </a-flex>
             </a>
+            <NuxtLink to="" exact class="link-sidebar" v-else-if="item.name == 'ประกาศ'" @click="handleNotifyClick">
+              <a-flex :align="'center'" class="sidebar-menu-list-detail" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
+                <a-col :span="6" class="sidebar-menu-list-icon">
+                  <component :is="item.icon" />
+                </a-col>
+                <a-col :span="18">
+                  {{item.name}}
+                </a-col>
+              </a-flex>
+            </NuxtLink>
             <NuxtLink :to="item.path" exact class="link-sidebar" v-else>
               <a-flex :align="'center'" class="sidebar-menu-list-detail" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
                 <a-col :span="6" class="sidebar-menu-list-icon">
@@ -93,12 +103,19 @@
   import { memberStore } from '~/store/index';
 
   const member = memberStore();
+  const config = useRuntimeConfig()
   // const open = ref<boolean>(false);
   
+
+  const handleNotifyClick = () => {
+      member.setMemberNotify(true);
+  };
+
   const props = defineProps<{
-      onClose:Function,
-      open:boolean
-    }>();
+    onClose: () => void,
+    open: boolean
+  }>();
+
     const LogoutSystem = () =>{
       logout();
       props.onClose();

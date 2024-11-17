@@ -1,10 +1,10 @@
 <template>
-  <a-row>
-        <a-flex>
+  <a-row style="width: 100%;">
+        <a-flex style="width: 100%;">
             <LayoutsSidebar v-if="!screens.md"/>
-            <a-col :class="{'small-main':!screens.md}">
+            <a-col :class="{'small-main':!screens.md}" style="width: 100%;">
               <h2 class="m-2">
-                {{category.nameTH}}
+                {{category.name_th}}
               </h2>
               <div class="game-recommend my-4">
                   <a-row>
@@ -24,7 +24,7 @@
                                   <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
                               </div>
                               <div class="hot">
-                                  <img src="https://play.1million.social/image/fire.gif">
+                                  <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
                               </div>
                           </div>
                       </a-col>
@@ -38,12 +38,20 @@
 import { gameCategories } from '~/data/data';
 import { getProviderGameList } from '~/services/gameListServices';
 import { Grid } from 'ant-design-vue';
+import { memberStore } from '~/store/index';
+const member = memberStore();
 
-interface Category {
-  name: string;
-  nameTH: string;
-  nameEN: string;
-}
+interface GameMenuItem {
+    id: number;
+    name: string;
+    name_th: string;
+    icon: string;
+    ref: string;
+    image: string;
+    priority: number;
+    is_active: boolean;
+  }
+
 interface GameList {
   id: string;
   image: string;
@@ -57,7 +65,7 @@ interface GameList {
 }
 
 const route = useRoute();
-const category = ref<Category>({ name: '', nameTH: '', nameEN: ''  });
+const category = ref<GameMenuItem>({ id: 0, name: '', name_th: '', ref: '', icon: '', image: '', priority: 0, is_active: false });
 
 const useBreakpoint = Grid.useBreakpoint;
 const screens = useBreakpoint();
@@ -66,8 +74,20 @@ const gameRecommend = ref<GameList[]>([])
 
 const updateCategory = async() => {
   const game = route.params.category;
-  category.value = gameCategories.find(cat => cat.name === game) || { name: '', nameTH: '',nameEN:'' };
-  var data = await getProviderGameList(category.value.nameEN)
+  console.log(game);
+  
+  category.value = member.menuBar.find((cat: GameMenuItem) => cat.name === game) || {
+    id: 0,
+    name: '',
+    name_th: '',
+    ref: '',
+    icon: '',
+    image: '',
+    priority: 0,
+    is_active: false,
+  };
+  
+  var data = await getProviderGameList(category.value.ref)
   console.log(data.data);
   
   if(data.status == "success"){

@@ -6,42 +6,42 @@
                         <a-image
                                 :width="400"
                                 :preview="false"
-                                src="https://play.1million.social/wp-content/uploads/2022/03/ag-gaming.2eb0369.png"
+                                src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/joker-gaming.417d073.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/ambbet.1d53780.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/ambbet.1d53780.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/ameba.dea3fdf.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/ameba.dea3fdf.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/dragoonsoft.a39781a.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/dragoonsoft.a39781a.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/dream-gaming.d993e67.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/dream-gaming.d993e67.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/gamatron.96cdfab.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/gamatron.96cdfab.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/joker-gaming.417d073.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/joker-gaming.417d073.png"
                         />
                         <a-image
                             :width="400"
                             :preview="false"
-                            src="https://play.1million.social/wp-content/uploads/2022/03/live-22.dfd4972.png"
+                            src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/live-22.dfd4972.png"
                         />
                 </a-flex>
             </a-col>
@@ -52,13 +52,13 @@
                 <a-col :span="16">
                     <div class="center my-2">
                         <h2>
-                            1MILLION เว็บคาสิโนออนไลน์ 
+                            {{member.settingDefault.title}} เว็บคาสิโนออนไลน์ 
                         </h2>
                         <h2>
                             ครองอันดับในใจคนไทย 10 ปีซ้อน 
                         </h2>
                         <h3>
-                            1MILLIONบาคาร่า คาสิโนออนไลน์ ที่ดีที่สุด เพื่อประสบการณ์ที่ดีของผู้เล่นอย่างแท้จริง แบบ 1MILLION
+                            {{member.settingDefault.title}} บาคาร่า คาสิโนออนไลน์ ที่ดีที่สุด เพื่อประสบการณ์ที่ดีของผู้เล่นอย่างแท้จริง แบบ {{member.settingDefault.title}}
                         </h3>
                         <h4>
                             Created website by
@@ -67,14 +67,14 @@
                             <a-image
                                 :width="screens.md ? '400px' : '100%'"
                                 :preview="false"
-                                src="https://image.1million.social/image/imageList/1707495347305.png"
+                                :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
                             />
                         </div>
                         <h4>
                             Terms and Conditions 
                         </h4>
                         <h5>
-                            Copyright © 2023 1MILLION All Rights Reserved.
+                            Copyright © 2023 {{member.settingDefault.title}} All Rights Reserved.
                         </h5>
                     </div>
                 </a-col>
@@ -84,8 +84,12 @@
 
 <script lang="ts" setup>
   import { Grid } from 'ant-design-vue';
+  import { memberStore } from '~/store/index';
   const useBreakpoint = Grid.useBreakpoint;
+  const member = memberStore();
   const screens = useBreakpoint();
+  const config = useRuntimeConfig()
+  
 </script>
 <style>
 .elementor-background-overlay-dark{

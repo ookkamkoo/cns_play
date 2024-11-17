@@ -75,6 +75,7 @@
             </div>
         </a-col>
         <a-col :span="24" :xl="12">
+            <h3>รายการเเนะนำเพื่อน</h3>
             <a-table 
             :columns="dynamicColumns"
             :data-source="dataList"

@@ -28,6 +28,23 @@ export async function getDetailconfigMember(): Promise<getResponse> {
     }
 }
 
+export async function refreshAmountServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.apiServer;
+    console.log(url);
+    
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/api/refresh-amount`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function getNameServices(bank_id :number ,bank_no:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.apiServer;

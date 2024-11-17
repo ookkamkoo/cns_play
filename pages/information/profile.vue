@@ -59,7 +59,7 @@
                 </div>
               </a-col>
           </a-flex>
-          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''">
+          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-if="member.memberDetail.bank_true_no != ''" >
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"
@@ -79,7 +79,7 @@
                 </div>
               </a-col>
           </a-flex>
-          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-else>
+          <a-flex class="info-bank m-1" :align="'center'" :justify="'center'" wrap="wrap" v-else v-if="member.settingDefault.registerTruewallet == 'true'">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
                 <a-image
                   :width="60"

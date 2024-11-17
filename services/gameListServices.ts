@@ -50,14 +50,14 @@ export async function getGameList(data:string): Promise<getResponse> {
     };
 
     try {
-        const response = await axios.get<getResponse>(`${url}/api/getGameList/${data}`, { headers });
+        const response = await axios.get<getResponse>(`${url}/api/getGameList/${data}/${data}`, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
     }
 }
 
-export async function launchGameService(code:string,provider:string): Promise<getResponse> {
+export async function launchGameService(code:string,provider:string,deviceType:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.apiServer;
     
@@ -68,6 +68,7 @@ export async function launchGameService(code:string,provider:string): Promise<ge
     var body = {
         "gameCode": code,
         "language": "th",
+        "deviceType": deviceType,
     }
     
     try {

@@ -1,5 +1,12 @@
 <template>
     <LayoutsNewsboxhead/>
+    <a-drawer width="100%"  height="100vh"  :title="nameGame" :placement="'right'" :open="openGame" @close="onClose">
+      <template #extra>
+        <!-- <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button> -->
+        <a-button style="margin-right: 8px" @click="refreshUrl()">รีเฟรซ <RedoOutlined /></a-button>
+      </template>
+      <iframe ref="gameIframe" :src="urlGame" width="100%" height="100%" style="border: none;"></iframe>
+    </a-drawer>
     <a-row>
         <a-flex>
             <LayoutsSidebar v-if="!screens.md"/>
@@ -10,22 +17,24 @@
                 <div class="game-recommend my-4">
                     <a-row>
                         <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-for="game in gameRecommend">
-                            <div class="game-recommend-item-detail">
+                            
+                            <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active">
                                 <a-image
                                     width="100%"
                                     :preview="false"
                                     :src="game.image"
+                                    loading="lazy"
                                 />
                                 <div class="overlay"></div>
                                 <span class="name">
-                                    <span>{{game.name}}</span>
+                                    <span>{{game.game_code}}</span>
                                 </span>
                                 <div class="provider-name">PGSOFT</div>
                                 <div class="box-play">
                                     <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
                                 </div>
                                 <div class="hot">
-                                    <img src="https://play.1million.social/image/fire.gif">
+                                    <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
                                 </div>
                             </div>
                         </a-col>
@@ -40,19 +49,19 @@
                 <a-col :span="16" >
                     <a-col :span="24">
                         <h2>
-                            1MILLION เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ
+                            {{member.settingDefault.title}} เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ
                         </h2>
                         <p>
                             โดยผู้เล่นสามารถสนุกกับเกมของเราได้ด้วยเงินเดิมพันขั้นต่ำเพียง 10 บาทเท่านั้น และสามารถทำการฝาก-ถอนได้ตลอด 24 ชั่วโมง ด้วยระบบออโต้ ทั้งสะดวก รวดเร็วทันใจเป็นอย่างมากเหมาะสำหรับผู้ที่ชื่นชอบการเดิมพันในรูปแบบของเกมการพนันออนไลน์อันดับ 1 ในปี 2023
                         </p>
                         <h2>
-                            1MILLION บริการประทับใจ ก็ไม่เป็นสองรองใคร ใส่ใจทุกคำตอบ ตลอด 24 ชั่วโมง 7 วันต่อสัปดาห์ไม่มีหยุด
+                            {{member.settingDefault.title}} บริการประทับใจ ก็ไม่เป็นสองรองใคร ใส่ใจทุกคำตอบ ตลอด 24 ชั่วโมง 7 วันต่อสัปดาห์ไม่มีหยุด
                         </h2>
                         <div class="center my-3">
                             <a-image
                                 :width="screens.md ? '400px' : '100%'"
                                 :preview="false"
-                                src="https://image.1million.social/image/imageList/1707495347305.png"
+                                :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
                             />
                         </div>
                         <p>
@@ -62,7 +71,7 @@
                             <a-image
                                 :width="screens.md ? '400px' : '100%'"
                                 :preview="false"
-                                src="https://play.1million.social/wp-content/uploads/2023/11/cover-games-bg-min-1024x576.png"
+                                src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/cover-games-bg-min-1024x576.png"
                             />
                         </div>
                     </a-col>
@@ -78,7 +87,7 @@
                                 <a-image
                                     :width="screens.md ? '400px' : '100%'"
                                     :preview="false"
-                                    src="https://play.1million.social/wp-content/uploads/2023/11/gg1-min.png"
+                                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/gg1-min.png"
                                 />
                             </a-col>
                             <a-col :span="24" :md="12">
@@ -102,26 +111,55 @@
   <script lang="ts" setup>
   import { Grid } from 'ant-design-vue';
   import { getGameRecommend } from '~/services/gameListServices';
+  import { memberStore } from '~/store/index';
+  import { launchGameService } from '~/services/gameListServices';
+
+    const member = memberStore();
+    const config = useRuntimeConfig()
+
     interface GameList {
-        id: string;
-        image: string;
         is_active: boolean;
-        loby: boolean;
-        name: string;
-        priority: number;
-        productCode: string;
-        provider: string;
-        type: string;
-        code: string;
+        maintain: boolean;
+        image: string;
+        categoryId: string;
+        createdDate: string | null;  // Assuming `createdDate` can be null
+        describe: string;
+        game_code: string;
+        gameId: number;
+        gameName: string;
+        launch_code: string;
+        new: boolean;
+        popular: boolean;
+        productId: number;
+        updatedDate: string;
+        vote: boolean;
     }
 
+    const provider = "PG Soft"
     const gameRecommend = ref<GameList[]>([])
     const useBreakpoint = Grid.useBreakpoint;
     const screens = useBreakpoint();
+    const openGame = ref<boolean>(false);
+    const urlGame = ref<string>("");
+    const nameGame = ref<string>("");
     
     onMounted( () => {
+        window.onbeforeunload = null;
         getRecomend();
     });
+
+    const onClose = () => {
+      console.log("close");
+    //   urlGame.value = "";
+      openGame.value = false;
+    };
+
+    const refreshUrl = () => {
+        const iframe = document.querySelector("iframe");
+        if (iframe) {
+            iframe.src = iframe.src;
+        }
+    };
 
     const getRecomend = async() =>{
         var data = await getGameRecommend();
@@ -130,6 +168,26 @@
             gameRecommend.value = data.data
         }
     }
+
+    function getDeviceType() {
+        return window.innerWidth < 768 ? "mobile" : "pc";
+    }
+
+    const launchGame = async (code: string, provider: string, maintain: boolean, name: string) => {
+        if (!maintain) { // Add parentheses around the condition
+            const deviceType = getDeviceType();
+            const data = await launchGameService(code, provider,deviceType);
+            console.log(data);
+            if (data.status === "success") {
+            // window.open(data.data.url, "_blank");
+            console.log(name);
+            
+            urlGame.value = data.data.url
+            openGame.value = true
+            nameGame.value = name
+            }
+        }
+        }
   </script>
   <style scoped>
     .elementor-background-overlay{
@@ -187,6 +245,40 @@
         transition: all .3s ease;
         z-index: 2;
         height: 100%;
+    }
+
+    .maintain {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000000a0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity:1;
+        z-index: 999;
+    }
+
+    .maintain-detail .overlay{
+        opacity:0 !important
+    }
+
+    .maintain-detail .box-play{
+        -webkit-transform: scale(0) !important; 
+        transform: scale(0) !important;
+    }
+    
+    .maintain .box-play{
+        -webkit-transform: scale(0); 
+        transform: scale(0);
+    }
+
+    .maintain-center{
+        position: relative;
+        top: 50%;
+        left: 50%;
     }
 
     .overlay{
@@ -259,4 +351,26 @@
         overflow: hidden;
         cursor: pointer;
     }
+    
+  </style>
+  <style>
+  .ant-drawer-body{
+    padding: 0 !important;
+  }
+  :where(.css-dev-only-do-not-override-19iuou).ant-drawer .ant-drawer-close{
+    color: rgb(255 255 255) !important
+  }
+  :where(.css-dev-only-do-not-override-19iuou).ant-drawer .ant-drawer-body {
+    overflow: hidden !important;
+    }
+
+    :where(.css-dev-only-do-not-override-19iuou).ant-drawer .ant-drawer-content {
+        overflow: hidden !important;
+    }
+  .ant-drawer-title{
+    color: rgb(255 255 255) !important
+  }
+  .ant-drawer-header{
+    background-color: rgba(0, 0, 0, 1)
+  }
   </style>

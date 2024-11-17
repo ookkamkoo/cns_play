@@ -30,7 +30,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 logout();
                 // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
               }else{
-                  return navigateTo('/list-game/PG%20Soft');
+                  // return navigateTo('/information/withdraw');
               }
           }
       }

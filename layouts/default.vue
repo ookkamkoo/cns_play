@@ -1,4 +1,7 @@
 <template>
+    <a-modal v-model:open="member.notify" :footer="null" :class="{'login-small':!screens.md}">
+      <OtherNotify/>
+    </a-modal>
     <a-modal v-model:open="openLogin" :footer="null" :class="{'login-small':!screens.md}">
       <FormLogin :closeModal="closeModalLogin"/>
     </a-modal>
@@ -9,12 +12,12 @@
       <a-layout-header class="header" :class="{'small-header':!screens.md}">
         <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
       </a-layout-header>
-      <a-layout class="main">
+      <a-layout class="main" :style="mainBackgroundStyle">
         <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
         <a-layout-sider class="sidebar" v-if="screens.md">
             <LayoutsSidebar/>
         </a-layout-sider>
-        <a-layout style="padding: 0 0px 10px" class="main-detail">
+        <a-layout class="main-detail">
             <LayoutsNew/>
             <slot/>
             <LayoutsFooter/>
@@ -24,13 +27,88 @@
   </template>
   <script lang="ts" setup>
     import { Grid } from 'ant-design-vue';
+    import type { NotificationPlacement } from 'ant-design-vue';
+    import { memberStore } from '~/store/index';
+    import { getSettingServices } from "~/services/settingServices";
+
     const openLogin = ref<boolean>(false);
     const openRegister = ref<boolean>(false);
     const useBreakpoint = Grid.useBreakpoint;
     const open = ref<boolean>(false);
-    
-
     const screens = useBreakpoint();
+    const mainBackgroundStyle = ref({});
+    const config = useRuntimeConfig()
+
+    const { $socket } = useNuxtApp();
+    const socket = $socket as WebSocket;
+    const member = memberStore();
+
+    const messageContent = ref('');
+
+    const openNotification = (placement: NotificationPlacement, amount: string) => {
+      notification.success({
+        message: `เเจ้งเตือนรายการ ฝาก - ถอน`,
+        description: `ฝากถอนสำเร็จ ยอดเงินปัจจุบันของคุณ คือ ${amount}`,
+        placement,
+      });
+    };
+
+
+    onMounted(() => {
+      getSetting();
+      // ตรวจสอบการเชื่อมต่อ WebSocket และจัดการข้อความ
+      if (socket) {
+        socket.onmessage = (event: MessageEvent) => {
+          try {
+            // แปลงข้อความ JSON ที่ได้รับเป็น object
+            const data = JSON.parse(event.data);
+            
+            // เก็บข้อมูลข้อความใน messageContent
+            messageContent.value = data;
+            
+            console.log("ข้อความจากเซิร์ฟเวอร์:", data);
+            console.log(data.status); // เข้าถึง status จาก object ที่แปลงแล้ว
+            
+            if (data.status === "success") {
+              // เรียก openNotification และแปลง data.data เป็นสตริงหากจำเป็น
+              openNotification('bottomRight', String(data.data));
+              member.memberDetail.balance = data.data
+            }
+          } catch (error) {
+            console.error("Error parsing WebSocket message:", error);
+          }
+        };
+      } else {
+        console.warn("ไม่สามารถเชื่อมต่อ WebSocket ได้");
+      }
+    });
+
+
+    const getSetting = async () => {
+        const data = await getSettingServices();
+        if (data.status === 'success') {
+          member.settingDefault = data.data.setting;
+          member.menuBar = data.data.menu;
+          member.news = data.data.news;
+          // member.menuBar = data.data.menu;
+          // if(!member.login){
+          //   member.setMemberNotify(true);
+          // }
+          console.log("bgImageSw:",member.settingDefault.bgImageSw);
+          if (data.data.setting.bgImageSw == "true") {
+            member.settingDefault.bgImageSw = "true"
+            var url = config.public.apiServer +'/' + member.settingDefault.bgImage
+            console.log(url);
+            
+            mainBackgroundStyle.value = { backgroundImage: `url(${url})` };
+          } else {
+            member.settingDefault.bgImageSw = "false"
+            mainBackgroundStyle.value = { backgroundColor: member.settingDefault.bgColor || 'transparent' };
+          }
+        } else {
+            console.error("Failed to fetch setting.");
+        }
+    };
 
     const showDrawer = () => {
       console.log("open");
@@ -43,6 +121,7 @@
     };
 
     const showModalLogin = () => {
+      console.log("sssssssssssssss");
       openLogin.value = true;
     };
 
@@ -105,13 +184,14 @@
     width: 100%;
     z-index: 999;
   }
+
   .main{
-    background: url(https://image.1million.social/image/imageList/1707499900431.jpg);
     background-repeat: repeat;
     background-attachment: fixed;
     background-position: center;
     width: 100%;
   }
+
   .ant-modal-content{
     background: linear-gradient(#4B0082FF, #663399FF);
     padding: 5px;
@@ -131,4 +211,5 @@
     margin: 0 auto;
     max-width:100vw !important;
   }
+  
   </style>

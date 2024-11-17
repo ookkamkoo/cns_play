@@ -1,4 +1,8 @@
 <template>
+    <a-row justify="center">
+      <h2>ประกาศ</h2>
+    </a-row>
+  
     <a-carousel arrows autoplay>
       <!-- ปุ่มสำหรับเปลี่ยนภาพ -->
       <template #prevArrow>
@@ -13,18 +17,54 @@
       </template>
   
       <!-- วนซ้ำเพื่อแสดงรูปภาพใน Carousel -->
-      <div v-for="(item, index) in member.news" :key="index">
+      <div v-for="(item, index) in dataShow" :key="index">
+        
         <a-image :preview="false" :src="config.public.apiServer + '/' + item.image" />
       </div>
     </a-carousel>
+  
+    <a-row justify="center" class="m-2">
+      <a-button type="primary" ghost @click="closeNotify">ปิดหน้าต่าง</a-button>
+    </a-row>
   </template>
+  
   <script lang="ts" setup>
+  import { ref, onMounted } from 'vue';
   import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons-vue';
   import { memberStore } from '~/store/index';
+  import { getNotifyServices } from '~/services/notifyServices';
+  
   const member = memberStore();
+  const dataShow = ref<any[]>([]);
   const config = useRuntimeConfig()
+  
+  // ดึงข้อมูลการแจ้งเตือน
+  const getNotify = async () => {
+    try {
+      const response = await getNotifyServices();
+      if (response.status === 'success') {
+        dataShow.value = response.data.data;
+        console.log('Fetched notification data:', response.data.data);
+      } else {
+        console.error('Failed to fetch transaction data');
+      }
+    } catch (error) {
+      console.error('Error fetching transaction data:', error);
+    }
+  };
+  
+  // ปิดการแจ้งเตือน
+  const closeNotify = () => {
+    member.setMemberNotify(false);
+  };
+  
+  onMounted(() => {
+    getNotify();
+  });
   </script>
+  
   <style scoped>
+  /* ปรับขนาดของ Carousel ให้แสดงภาพเต็ม */
   :deep(.slick-slide) {
     text-align: center;
     height: auto;
@@ -61,3 +101,4 @@
     opacity: 1;
   }
   </style>
+  

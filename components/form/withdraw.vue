@@ -56,11 +56,23 @@
             <a-col :span="24" :sm="12" class="input-withdraw my-1">
                 <a-input-group compact>
                     <label for="">จำนวนเงินที่ถอนได้</label>
-                    <a-input-number v-model:value="formState.amount" style="width: calc(100% - 75px);font-weight: 600;" class="form-withdraw" :step="0.01" :max="formState.maxAmount"/>
-                    <a-button type="primary" @click="allWithdrow()" class="bt-withdraw">ทั้งหมด</a-button>
-                    <p class="input-withdraw-detail">ถอนขั้นต่ำ 0 - 100000 บาท</p>
+                    <a-input-number v-model:value="formState.amount" @change="amountChange()" style="width: calc(100% - 75px);font-weight: 600;" class="form-withdraw" :step="0.01" :max="formState.maxAmount" :readonly="disabled"/>
+                    <a-button type="primary" @click="allWithdraw()"  class="bt-withdraw">ทั้งหมด</a-button>
+                    <p class="input-withdraw-detail">ถอนขั้นต่ำ {{member.settingDefault.withdrawMin}} - {{member.settingDefault.withdrawMax}} บาท</p>
                 </a-input-group>
             </a-col>
+            <a-row style="width: 100%;" v-if="member.settingDefault.withdrawFee == 'true'">
+              <a-col :span="24" :sm="12" class="input-withdraw my-1">
+                  <label for="">ค่าธรรมเนียม </label>
+                  <div class="max-amount">{{formState.amount_vat}}</div>
+                  <p class="input-withdraw-detail">ธรรมเนียม {{formState.amount_vat_use}} <span v-if="member.settingDefault.typeWithdrawFeeAmountOrPerCent ==  '1'">(เปอร์เช็น)</span><span v-if="member.settingDefault.typeWithdrawFeeAmountOrPerCent ==  '2'">(จำนวนเงิน)</span> ไม่เกิน {{formState.amount_vat_max}} บาท</p>
+              </a-col>
+              <a-col :span="24" :sm="12" class="input-withdraw my-1">
+                  <label for="">จำนวนเงินที่ได้</label>
+                  <div class="max-amount">{{formState.amount_cal}}</div>
+                  <p class="input-withdraw-detail">จำนวนเงินที่ได้</p>
+              </a-col>
+            </a-row>
             <a-col :span="24" class="center">
               <a-button type="primary" ghost :style="{ width: '80px', margin: '5px' }" @click="addAmount(10)">10</a-button>
               <a-button type="primary" ghost :style="{ width: '80px', margin: '5px' }" @click="addAmount(50)">50</a-button>
@@ -87,12 +99,13 @@ import { withdrawServices } from "~/services/withdraw";
 import { Alert } from "../alert/alertComponent";
 const isClicked1 = ref(true);
 const isClicked2 = ref(false);
+const disabled = ref(false);
 
 const member = memberStore();
 
-const props = defineProps({
-  closeModal: Function
-});
+const props = defineProps<{
+        closeModal: () => void
+    }>();
 
 const toggleClass = (colNum: number) => {
   if (colNum === 1) {
@@ -108,26 +121,97 @@ const toggleClass = (colNum: number) => {
   }
 };
 
-const allWithdrow = () =>{
+const amountChange = () => {
+  console.log(member.settingDefault.withdrawDetail);
+  
+  const withdrawDetail = typeof member.settingDefault.withdrawDetail === 'string'
+      ? JSON.parse(member.settingDefault.withdrawDetail)
+      : member.settingDefault.withdrawDetail;
+    console.log(withdrawDetail.fee);
+  if(member.settingDefault.typeWithdrawFee == '1'){
+    if(member.settingDefault.typeWithdrawFeeAmountOrPerCent == '1'){
+      formState.amount_vat = (Number(formState.amount) * (Number(withdrawDetail.fee) / 100))
+      if(formState.amount_vat > withdrawDetail.amountMaxFee){
+        formState.amount_vat = withdrawDetail.amountMaxFee
+      }
+      formState.amount_vat_max = withdrawDetail.amountMaxFee
+      formState.amount_cal = Number(formState.amount) - formState.amount_vat;
+      formState.amount_vat_use = withdrawDetail.fee;
+    }else{
+      formState.amount_vat = Number(withdrawDetail.fee);
+      if(formState.amount_vat > withdrawDetail.amountMaxFee){
+        formState.amount_vat = withdrawDetail.amountMaxFee
+      }
+      formState.amount_vat_max = withdrawDetail.amountMaxFee
+      formState.amount_cal = Number(formState.amount) - Number(formState.amount_vat);
+      formState.amount_vat_use = withdrawDetail.fee;
+    }
+  }else{
+    withdrawDetail.sort((a:any, b:any) => b.amount - a.amount);
+    console.log(withdrawDetail);
+    
+    if(member.settingDefault.typeWithdrawFeeAmountOrPerCent == '1'){
+      withdrawDetail.forEach((element:any) => {
+        if(formState.amount > element.amount){
+          console.log("aaaaaaaaa");
+          console.log(element);
+          formState.amount_vat = (Number(formState.amount) * (Number(element.fee) / 100))
+          console.log(formState.amount_vat);
+          
+          if(formState.amount_vat > element.amountMaxFee){
+            formState.amount_vat = element.amountMaxFee
+            console.log(formState.amount_vat);
+          }
+          formState.amount_vat_max = element.amountMaxFee
+          formState.amount_cal = Number(formState.amount) - Number(element.fee);
+          formState.amount_vat_use = withdrawDetail.fee;
+        }
+      });
+    }else{
+      withdrawDetail.forEach((element:any) => {
+        if(formState.amount > element.amount){
+          formState.amount_vat = Number(element.fee);
+          if(formState.amount_vat > element.amountMaxFee){
+            formState.amount_vat = element.amountMaxFee
+          }
+          formState.amount_vat_max = element.amountMaxFee
+          formState.amount_cal = Number(formState.amount) - Number(element.fee);
+          formState.amount_vat_use = withdrawDetail.fee;
+        }
+      });
+    }
+  }
+}
+
+const allWithdraw = () =>{
     formState.amount = member.memberDetail.balance.toFixed(2)
 }
 
 const formState = reactive<any>({
     maxAmount: member.memberDetail.balance.toFixed(2),
     amount: 0,
+    amount_cal: 0,
+    amount_vat: 0,
+    amount_vat_use: 0,
+    amount_vat_max: 0,
     withdraw_with:'bank'
   });
 
 const addAmount = (amount:number) =>{
-  if(amount == 0){
-    formState.amount = 0
+  if(member.settingDefault.withdrawAll == "true"){
+    Alert("warning","ระบบบังคับถอนเงินทั้งหมด.")
   }else{
-    formState.amount += amount
-  }
+    if(amount == 0){
+      formState.amount = 0
+    }else{
+      formState.amount += amount
+    }
 
-  if(formState.amount > member.memberDetail.balance){
-    formState.amount = member.memberDetail.balance
+    if(formState.amount > member.memberDetail.balance){
+      formState.amount = member.memberDetail.balance
+    }
   }
+  amountChange()
 }
 
 const confirmWithdraw = () =>{
@@ -138,10 +222,18 @@ const confirmWithdraw = () =>{
   }
 }
 
+onMounted( () => {
+  if(member.settingDefault.withdrawAll == "true"){
+    disabled.value = true
+    allWithdraw();
+  }
+  amountChange()
+});
 const withdraw = async() => {
   var data = await withdrawServices(formState.amount,formState.withdraw_with);
   if(data.status == 'success'){
       Alert("success","ทำรายการถอนเงินเรียบร้อย")
+      member.memberDetail.balance = data.data
       if (props.closeModal) {
         props.closeModal();
       }

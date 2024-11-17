@@ -13,6 +13,8 @@
     import { Alert } from '~/components/alert/alertComponent';
     import { getToken } from '~/auth/authToken'
     import { checkToken } from '~/services/authService';
+    import { memberStore } from '~/store/index';
+    const member = memberStore();
     const formState = reactive<any>({
         Truewallet:'',
     });
@@ -36,6 +38,8 @@
     const addTrueWallet = async() => {
         var data = await addTruewalletService(formState.Truewallet);
         if(data.status == 'success'){
+            member.memberDetail.bank_true_id = 16
+            // member.memberDetail.bank_true_no = data.data
             Alert("success","Update truewallet success.")
             props.closeModal()
         }else{

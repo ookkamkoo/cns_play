@@ -6,7 +6,7 @@
                 <a-image
                 :width="120"
                 :preview="false"
-                src="https://image.1million.social/image/imageList/1707495347305.png"
+                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
             />
             </NuxtLink>
         </div>
@@ -33,8 +33,8 @@
                             <div class="header-detail-name">
                                 <span class="header-detail-icon mx-1"><WalletOutlined />  </span>
                                 <span class="text-white"> <span class="textCreditMainBalance"> {{member.memberDetail.balance.toFixed(2)}}</span></span>
-                                <span class="refresh-amount">
-                                    <SyncOutlined :spin="refreshAmount"/>
+                                <span class="refresh-amount" @click="refreshAmount()">
+                                    <SyncOutlined :spin="refresh_amount"/>
                                 </span>
                             </div>
                         </div>
@@ -66,13 +66,13 @@
                                 <div class="mobile-header-detail-name header-detail-name-border">
                                     <span class="text-white "> <span class="textCreditMainBalance"> {{member.memberDetail.balance.toFixed(2)}}</span></span>
                                     <span class="refresh-amount">
-                                        <SyncOutlined :spin="refreshAmount"/>
+                                        <SyncOutlined :spin="refresh_amount"/>
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <div class="mobile-header-action mx-1">
-                            <a-dropdown :placement="'bottom'">
+                            <a-dropdown :placement="'bottom'" :trigger="['click']">
                             <template #overlay>
                                 <a-menu @click="handleMenuClick">
                                     <NuxtLink to="/information/deposit" exact class="link-sidebar">
@@ -100,12 +100,14 @@
 <script lang="ts" setup>
     import { Grid } from 'ant-design-vue';
     import { logout } from '~/auth/authToken';
+    import { refreshAmountServices } from '~/services/memberServices';
     import type { MenuProps } from 'ant-design-vue';
     import { memberStore } from '~/store/index';
     type SizeType = 'small' | 'middle' | 'large';
     
     const buttonSize = ref<SizeType>('large');
     const member = memberStore();
+    const config = useRuntimeConfig()
     // console.log(member.memberDetail.username);
     const checkScreenSize = () => {
       buttonSize.value = window.innerWidth >= 768 ? 'large' : 'middle';
@@ -114,7 +116,7 @@
     // const headerLogin = ref(true)
     // const router = useRouter();
 
-    const refreshAmount = ref(false);
+    const refresh_amount = ref(false);
     const useBreakpoint = Grid.useBreakpoint;
     const screens = useBreakpoint();
 
@@ -139,11 +141,24 @@
     //         headerLogin.value = true
     //     }
     // }
-    
+    const refreshAmount = async() => {
+        refresh_amount.value = true
+        try {
+            const data = await refreshAmountServices();
+            if (data.status === 'success') {
+                member.memberDetail.balance = data.data
+            }else{
+                console.error('Error fetching user roles:');
+            }
+        } catch (error) {
+            console.error('Error fetching user roles:', error);
+        }
+        refresh_amount.value = false
+    }
     const props = defineProps<{
-        showDrawer:Function,
-        showModalLogin:Function,
-        showModalRegister:Function,
+        showDrawer: () => void;
+        showModalLogin: () => void;
+        showModalRegister: () => void;
     }>();
 
     const LogoutSystem = () => {

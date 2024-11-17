@@ -64,3 +64,70 @@ export interface Marketing {
     created_by: number;
     created_at: string;
   }
+
+  export interface SettingDF {
+    bgColor: string;
+    bgImage: string;
+    bgImageSw: string;
+    checkDuplicateName: string;
+    clearWithdrawMin: string;
+    depositFee: string;
+    depositMax: string;
+    depositMin: string;
+    depositStatus: string;
+    depostDetail: string;
+    description: string;
+    getName: string;
+    imageLogoWebsite: string;
+    imageWebsite: string;
+    keyword: string;
+    memberCreateDeposit: string;
+    product: string;
+    registerStatus: string;
+    registerTruewallet: string;
+    serverStatus: string;
+    title: string;
+    tranferAuto: string;
+    turnWithdrawNormal: string;
+    type2factor: string;
+    typeDepositFee: string;
+    typeDepositFeeAmountOrPerCent: string;
+    typeWithdrawFee: string;
+    typeWithdrawFeeAmountOrPerCent: string;
+    websiteLine: string;
+    websiteUrl: string;
+    withdrawAll: string;
+    withdrawAround: string;
+    withdrawAuto: string;
+    withdrawDetail: string;
+    withdrawFee: string;
+    withdrawMax: string;
+    withdrawMaxDay: string;
+    withdrawMin: string;
+    withdrawStatus: string;
+  }
+
+  export interface GameMenuItem {
+    id: number;
+    name: string;
+    name_th: string;
+    icon: string;
+    ref: string;
+    image: string;
+    priority: number;
+    is_active: boolean;
+  }
+
+  export interface News {
+    id: number;
+    name: string;
+    priority: number;
+    image: string;
+    is_active: boolean;
+    created_by: number;
+    created_by_name: string;
+    created_at: string;
+    updated_by: number;
+    updated_by_name: string;
+    updated_at: string;
+  }

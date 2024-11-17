@@ -12,7 +12,7 @@
                         <div class="menu-list-item-detail">
                         <a-flex :align="'center'">
                             <div class="logo-menu-sidebar">
-                                <a-image :width="60" :preview="false" :src="item.image" />
+                                <a-image :width="60" :preview="false" :src="config.public.apiServer + '/' +item.image" />
                             </div>
                             <div class="detail-menu-sidebar">
                                 <span>{{ item.name }}</span>
@@ -30,6 +30,7 @@
     import { ref } from 'vue';
     import { useRoute } from 'vue-router';
     import { sidebarItems } from '~/data/data';
+    const config = useRuntimeConfig()
     
     const route = useRoute();
     

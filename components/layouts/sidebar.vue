@@ -4,18 +4,36 @@
             <ul class="menu-list">
                 <li
                         class="menu-list-item"
-                        v-for="item in sidebarItems"
-                        :key="item.path"
-                        :class="{ 'menu-list-item-active': item.path === $route.path }"
+                        key="/"
+                        :class="{ 'menu-list-item-active':   $route.path === '/'}"
                     >
-                    <NuxtLink :to="item.path" exact class="link-sidebar">
+                    <NuxtLink to="/" exact class="link-sidebar">
                         <div class="menu-list-item-detail">
                         <a-flex :align="'center'" :vertical="!screens.md">
                             <a-col class="logo-menu-sidebar" :class="{'small-logo-menu-sidebar-img':!screens.md}">
-                                <a-image :width="60" :preview="false" :src="item.image" :class="{'logo-menu-sidebar-img':!screens.md}"/>
+                                <a-image :width="60" :preview="false" src="/img/home.png" :class="{'logo-menu-sidebar-img':!screens.md}"/>
                             </a-col>
                             <div class="detail-menu-sidebar">
-                                <span>{{ item.name }}</span>
+                                <span>หน้าเเรก</span>
+                            </div>
+                        </a-flex>
+                        </div>
+                    </NuxtLink>
+                </li>
+                <li
+                        class="menu-list-item"
+                        v-for="item in member.menuBar"
+                        :key="item.name"
+                        :class="{ 'menu-list-item-active': item.name === $route.path }"
+                    >
+                    <NuxtLink :to="'/lobby/'+item.name" exact class="link-sidebar">
+                        <div class="menu-list-item-detail">
+                        <a-flex :align="'center'" :vertical="!screens.md">
+                            <a-col class="logo-menu-sidebar" :class="{'small-logo-menu-sidebar-img':!screens.md}">
+                                <a-image :width="60" :preview="false" :src="item.icon" :class="{'logo-menu-sidebar-img':!screens.md}"/>
+                            </a-col>
+                            <div class="detail-menu-sidebar">
+                                <span>{{ item.name_th }}</span>
                             </div>
                         </a-flex>
                         </div>
@@ -31,6 +49,10 @@
     import { useRoute } from 'vue-router';
     import { sidebarItems } from '~/data/data';
     import { Grid } from 'ant-design-vue';
+    import { memberStore } from '~/store/index';
+
+    const member = memberStore();
+    
     const useBreakpoint = Grid.useBreakpoint;
     const screens = useBreakpoint();
     

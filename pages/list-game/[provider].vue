@@ -1,38 +1,46 @@
 <template>
-    <a-row>
-        <a-flex>
+    <a-drawer width="100%"  height="100vh"  :title="nameGame" :placement="'right'" :open="openGame" @close="onClose">
+      <template #extra>
+        <!-- <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button> -->
+        <a-button style="margin-right: 8px" @click="refreshUrl()">รีเฟรซ <RedoOutlined /></a-button>
+      </template>
+      <iframe ref="gameIframe" :src="urlGame" width="100%" height="100%" style="border: none;"></iframe>
+    </a-drawer>
+    <a-row style="width: 100%;">
+        <a-flex style="width: 100%;">
             <LayoutsSidebar v-if="!screens.md"/>
-            <a-col :class="{'small-main':!screens.md}">
-              <span class="m-2 page-back"  @click="goBack">
+            <a-col :class="{'small-main':!screens.md}" style="width: 100%;">
+              <!-- <span class="m-2 page-back"  @click="goBack">
                 << ย้อนกลับ
-              </span>
+              </span> -->
               <h2 class="m-2">
                   รายการเกมส์ค่าย {{provider}}
               </h2>
               <div class="game-recommend my-4">
                   <a-row>
                       <a-col :span="12" :md="8" :lg="4" :xl="4" class="game-recommend-item" v-for="game,index in gameRecommend">
-                        <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.code,provider,game.maintain)" v-if="game.isActive">
+                        <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.launchCode,provider,game.maintain,game.gameName)" v-if="game.active">
                             <a-image
                                 width="100%"
                                 :preview="false"
-                                :src="game.imageUrl"
+                                :src="game.bannerUrl"
+                                loading="lazy"
                             />
-                            <div class="maintain" v-if="game.maintain">
+                            <div class="maintain" v-if="(game.maintain && provider=='PG Soft') || (!game.active && provider != 'PG Soft')">
                                 <div calss="maintain-center">
                                     ปิดปรับปรุง
                                 </div>
                             </div>
                             <div class="overlay"></div>
                             <span class="name">
-                                <span>{{game.name}}</span>
+                                <span>{{game.gameName}}</span>
                             </span>
                             <div class="provider-name">PGSOFT</div>
                             <div class="box-play">
                                 <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
                             </div>
-                            <div class="hot" v-if="game.hot==true">
-                                <img src="https://play.1million.social/image/fire.gif">
+                            <div class="hot" v-if="game.popular==true">
+                                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
                             </div>
                         </div>
                       </a-col>
@@ -47,31 +55,50 @@
   import { Grid } from 'ant-design-vue';
   import { ref, watch } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-import { Alert } from '~/components/alert/alertComponent';
+  import { Alert } from '~/components/alert/alertComponent';
   import { getGameList,launchGameService } from '~/services/gameListServices';
 
   const useBreakpoint = Grid.useBreakpoint;
   const screens = useBreakpoint();
 
-  interface GameList {
-    id: string;
-    imageUrl: string;
-    isActive: boolean;
-    loby: boolean;
-    name: string;
-    priority: number;
-    productCode: string;
-    provider: string;
-    type: string;
-    code: string;
-    hot: boolean;
+  interface Game {
+    active: boolean;
     maintain: boolean;
-}
+    bannerUrl: string;
+    categoryId: string;
+    createdDate: string | null;  // Assuming `createdDate` can be null
+    describe: string;
+    gameCode: string;
+    gameId: number;
+    gameName: string;
+    launchCode: string;
+    new: boolean;
+    popular: boolean;
+    productId: number;
+    updatedDate: string;
+    vote: boolean;
+  }
 
   const route = useRoute();
   const router = useRouter();
   const provider = ref<string>("");
-  const gameRecommend = ref<GameList[]>([])
+  const gameRecommend = ref<Game[]>([])
+  const openGame = ref<boolean>(false);
+  const urlGame = ref<string>("");
+  const nameGame = ref<string>("");
+
+  const onClose = () => {
+      console.log("close");
+      urlGame.value = "";
+      openGame.value = false;
+    };
+
+  const refreshUrl = () => {
+      const iframe = document.querySelector("iframe");
+      if (iframe) {
+          iframe.src = iframe.src;
+      }
+  };
 
 
   const updateCategory = async() => {
@@ -86,7 +113,9 @@ import { Alert } from '~/components/alert/alertComponent';
       console.log(data);
       
       if(data.status == "success"){
-        gameRecommend.value = data.data
+        console.log(data.data.data);
+        
+        gameRecommend.value = data.data.data
       }
   };
 
@@ -96,12 +125,19 @@ import { Alert } from '~/components/alert/alertComponent';
       router.go(-1);
   };
 
-  const launchGame = async (code: string, provider: string, maintain: boolean) => {
+  function getDeviceType() {
+    return window.innerWidth < 768 ? "mobile" : "pc";
+  }
+
+  const launchGame = async (code: string, provider: string, maintain: boolean,name: string) => {
   if (!maintain) { // Add parentheses around the condition
-    const data = await launchGameService(code, provider);
+    const deviceType = getDeviceType();
+    const data = await launchGameService(code, provider,deviceType);1
     console.log(data);
     if (data.status === "success") {
-      window.open(data.data.url, "_blank");
+      urlGame.value = data.data.url
+      openGame.value = true
+      nameGame.value = name
     }
   }
 }

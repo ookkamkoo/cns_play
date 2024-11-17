@@ -15,11 +15,11 @@ export interface Promotion {
     low_deposit: number;
     limit_round: number;
     type_deposit: number;
-    type_max_withDrow: number;
+    type_max_withDraw: number;
     condition_data: {
       bonus: number;
       amount: number;
-      amountMaxWithDrow: number;
+      amountMaxWithDraw: number;
     };
     turn: {
       m2: number;
@@ -42,10 +42,15 @@ export interface Promotion {
     updated_by: number;
     updated_at: string;
   }
+
+  
   
   export interface GetPromotionResponse {
     status: string;
-    data: Promotion[];
+    data: {
+      promotions: Promotion[];           // Array of all promotions
+      promotionsMember: Promotion | null; // Single promotion for the member, or null if not found
+    };
     message: string;
     error?: string;
     time: string;
@@ -66,4 +71,20 @@ export async function getPromotionServices(): Promise<GetPromotionResponse> {
     } catch (error: any) {
         return error.response.data;
     }
+}
+
+export async function confirmPromotionServices(id:number): Promise<GetPromotionResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.apiServer;
+  
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+  
+  try {
+      const response = await axios.post<GetPromotionResponse>(`${url}/api/confirmPromotion/`+id,{}, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
 }
