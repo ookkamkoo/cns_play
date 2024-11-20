@@ -235,10 +235,10 @@
     </a-flex>
     <h3>โปรโมชั่นทัั้งหมด</h3>
     <a-flex>
-        <a-col :span="24" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
+        <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
-                    :src="config.public.apiServer + '/' + v.image"
+                    :src="config.public.apiServer + '/' "
                     style="border-radius: 5px;"
                     :preview="false"
                 />
@@ -252,9 +252,9 @@
         </a-col>
 
         <a-col :span="24" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
-            <div class="image-container p-1" @click="promotionDetail(v)">
+            <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
-                    :src="v.image"
+                    :src="config.public.apiServer + '/' + v.image"
                     style="border-radius: 5px;"
                     :preview="false"
                 />
@@ -266,6 +266,7 @@
                 <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(v.id,v.name)">รับโปรโมชั่น</a-button>
             </a-row>
         </a-col>
+
     </a-flex>
 </template>
 
