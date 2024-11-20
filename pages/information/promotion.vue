@@ -238,7 +238,7 @@
         <a-col :span="24" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
-                    :src="v.image"
+                    :src="config.public.apiServer + '/' + v.image"
                     style="border-radius: 5px;"
                     :preview="false"
                 />
@@ -277,6 +277,7 @@
     import { createVNode } from 'vue';
     import dayjs from 'dayjs';
     import { Alert } from '~/components/alert/alertComponent';
+    const config = useRuntimeConfig()
 
     const noPromotion: Promotion = {
         id: 0,

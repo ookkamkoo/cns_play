@@ -98,8 +98,6 @@
           if (data.data.setting.bgImageSw == "true") {
             member.settingDefault.bgImageSw = "true"
             var url = config.public.apiServer +'/' + member.settingDefault.bgImage
-            console.log(url);
-            
             mainBackgroundStyle.value = { backgroundImage: `url(${url})` };
           } else {
             member.settingDefault.bgImageSw = "false"
