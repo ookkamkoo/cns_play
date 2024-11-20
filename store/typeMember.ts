@@ -105,6 +105,14 @@ export interface Marketing {
     withdrawMaxDay: string;
     withdrawMin: string;
     withdrawStatus: string;
+    recommend: string;
+    typeRecommend: string;
+    recommendPercent: string;
+    recommendTurn: string;
+    recommendMin: string;
+    recommendMax: string;
+    typeRecommendDate: string;
+    recommendDate: string;
   }
 
   export interface GameMenuItem {
