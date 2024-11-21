@@ -127,9 +127,11 @@
   margin: 3rem 3rem 3rem 1rem;
   }
   
+  
   .small-main-detail{
     margin: 1rem 1rem;
-    /* width: 100% !important; */
+    width: 100% !important;
+    margin: 5px !important;
     /* width: calc(100% - 400px) !important; */
   }
   .small-header{
