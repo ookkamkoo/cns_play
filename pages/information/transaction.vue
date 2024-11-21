@@ -120,4 +120,9 @@
     margin: 0 2px;
   }
   </style>
+  <style>
+    .ant-table-cell, .ant-table-cell-header {
+        text-align: center !important;
+    }
+  </style>
   
