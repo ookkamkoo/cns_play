@@ -14,7 +14,7 @@
       </a-layout-header>
       <a-layout class="main" :style="mainBackgroundStyle">
         <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
-        <a-layout-sider class="sidebar" v-if="screens.md">
+        <a-layout-sider class="sidebar">
             <LayoutsSidebar/>
         </a-layout-sider>
         <a-layout class="main-detail">
