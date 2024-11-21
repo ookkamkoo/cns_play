@@ -27,8 +27,8 @@
                     />
                     <div v-else> - </div>
                 </template>
-                <template v-if="column.key === 'bank_system_no'">
-                    <div v-if="record.bank_system_no != ''">{{ record.bank_system_no }}</div>
+                <template v-if="column.key === 'bank_no'">
+                    <div v-if="record.bank_no != ''">{{ record.bank_no }}</div>
                     <div v-else> - </div>
                 </template>
                 <template v-if="column.key === 'promotion'">
@@ -72,7 +72,7 @@
         title: `ทั้งหมด ${allRecord.value} รายการ`, 
         children: [
           { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 30 },
-          { title: 'เลขบัญชี', key: 'bank_system_no', width: 30},
+          { title: 'เลขบัญชี', key: 'bank_no', width: 30},
           { title: 'รายการ', key: 'type', width: 30},
           { title: 'โปรโมชั่น', key: 'promotion', width: 30},
           { title: 'เครดิต', key: 'amount', width: 30},
