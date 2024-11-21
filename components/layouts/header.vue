@@ -1,7 +1,7 @@
 <template>
     <a-flex :justify="'space-between'" :align="'center'" class="header-detail">
         <div class="logo">
-            <MenuOutlined class="header-menu-list" v-if="!screens.lg" @click="props.showDrawer"/>
+            <MenuOutlined class="header-menu-list" v-if="!screens.lg && !member.login" @click="props.showDrawer"/>
             <NuxtLink to="/" exact class="link-sidebar">
                 <a-image
                 :width="120"

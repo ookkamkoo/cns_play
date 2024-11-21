@@ -2,7 +2,7 @@
     <a-modal v-model:open="member.notify" :footer="null" :class="{'login-small':!screens.md}">
       <OtherNotify/>
     </a-modal>
-    <a-modal v-model:open="openLogin" :footer="null" :class="{'login-small':!screens.md}">
+    <a-modal v-model:open="member.showLogin" :footer="null" :class="{'login-small':!screens.md}">
       <FormLogin :closeModal="closeModalLogin"/>
     </a-modal>
     <a-modal v-model:open="openRegister" :footer="null" :class="{'login-small':!screens.md}">
@@ -13,10 +13,10 @@
         <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
       </a-layout-header>
       <a-layout class="main" :style="mainBackgroundStyle">
-        <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
+        <LayoutsSidebarMenu :onClose="onClose" :open="open" />
 
         <a-layout-sider class="sidebar" v-if="screens.md">
-            <LayoutsSidebar/>
+            <LayoutsSidebar />
         </a-layout-sider>
         <a-layout class="main-detail">
             <LayoutsNew/>
@@ -37,7 +37,7 @@
     import { memberStore } from '~/store/index';
     import { getSettingServices } from "~/services/settingServices";
 
-    const openLogin = ref<boolean>(false);
+    // const openLogin = ref<boolean>(false);
     const openRegister = ref<boolean>(false);
     const useBreakpoint = Grid.useBreakpoint;
     const open = ref<boolean>(false);
@@ -126,11 +126,12 @@
 
     const showModalLogin = () => {
       console.log("sssssssssssssss");
-      openLogin.value = true;
+      member.setShowLogin(true);
     };
 
     function closeModalLogin() {
-        openLogin.value = false;
+        // openLogin.value = false;
+        member.setShowLogin(false);
     }
 
     const showModalRegister = () => {

@@ -5,6 +5,7 @@ import type { MemberDetail,SettingDF,GameMenuItem,News } from './typeMember';
 export const memberStore = defineStore('member', {
   state: () => ({
     login: true,
+    showLogin: false,
     notify: false,
     memberDetail: {} as MemberDetail,
     settingDefault: {} as SettingDF,
@@ -15,6 +16,10 @@ export const memberStore = defineStore('member', {
     setMemberDetail(data: MemberDetail) {
       console.log('Setting member detail:', data);
       this.memberDetail = data;
+    },
+    setShowLogin(bool: boolean) {
+      console.log('Setting show login:', bool);
+      this.showLogin = bool;
     },
     setMemberLogin(bool: boolean) {
       console.log('Setting login status to:', bool);

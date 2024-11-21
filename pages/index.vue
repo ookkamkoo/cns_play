@@ -115,6 +115,7 @@
   import { getGameRecommend } from '~/services/gameListServices';
   import { memberStore } from '~/store/index';
   import { launchGameService } from '~/services/gameListServices';
+  import { getToken,logout } from '../auth/authToken';
 
     const member = memberStore();
     const config = useRuntimeConfig()
@@ -176,19 +177,25 @@
     }
 
     const launchGame = async (code: string, provider: string, maintain: boolean, name: string) => {
-        if (!maintain) { // Add parentheses around the condition
-            const deviceType = getDeviceType();
-            const data = await launchGameService(code, provider,deviceType);
-            console.log(data);
-            if (data.status === "success") {
-            // window.open(data.data.url, "_blank");
-            console.log(name);
-            
-            urlGame.value = data.data.url
-            openGame.value = true
-            nameGame.value = name
+        let token = getToken();
+        if(token){
+            if (!maintain) { // Add parentheses around the condition
+                const deviceType = getDeviceType();
+                const data = await launchGameService(code, provider,deviceType);
+                console.log(data);
+                if (data.status === "success") {
+                // window.open(data.data.url, "_blank");
+                console.log(name);
+                
+                urlGame.value = data.data.url
+                openGame.value = true
+                nameGame.value = name
+                }
             }
-        }
+        }else {
+              member.setShowLogin(true)
+              return navigateTo('/');
+          }
         }
   </script>
   <style scoped>

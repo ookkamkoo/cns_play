@@ -1,6 +1,8 @@
 // import { Alert } from '../components/alert/alertComponent';
 import { checkToken } from '~/services/authService';
 import { getToken,logout } from '../auth/authToken';
+import { memberStore } from '~/store/index';
+const member = memberStore();
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   let token: string | null = null;
@@ -18,6 +20,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                   return navigateTo('/');
               }
           } else {
+              member.setShowLogin(true)
               return navigateTo('/');
           }
       } else {
@@ -32,6 +35,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
               }else{
                   // return navigateTo('/');
               }
+          }else{
+            // member.setShowLogin(true)
           }
       }
   } catch (error) {
