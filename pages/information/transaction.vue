@@ -71,7 +71,9 @@
         title: `ทั้งหมด ${allRecord.value} รายการ`, 
         children: [
           { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 30 },
+          { title: 'เลขบัญชี', key: 'bank_system_no', width: 30},
           { title: 'รายการ', key: 'type', width: 30},
+          { title: 'โปรโมชั่น', key: 'promotion', width: 30},
           { title: 'เครดิต', key: 'amount', width: 30},
           { title: 'สถานะ', key: 'status', width: 30 },
           { title: 'วันที่', key: 'created_at', width: 40 },
