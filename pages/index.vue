@@ -7,105 +7,107 @@
       </template>
       <iframe ref="gameIframe" :src="urlGame" width="100%" height="100%" style="border: none;"></iframe>
     </a-drawer>
-    <a-row>
-        <a-flex>
-            <!-- <LayoutsSidebar v-if="!screens.md"/> -->
-            <a-col :class="{'small-main':!screens.md}">
-                <h2 class="mx-1">
-                    เกมยอดนิยม
-                </h2>
-                <div class="game-recommend my-4">
-                    <a-row>
-                        <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-for="game in gameRecommend">
-                            
-                            <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active">
-                                <a-image
-                                    width="100%"
-                                    :preview="false"
-                                    :src="game.image"
-                                    loading="lazy"
-                                />
-                                <div class="overlay"></div>
-                                <span class="name">
-                                    <span>{{game.game_code}}</span>
-                                </span>
-                                <div class="provider-name">PGSOFT</div>
-                                <div class="box-play">
-                                    <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
-                                </div>
-                                <div class="hot">
-                                    <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
-                                </div>
-                            </div>
-                        </a-col>
-                    </a-row>
-                </div>
-            </a-col>
-        </a-flex>
-    </a-row>
-    <a-row :alight="'center'">
-        <div class="elementor-background-overlay">
-            <a-row justify="center">
-                <a-col :span="16" >
-                    <a-col :span="24">
-                        <h2>
-                            {{member.settingDefault.title}} เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ
-                        </h2>
-                        <p>
-                            โดยผู้เล่นสามารถสนุกกับเกมของเราได้ด้วยเงินเดิมพันขั้นต่ำเพียง 10 บาทเท่านั้น และสามารถทำการฝาก-ถอนได้ตลอด 24 ชั่วโมง ด้วยระบบออโต้ ทั้งสะดวก รวดเร็วทันใจเป็นอย่างมากเหมาะสำหรับผู้ที่ชื่นชอบการเดิมพันในรูปแบบของเกมการพนันออนไลน์อันดับ 1 ในปี 2023
-                        </p>
-                        <h2>
-                            {{member.settingDefault.title}} บริการประทับใจ ก็ไม่เป็นสองรองใคร ใส่ใจทุกคำตอบ ตลอด 24 ชั่วโมง 7 วันต่อสัปดาห์ไม่มีหยุด
-                        </h2>
-                        <div class="center my-3">
-                            <a-image
-                                :width="screens.md ? '400px' : '100%'"
-                                :preview="false"
-                                :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
-                            />
-                        </div>
-                        <p>
-                            เพราะผู้เล่นทุกท่าน คือ คนสำคัญของเรา และเรายังมีทีมลูกค้าสัมพันธ์ที่คอยให้ความช่วยเหลือ ตอบทุกคำถาม ให้บริการทุกเรื่องที่คุณสงสัยตลอด 24 ชั่วโมง เพื่อให้คนสำคัญของเราไม่ต้องกังวลกับปัญหาที่พบตั้งแต่ต้นจนจบ นอกจากนี้ เรายังมีเว็บคาสิโน และสล็อตพันธมิตรชั้นนำที่พร้อมมาเสิร์ฟความหลากหลายของเกม และความสนุกสนาน ให้คุณได้เพลิดเพลิน เช่น SA Gaming, WM Casino, Dream Gaming, Pretty Gaming, ALLBET, Joker, PG Slot และอื่นๆ อีกมากมายจนผู้เล่นจะติดใจอย่างแน่นอน
-                        </p>
-                        <div class="center my-3">
-                            <a-image
-                                :width="screens.md ? '400px' : '100%'"
-                                :preview="false"
-                                src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/cover-games-bg-min-1024x576.png"
-                            />
-                        </div>
-                    </a-col>
-                </a-col>
-            </a-row>
-        </div>
-        <div class="elementor-background-overlay elementor-background-overlay-line-top">
-            <a-row justify="center">
-                <a-col :span="16">
-                    <a-col :span="24">
-                        <a-row justify="space-around" align="middle" class="">
-                            <a-col :span="24" :md="12"  class="my-3">
-                                <a-image
-                                    :width="screens.md ? '400px' : '100%'"
-                                    :preview="false"
-                                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/gg1-min.png"
-                                />
-                            </a-col>
-                            <a-col :span="24" :md="12">
-                                <div class="center">
-                                    <h2>
-                                        สนุก และ คว้าชัยชนะได้ทุกที่ทุกเวลา
-                                    </h2>
-                                    <p>
-                                        ให้บริการความสนุกไม่รู้จบ 24 ชม. ไปกับดีลเลอร์ “DEALER” สาวสวย สุดเซ็กซี่ คอยแจกไพ่ ให้คุณได้ลุ้นทุกเกมส์เดิมพัน สบายตา สบายใจ ด้วย สาวๆ น่ารัก สุดเซ็กซี่ มาใส่บิกินี่ แต่ละสีแต่ละวันสีสด มาแจกไพ่ ท่านจะได้รับประสบการณ์ใหม่ในการเดิมพัน
-                                    </p>
+    <a-col>
+        <a-row>
+            <a-flex>
+                <LayoutsSidebar v-if="!screens.md"/>
+                <a-col :class="{'small-main':!screens.md}">
+                    <h2 class="mx-1">
+                        เกมยอดนิยม
+                    </h2>
+                    <div class="game-recommend my-4">
+                        <a-row>
+                            <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-for="game in gameRecommend">
+                                
+                                <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active">
+                                    <a-image
+                                        width="100%"
+                                        :preview="false"
+                                        :src="game.image"
+                                        loading="lazy"
+                                    />
+                                    <div class="overlay"></div>
+                                    <span class="name">
+                                        <span>{{game.game_code}}</span>
+                                    </span>
+                                    <div class="provider-name">PGSOFT</div>
+                                    <div class="box-play">
+                                        <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                                    </div>
+                                    <div class="hot">
+                                        <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
+                                    </div>
                                 </div>
                             </a-col>
                         </a-row>
-                    </a-col>
+                    </div>
                 </a-col>
-            </a-row>
-        </div>
-    </a-row>
+            </a-flex>
+        </a-row>
+        <a-row :alight="'center'">
+            <div class="elementor-background-overlay">
+                <a-row justify="center">
+                    <a-col :span="16" >
+                        <a-col :span="24">
+                            <h2>
+                                {{member.settingDefault.title}} เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ
+                            </h2>
+                            <p>
+                                โดยผู้เล่นสามารถสนุกกับเกมของเราได้ด้วยเงินเดิมพันขั้นต่ำเพียง 10 บาทเท่านั้น และสามารถทำการฝาก-ถอนได้ตลอด 24 ชั่วโมง ด้วยระบบออโต้ ทั้งสะดวก รวดเร็วทันใจเป็นอย่างมากเหมาะสำหรับผู้ที่ชื่นชอบการเดิมพันในรูปแบบของเกมการพนันออนไลน์อันดับ 1 ในปี 2023
+                            </p>
+                            <h2>
+                                {{member.settingDefault.title}} บริการประทับใจ ก็ไม่เป็นสองรองใคร ใส่ใจทุกคำตอบ ตลอด 24 ชั่วโมง 7 วันต่อสัปดาห์ไม่มีหยุด
+                            </h2>
+                            <div class="center my-3">
+                                <a-image
+                                    :width="screens.md ? '400px' : '100%'"
+                                    :preview="false"
+                                    :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
+                                />
+                            </div>
+                            <p>
+                                เพราะผู้เล่นทุกท่าน คือ คนสำคัญของเรา และเรายังมีทีมลูกค้าสัมพันธ์ที่คอยให้ความช่วยเหลือ ตอบทุกคำถาม ให้บริการทุกเรื่องที่คุณสงสัยตลอด 24 ชั่วโมง เพื่อให้คนสำคัญของเราไม่ต้องกังวลกับปัญหาที่พบตั้งแต่ต้นจนจบ นอกจากนี้ เรายังมีเว็บคาสิโน และสล็อตพันธมิตรชั้นนำที่พร้อมมาเสิร์ฟความหลากหลายของเกม และความสนุกสนาน ให้คุณได้เพลิดเพลิน เช่น SA Gaming, WM Casino, Dream Gaming, Pretty Gaming, ALLBET, Joker, PG Slot และอื่นๆ อีกมากมายจนผู้เล่นจะติดใจอย่างแน่นอน
+                            </p>
+                            <div class="center my-3">
+                                <a-image
+                                    :width="screens.md ? '400px' : '100%'"
+                                    :preview="false"
+                                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/cover-games-bg-min-1024x576.png"
+                                />
+                            </div>
+                        </a-col>
+                    </a-col>
+                </a-row>
+            </div>
+            <div class="elementor-background-overlay elementor-background-overlay-line-top">
+                <a-row justify="center">
+                    <a-col :span="16">
+                        <a-col :span="24">
+                            <a-row justify="space-around" align="middle" class="">
+                                <a-col :span="24" :md="12"  class="my-3">
+                                    <a-image
+                                        :width="screens.md ? '400px' : '100%'"
+                                        :preview="false"
+                                        src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/landing-page/gg1-min.png"
+                                    />
+                                </a-col>
+                                <a-col :span="24" :md="12">
+                                    <div class="center">
+                                        <h2>
+                                            สนุก และ คว้าชัยชนะได้ทุกที่ทุกเวลา
+                                        </h2>
+                                        <p>
+                                            ให้บริการความสนุกไม่รู้จบ 24 ชม. ไปกับดีลเลอร์ “DEALER” สาวสวย สุดเซ็กซี่ คอยแจกไพ่ ให้คุณได้ลุ้นทุกเกมส์เดิมพัน สบายตา สบายใจ ด้วย สาวๆ น่ารัก สุดเซ็กซี่ มาใส่บิกินี่ แต่ละสีแต่ละวันสีสด มาแจกไพ่ ท่านจะได้รับประสบการณ์ใหม่ในการเดิมพัน
+                                        </p>
+                                    </div>
+                                </a-col>
+                            </a-row>
+                        </a-col>
+                    </a-col>
+                </a-row>
+            </div>
+        </a-row>
+    </a-col>
     
   </template>
   <script lang="ts" setup>
@@ -372,8 +374,5 @@
   }
   .ant-drawer-header{
     background-color: rgba(0, 0, 0, 1)
-  }
-  :where(.css-19iuou).ant-drawer .ant-drawer-close{
-    color: rgb(255, 255, 255) !important;
   }
   </style>

@@ -22,10 +22,8 @@
             <LayoutsNew/>
             <a-row style="width: 100%;">
               <a-flex style="width: 100%;">
-              <LayoutsSidebar v-if="!screens.md"/>
-              <a-col span="24">
-                <slot/>
-              </a-col>
+                <LayoutsSidebar v-if="!screens.md" :class="{ 'disabled-sidebar':   $route.path === '/'}"/>
+                  <slot/>
               </a-flex>
             </a-row>
             <LayoutsFooter/>
@@ -216,6 +214,9 @@
   .login-small{
     margin: 0 auto;
     max-width:100vw !important;
+  }
+  .disabled-sidebar{
+    display: none;
   }
   
   </style>
