@@ -310,7 +310,7 @@
             football: 0,
             multiplePlayer: 0
         },
-        image: "https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/demo/promotions/1730009857.jpg",
+        image: "https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.jpg",
         is_active: true,
         created_by: 1,
         created_at: "2024-10-27T13:17:38.006021+07:00",
