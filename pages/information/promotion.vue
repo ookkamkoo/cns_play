@@ -238,7 +238,7 @@
         <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
-                    :src="config.public.apiServer + '/' "
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.jpg"
                     style="border-radius: 5px;"
                     :preview="false"
                 />
