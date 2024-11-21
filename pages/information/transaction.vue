@@ -34,8 +34,8 @@
                 <template v-else-if="column.key === 'created_at'">
                     <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
                 </template>
-                <template v-else-if="column.key === 'action'">
-                    <a-tag color="green" v-if="record.action == 1">ฝากเงิน</a-tag>
+                <template v-else-if="column.key === 'type'">
+                    <a-tag color="green" v-if="record.type == 1 || record.type == 3">ฝากเงิน</a-tag>
                     <a-tag color="red" v-else>ถอนเงิน</a-tag>
                 </template>
                 <template v-else-if="column.key === 'amount'">
@@ -71,7 +71,7 @@
         title: `ทั้งหมด ${allRecord.value} รายการ`, 
         children: [
           { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 30 },
-          { title: 'รายการ', key: 'action', width: 30},
+          { title: 'รายการ', key: 'type', width: 30},
           { title: 'เครดิต', key: 'amount', width: 30},
           { title: 'สถานะ', key: 'status', width: 30 },
           { title: 'วันที่', key: 'created_at', width: 40 },
