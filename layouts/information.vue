@@ -129,9 +129,8 @@
   
   
   .small-main-detail{
-    margin: 1rem 1rem;
     width: 100% !important;
-    margin: 5px !important;
+    /* margin: 5px !important; */
     /* width: calc(100% - 400px) !important; */
   }
   .small-header{
@@ -173,6 +172,7 @@
     background-color: rgba(0, 0, 0, 0.739) !important;
     border-radius: 10px;
     padding: 1rem;
+    margin: 5px !important;
   }
   .ant-table-cell, .ant-table-cell-header {
   text-align: center !important;
