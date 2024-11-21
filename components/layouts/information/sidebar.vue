@@ -122,7 +122,7 @@ const handleNotifyClick = () => {
 }
 .button-info{
     border-radius: 10px;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     margin: 0 1rem;
     cursor: pointer;
 }
