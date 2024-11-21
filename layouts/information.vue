@@ -130,7 +130,7 @@
   
   .small-main-detail{
     width: 100% !important;
-    /* margin: 5px !important; */
+    margin: 0 !important;
     /* width: calc(100% - 400px) !important; */
   }
   .small-header{
