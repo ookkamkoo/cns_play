@@ -27,6 +27,10 @@
                     />
                     <div v-else> - </div>
                 </template>
+                <template v-if="column.key === 'bank_system_no'">
+                    <div v-if="record.bank_system_no != ''">{{ record.bank_system_no }}</div>
+                    <div v-else> - </div>
+                </template>
                 <template v-if="column.key === 'bank_no'">
                     <div v-if="record.bank_no != ''">{{ record.bank_no }}</div>
                     <div v-else> - </div>
