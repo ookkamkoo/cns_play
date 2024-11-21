@@ -31,8 +31,8 @@
                     <div v-if="record.bank_system_no != ''">{{ record.bank_system_no }}</div>
                     <div v-else> - </div>
                 </template>
-                <template v-if="column.key === 'bank_no'">
-                    <div v-if="record.bank_no != ''">{{ record.bank_no }}</div>
+                <template v-if="column.key === 'promotion'">
+                    <div v-if="record.promotion != ''">{{ record.promotion }}</div>
                     <div v-else> - </div>
                 </template>
                 <template v-else-if="column.key === 'created_at'">
@@ -41,9 +41,6 @@
                 <template v-else-if="column.key === 'type'">
                     <a-tag color="green" v-if="record.type == 1 || record.type == 3">ฝากเงิน</a-tag>
                     <a-tag color="red" v-else>ถอนเงิน</a-tag>
-                </template>
-                <template v-else-if="column.key === 'amount'">
-                    <div>{{ record.amount }}</div>
                 </template>
                 <template v-else-if="column.key === 'amount'">
                     <div>{{ record.amount }}</div>
