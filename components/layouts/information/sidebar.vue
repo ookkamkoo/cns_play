@@ -111,6 +111,7 @@ const handleNotifyClick = () => {
     border-radius: 10px;
     padding: 1rem;
     color: whitesmoke;
+    margin: 5px;
 }
 .sidebar-info-detai-contailner{
     margin: 0 auto;
