@@ -373,4 +373,7 @@
   .ant-drawer-header{
     background-color: rgba(0, 0, 0, 1)
   }
+  :where(.css-19iuou).ant-drawer .ant-drawer-close{
+    color: rgb(255, 255, 255) !important;
+  }
   </style>
