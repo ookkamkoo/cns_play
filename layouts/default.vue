@@ -20,7 +20,14 @@
         </a-layout-sider>
         <a-layout class="main-detail">
             <LayoutsNew/>
-            <slot/>
+            <a-row style="width: 100%;">
+              <a-flex style="width: 100%;">
+              <LayoutsSidebar v-if="!screens.md"/>
+              <a-col span="24">
+                <slot/>
+              </a-col>
+              </a-flex>
+            </a-row>
             <LayoutsFooter/>
         </a-layout>
       </a-layout>

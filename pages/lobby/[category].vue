@@ -1,38 +1,33 @@
 <template>
-  <a-row style="width: 100%;">
-        <a-flex style="width: 100%;">
-            <LayoutsSidebar v-if="!screens.md"/>
-            <a-col :class="{'small-main':!screens.md}" style="width: 100%;">
-              <h2 class="m-2">
-                {{category.name_th}}
-              </h2>
-              <div class="game-recommend my-4">
-                  <a-row>
-                      <a-col :span="12" :md="8" :lg="6" :xl="3" class="game-recommend-item" v-for="game in gameRecommend">
-                          <div class="game-recommend-item-detail" @click="goGameList(game.name)">
-                              <a-image
-                                  width="100%"
-                                  :preview="false"
-                                  :src="game.image"
-                              />
-                              <div class="overlay"></div>
-                              <span class="name">
-                                  <span>{{game.name}}</span>
-                              </span>
-                              <div class="provider-name">PGSOFT</div>
-                              <div class="box-play">
-                                  <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
-                              </div>
-                              <div class="hot">
-                                  <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
-                              </div>
-                          </div>
-                      </a-col>
-                  </a-row>
-              </div>
+  <a-col :class="{'small-main':!screens.md}" style="width: 100%;">
+    <h2 class="m-2">
+      {{category.name_th}}
+    </h2>
+    <div class="game-recommend my-4">
+        <a-row>
+            <a-col :span="12" :md="8" :lg="6" :xl="3" class="game-recommend-item" v-for="game in gameRecommend">
+                <div class="game-recommend-item-detail" @click="goGameList(game.name)">
+                    <a-image
+                        width="100%"
+                        :preview="false"
+                        :src="game.image"
+                    />
+                    <div class="overlay"></div>
+                    <span class="name">
+                        <span>{{game.name}}</span>
+                    </span>
+                    <div class="provider-name">PGSOFT</div>
+                    <div class="box-play">
+                        <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                    </div>
+                    <div class="hot">
+                        <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
+                    </div>
+                </div>
             </a-col>
-        </a-flex>
-    </a-row>
+        </a-row>
+    </div>
+  </a-col>
 </template>
 <script lang="ts" setup>
 import { gameCategories } from '~/data/data';

@@ -9,7 +9,7 @@
     </a-drawer>
     <a-row>
         <a-flex>
-            <LayoutsSidebar v-if="!screens.md"/>
+            <!-- <LayoutsSidebar v-if="!screens.md"/> -->
             <a-col :class="{'small-main':!screens.md}">
                 <h2 class="mx-1">
                     เกมยอดนิยม
