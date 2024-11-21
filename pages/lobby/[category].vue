@@ -185,7 +185,7 @@ const goGameList = (provider: string) => {
 }
 .button-play, .button-play:focus, .button-play:active, .button-play:hover {
   background: linear-gradient(to bottom, #FF9100FF 0%, #FF9100FF 100%);
-  border-radius: 1.5rem;
+  border-radius: 1.8rem;
   color: #fff;
   cursor: pointer;
   margin: auto;
