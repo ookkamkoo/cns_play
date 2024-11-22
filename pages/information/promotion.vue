@@ -220,7 +220,7 @@
     </a-modal>
     <h3>โปรโมชั่นของคุณ</h3>
     <a-flex>
-        <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
+        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(promotionMember)">
                 <a-image
                     :src="promotionMember.image"
@@ -235,7 +235,7 @@
     </a-flex>
     <h3>โปรโมชั่นทัั้งหมด</h3>
     <a-flex wrap="wrap">
-        <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
+        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
                     src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
@@ -250,7 +250,7 @@
                 <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(0,'ไม่เลือกโปรโมชั่น')">รับโปรโมชั่น</a-button>
             </a-row>
         </a-col>
-        <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
+        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
                     src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
@@ -265,7 +265,7 @@
                 <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(0,'ไม่เลือกโปรโมชั่น')">รับโปรโมชั่น</a-button>
             </a-row>
         </a-col>
-        <a-col :span="24" :sm="12" :xl="6" class="promotion-item">
+        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
                     src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
@@ -281,7 +281,7 @@
             </a-row>
         </a-col>
 
-        <a-col :span="24" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
+        <a-col :span="12" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
                 <a-image
                     :src="config.public.apiServer + '/' + v.image"

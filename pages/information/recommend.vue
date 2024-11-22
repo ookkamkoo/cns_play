@@ -57,7 +57,7 @@
                 </a-col>
             </div>
             <div class="center">
-                <h3>โบนัสแนะนำเพื่อน 0.50%  จาก สมาชิกที่เสีย</h3>
+                <h3>โบนัสแนะนำเพื่อน {{Number(member.settingDefault.recommendPercent).toFixed(2)}}%  จาก สมาชิกที่เสีย</h3>
                 <p>
                     1.ระบบจะสะสมยอดโบนัส เวลาเที่ยงคืนของทุกวัน
                 </p>
