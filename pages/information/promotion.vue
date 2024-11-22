@@ -250,36 +250,6 @@
                 <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(0,'ไม่เลือกโปรโมชั่น')">รับโปรโมชั่น</a-button>
             </a-row>
         </a-col>
-        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
-            <div class="image-container p-1" @click="promotionDetail(noPromotion)">
-                <a-image
-                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
-                    style="border-radius: 5px;"
-                    :preview="false"
-                />
-                <div class="overlay">
-                    <p class="detail-promotion">รายละเอียด</p>
-                </div>
-            </div>
-            <a-row :justify="'center'" class="mx-1">
-                <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(0,'ไม่เลือกโปรโมชั่น')">รับโปรโมชั่น</a-button>
-            </a-row>
-        </a-col>
-        <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
-            <div class="image-container p-1" @click="promotionDetail(noPromotion)">
-                <a-image
-                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
-                    style="border-radius: 5px;"
-                    :preview="false"
-                />
-                <div class="overlay">
-                    <p class="detail-promotion">รายละเอียด</p>
-                </div>
-            </div>
-            <a-row :justify="'center'" class="mx-1">
-                <a-button type="primary" class="bright-orange mx-1" @click="confirmPromotion(0,'ไม่เลือกโปรโมชั่น')">รับโปรโมชั่น</a-button>
-            </a-row>
-        </a-col>
 
         <a-col :span="12" :sm="12" :xl="6" v-for="v in promotion" :key="v.id" class="promotion-item">
             <div class="image-container p-1" @click="promotionDetail(noPromotion)">
@@ -340,7 +310,7 @@
             football: 0,
             multiplePlayer: 0
         },
-        image: "https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.jpg",
+        image: "https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp",
         is_active: true,
         created_by: 1,
         created_at: "2024-10-27T13:17:38.006021+07:00",

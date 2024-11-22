@@ -19,7 +19,9 @@
                         <a-row>
                             <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-for="game in gameRecommend">
                                 
-                                <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active">
+                                <!-- && (game.status = 1 && game.pg_status = false) -->
+                                 <!-- {{game}} -->
+                                <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active ">
                                     <a-image
                                         width="100%"
                                         :preview="false"
