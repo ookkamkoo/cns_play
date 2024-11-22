@@ -384,4 +384,7 @@
   .ant-drawer-header{
     background-color: rgba(0, 0, 0, 1)
   }
+  .ant-drawer-close{
+    color: rgb(255 255 255 / 72%) !important;
+  }
   </style>
