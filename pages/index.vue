@@ -17,31 +17,32 @@
                     </h2>
                     <div class="game-recommend my-4">
                         <a-row>
-                            <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-for="game in gameRecommend">
-                                
-                                <!-- && (game.status = 1 && game.pg_status = false) -->
-                                <!-- v-if="game.is_active && (game.status == 1 || game.status=3)" -->
-                                 <!-- {{game}} -->
-                                <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)" v-if="game.is_active && (game.status == 1 || game.status == 3) ">
-                                    <a-image
-                                        width="100%"
-                                        :preview="false"
-                                        :src="game.image"
-                                        loading="lazy"
-                                    />
-                                    <div class="overlay"></div>
-                                    <span class="name">
-                                        <span>{{game.game_code}}</span>
-                                    </span>
-                                    <div class="provider-name">PGSOFT</div>
-                                    <div class="box-play">
-                                        <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                            <template v-for="game in gameRecommend">
+                                <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-if="game.is_active && (game.status == 1 || game.status == 3) ">
+                                    <!-- && (game.status = 1 && game.pg_status = false) -->
+                                    <!-- v-if="game.is_active && (game.status == 1 || game.status=3)" -->
+                                    <!-- {{game}} -->
+                                    <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)">
+                                        <a-image
+                                            width="100%"
+                                            :preview="false"
+                                            :src="game.image"
+                                            loading="lazy"
+                                        />
+                                        <div class="overlay"></div>
+                                        <span class="name">
+                                            <span>{{game.game_code}}</span>
+                                        </span>
+                                        <div class="provider-name">PGSOFT</div>
+                                        <div class="box-play">
+                                            <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                                        </div>
+                                        <div class="hot">
+                                            <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
+                                        </div>
                                     </div>
-                                    <div class="hot">
-                                        <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
-                                    </div>
-                                </div>
-                            </a-col>
+                                </a-col>
+                            </template>
                         </a-row>
                     </div>
                 </a-col>

@@ -18,32 +18,34 @@
               </h2>
               <div class="game-recommend my-4">
                   <a-row>
-                      <a-col :span="12" :md="8" :lg="4" :xl="4" class="game-recommend-item" v-for="game,index in gameRecommend">
-                        <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.launchCode,provider,game.maintain,game.gameName)" v-if="game.active && (game.status == 1 || game.status == 3)">
-                            <a-image
-                                width="100%"
-                                :preview="false"
-                                :src="game.bannerUrl"
-                                loading="lazy"
-                            />
-                            <div class="maintain" v-if="(game.maintain && provider=='PG Soft') || (!game.active && provider != 'PG Soft')">
-                                <div calss="maintain-center">
-                                    ปิดปรับปรุง
-                                </div>
-                            </div>
-                            <div class="overlay"></div>
-                            <span class="name">
-                                <span>{{game.gameName}}</span>
-                            </span>
-                            <div class="provider-name">PGSOFT</div>
-                            <div class="box-play">
-                                <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
-                            </div>
-                            <div class="hot" v-if="game.popular==true">
-                                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
-                            </div>
-                        </div>
-                      </a-col>
+                      <template v-for="game in gameRecommend">
+                        <a-col :span="12" :md="8" :lg="4" :xl="4" class="game-recommend-item" v-if="game.active && (game.status == 1 || game.status == 3)">
+                          <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.launchCode,provider,game.maintain,game.gameName)">
+                              <a-image
+                                  width="100%"
+                                  :preview="false"
+                                  :src="game.bannerUrl"
+                                  loading="lazy"
+                              />
+                              <div class="maintain" v-if="(game.maintain && provider=='PG Soft') || (!game.active && provider != 'PG Soft')">
+                                  <div calss="maintain-center">
+                                      ปิดปรับปรุง
+                                  </div>
+                              </div>
+                              <div class="overlay"></div>
+                              <span class="name">
+                                  <span>{{game.gameName}}</span>
+                              </span>
+                              <div class="provider-name">PGSOFT</div>
+                              <div class="box-play">
+                                  <div class="button-play boxGoPlay" data-gameid="1682240">เล่น</div>
+                              </div>
+                              <div class="hot" v-if="game.popular==true">
+                                  <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/icon/fire.gif">
+                              </div>
+                          </div>
+                        </a-col>
+                      </template>
                   </a-row>
               </div>
             </a-col>
