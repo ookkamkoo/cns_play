@@ -19,7 +19,7 @@
               <div class="game-recommend my-4">
                   <a-row>
                       <a-col :span="12" :md="8" :lg="4" :xl="4" class="game-recommend-item" v-for="game,index in gameRecommend">
-                        <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.launchCode,provider,game.maintain,game.gameName)" v-if="game.active">
+                        <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.launchCode,provider,game.maintain,game.gameName)" v-if="game.active && (game.status == 1 || game.status == 3)">
                             <a-image
                                 width="100%"
                                 :preview="false"
@@ -77,6 +77,8 @@
     productId: number;
     updatedDate: string;
     vote: boolean;
+    status: number;
+    pg_status: boolean;
   }
 
   const route = useRoute();
