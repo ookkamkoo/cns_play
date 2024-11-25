@@ -80,7 +80,7 @@
   
   .action-col:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); */
   }
   
   .action-col {
