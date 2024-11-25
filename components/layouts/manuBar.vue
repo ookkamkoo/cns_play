@@ -21,13 +21,15 @@
         </a-col>
         <!-- Image -->
         <a-col class="action-col action-col-image" span="6">
-          <div class="action-col-image-set">
-            <a-image
-              :width="'100%'"
-              :preview="false"
-              :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
-            />
-          </div>
+            <NuxtLink to="/">
+                <div class="action-col-image-set">
+                    <a-image
+                    :width="'100%'"
+                    :preview="false"
+                    :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
+                    />
+                </div>
+            </NuxtLink>
         </a-col>
         <a-col span="9">
           <a-row class="container-detail">
