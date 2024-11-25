@@ -17,11 +17,6 @@
         </a-col>
         <!-- image -->
         <a-col class="action-col action-col-image" span="6">
-            <a-image
-                :width="200"
-                :preview="false"
-                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
-            />
             <!-- <div class="action-col-image-set">
                 <a-image
                 :width="'100%'"
@@ -29,6 +24,13 @@
                 src="https://image.1million.social/image/imageList/1707495347305.png"
             />
             </div> -->
+            <div class="action-col-image-set">
+                <a-image
+                :width="'100%'"
+                :preview="false"
+                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
+            />
+            </div>
         </a-col>
         <a-col span="9">
             <a-row class="container-detail">
