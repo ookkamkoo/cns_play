@@ -99,7 +99,7 @@
     position: absolute;
     width: 130px;
     transform: translate(-50%, -50%);
-    top: 10%;
+    top: 40%;
     left: 50%;
     z-index: 1000;
   }
