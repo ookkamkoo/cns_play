@@ -18,6 +18,7 @@
         </a-layout>
       </a-layout>
     </a-layout>
+    <LayoutsManuBar/>
 </template>
 <script lang="ts" setup>
   import { Grid } from 'ant-design-vue';  

@@ -1,71 +1,115 @@
 <template>
-    <div class="button-container">
-      <div class="button-group">
-        <button class="action-button">
-          <img src="deposit-icon.png" alt="ฝาก" />
-          <span>ฝาก</span>
-        </button>
-        <button class="action-button">
-          <img src="withdraw-icon.png" alt="ถอน" />
-          <span>ถอน</span>
-        </button>
-      </div>
-      <div class="button-group">
-        <button class="action-button">
-          <img src="promotion-icon.png" alt="โปรโมชั่น" />
-          <span>โปรโมชั่น</span>
-        </button>
-        <button class="action-button">
-          <img src="contact-icon.png" alt="ติดต่อเรา" />
-          <span>ติดต่อเรา</span>
-        </button>
-      </div>
-    </div>
+    <a-row class="button-container">
+      <a-flex :justify="'center'" class="container-side">
+        <a-col span="9">
+            <a-row class="container-detail">
+                <!-- Deposit -->
+                <a-col class="action-col" span="12">
+                    <DollarCircleOutlined class="menu-icon"/>
+                    <div class="menu-text">ฝาก</div>
+                </a-col>
+                <!-- Withdraw -->
+                <a-col class="action-col" span="12">
+                    <DollarCircleOutlined class="menu-icon"/>
+                    <div class="menu-text">ถอน</div>
+                </a-col>
+            </a-row>
+        </a-col>
+        <!-- image -->
+        <a-col class="action-col action-col-image" span="6">
+            <a-image
+                :width="200"
+                :preview="false"
+                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
+            />
+            <!-- <div class="action-col-image-set">
+                <a-image
+                :width="'100%'"
+                :preview="false"
+                src="https://image.1million.social/image/imageList/1707495347305.png"
+            />
+            </div> -->
+        </a-col>
+        <a-col span="9">
+            <a-row class="container-detail">
+                <!-- Promotion -->
+                <a-col class="action-col" span="12">
+                    <CrownOutlined class="menu-icon"/>
+                    <div class="menu-text">โปรโมชั่น</div>
+                </a-col>
+                <!-- Contact -->
+                <a-col class="action-col" span="12">
+                    <CommentOutlined class="menu-icon" />
+                    <div class="menu-text">ติดต่อเรา</div>
+                </a-col>
+            </a-row>
+        </a-col>
+      </a-flex>
+    </a-row>
   </template>
+  
+  <script lang="ts" setup>
+    import { memberStore } from '~/store/index';
+    const config = useRuntimeConfig()
+    const member = memberStore();
+  </script>
+  
+  <style scoped>
+  .button-container {
+    text-align: center;
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+    z-index: 999; 
+    border: 5px solid #000;
+  }
 
-<style scoped>
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right, #4c1a9d, #7d30d4);
-  padding: 10px;
-  border-radius: 15px;
-}
+  .container-side{
+    width: 100%;
+  }
+  .container-detail{
+    background: linear-gradient(to right, #4c1a9d, #7d30d4);
+    border-radius: 15px 15px 0 0;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .action-col:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .action-col{
+    padding: 10px;
+  }
 
-.button-group {
-  display: flex;
-  gap: 20px;
-}
+  .action-col img {
+    position: absolute;
+    width: 200px;
+  }
 
-.action-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  color: #6b3aee;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 80px;
-  height: 80px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
+  .action-col-image{
+    padding: 0;
+  }
 
-.action-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
+  .action-col-image-set{
+    position: absolute;
+    width: 130px;
+    transform: translate(-50%, -50%);
+    top: 20%;
+    left: 50%;
+    z-index: 1000;
+  }
+  .menu-text{
+    font-size: 10px;
+    /* font-weight: bold; */
+    color: whitesmoke;
+    white-space: nowrap;
+  }
 
-.action-button img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 5px;
-}
-</style>
+  .menu-icon {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 5px;
+    }
+  </style>
+  
