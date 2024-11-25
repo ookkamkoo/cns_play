@@ -61,7 +61,7 @@
     width: 100%;
     bottom: 0;
     z-index: 999; 
-    border: 5px solid #000;
+    /* border: 5px solid #000; */
   }
 
   .container-side{
