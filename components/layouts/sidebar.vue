@@ -24,7 +24,7 @@
                         class="menu-list-item"
                         v-for="item in member.menuBar"
                         :key="item.name"
-                        :class="{ 'menu-list-item-active': item.name === $route.path }"
+                        :class="{ 'menu-list-item-active': '/lobby/'+item.name === $route.path }"
                     >
                     <NuxtLink :to="'/lobby/'+item.name" exact class="link-sidebar">
                         <div class="menu-list-item-detail">

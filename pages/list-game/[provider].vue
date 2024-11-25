@@ -8,7 +8,7 @@
     </a-drawer>
     <a-row style="width: 100%;">
         <a-flex style="width: 100%;">
-            <LayoutsSidebar v-if="!screens.md"/>
+            <!-- <LayoutsSidebar v-if="!screens.md"/> -->
             <a-col :class="{'small-main':!screens.md}" style="width: 100%;">
               <!-- <span class="m-2 page-back"  @click="goBack">
                 << ย้อนกลับ
