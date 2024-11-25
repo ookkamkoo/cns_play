@@ -86,6 +86,7 @@
   }
   
   .action-col {
+    cursor: pointer;
     padding: 10px;
   }
   
