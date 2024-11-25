@@ -59,8 +59,10 @@
   <style scoped>
   .button-container {
     text-align: center;
-    position: sticky;
+    position: fixed;
+    /* position: absolute; */
     width: 100%;
+    left: 0;
     bottom: 0;
     z-index: 999; 
     /* border: 5px solid #000; */

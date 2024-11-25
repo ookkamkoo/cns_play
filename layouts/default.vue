@@ -29,8 +29,8 @@
             <LayoutsFooter/>
         </a-layout>
       </a-layout>
+        <LayoutsManuBar v-if="!screens.md"/>
     </a-layout>
-    <LayoutsManuBar v-if="!screens.md"/>
   </template>
   <script lang="ts" setup>
     import { Grid } from 'ant-design-vue';
