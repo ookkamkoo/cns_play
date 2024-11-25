@@ -2,76 +2,76 @@
     <a-row class="button-container">
       <a-flex :justify="'center'" class="container-side">
         <a-col span="9">
-            <a-row class="container-detail">
-                <!-- Deposit -->
-                <a-col class="action-col" span="12">
-                    <DollarCircleOutlined class="menu-icon"/>
-                    <div class="menu-text">ฝาก</div>
-                </a-col>
-                <!-- Withdraw -->
-                <a-col class="action-col" span="12">
-                    <DollarCircleOutlined class="menu-icon"/>
-                    <div class="menu-text">ถอน</div>
-                </a-col>
-            </a-row>
+          <a-row class="container-detail">
+            <!-- Deposit -->
+            <a-col class="action-col" span="12">
+              <NuxtLink to="/information/deposit">
+                <DollarCircleOutlined class="menu-icon" />
+                <div class="menu-text">ฝาก</div>
+              </NuxtLink>
+            </a-col>
+            <!-- Withdraw -->
+            <a-col class="action-col" span="12">
+              <NuxtLink to="/information/withdraw">
+                <DollarCircleOutlined class="menu-icon" />
+                <div class="menu-text">ถอน</div>
+              </NuxtLink>
+            </a-col>
+          </a-row>
         </a-col>
-        <!-- image -->
+        <!-- Image -->
         <a-col class="action-col action-col-image" span="6">
-            <!-- <div class="action-col-image-set">
-                <a-image
-                :width="'100%'"
-                :preview="false"
-                src="https://image.1million.social/image/imageList/1707495347305.png"
+          <div class="action-col-image-set">
+            <a-image
+              :width="'100%'"
+              :preview="false"
+              :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
             />
-            </div> -->
-            <div class="action-col-image-set">
-                <a-image
-                :width="'100%'"
-                :preview="false"
-                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
-            />
-            </div>
+          </div>
         </a-col>
         <a-col span="9">
-            <a-row class="container-detail">
-                <!-- Promotion -->
-                <a-col class="action-col" span="12">
-                    <CrownOutlined class="menu-icon"/>
-                    <div class="menu-text">โปรโมชั่น</div>
-                </a-col>
-                <!-- Contact -->
-                <a-col class="action-col" span="12">
-                    <CommentOutlined class="menu-icon" />
-                    <div class="menu-text">ติดต่อเรา</div>
-                </a-col>
-            </a-row>
+          <a-row class="container-detail">
+            <!-- Promotion -->
+            <a-col class="action-col" span="12">
+              <NuxtLink to="/information/promotion">
+                <CrownOutlined class="menu-icon" />
+                <div class="menu-text">โปรโมชั่น</div>
+              </NuxtLink>
+            </a-col>
+            <!-- Contact -->
+            <a-col class="action-col" span="12">
+              <a :href="`https://line.me/R/ti/p/${member.settingDefault.websiteLine}?oat_content=url`" target="_blank">
+                <CommentOutlined class="menu-icon" />
+                <div class="menu-text">ติดต่อเรา</div>
+              </a>
+            </a-col>
+          </a-row>
         </a-col>
       </a-flex>
     </a-row>
   </template>
   
   <script lang="ts" setup>
-    import { memberStore } from '~/store/index';
-    const config = useRuntimeConfig()
-    const member = memberStore();
+  import { memberStore } from '~/store/index';
+  const config = useRuntimeConfig();
+  const member = memberStore();
   </script>
   
   <style scoped>
   .button-container {
     text-align: center;
     position: fixed;
-    /* position: absolute; */
     width: 100%;
     left: 0;
     bottom: 0;
     z-index: 999; 
-    /* border: 5px solid #000; */
   }
-
-  .container-side{
+  
+  .container-side {
     width: 100%;
   }
-  .container-detail{
+  
+  .container-detail {
     background: linear-gradient(to right, #4c1a9d, #7d30d4);
     border-radius: 15px 15px 0 0;
     padding: 5px;
@@ -82,20 +82,21 @@
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
-  .action-col{
+  
+  .action-col {
     padding: 10px;
   }
-
+  
   .action-col img {
     position: absolute;
     width: 200px;
   }
-
-  .action-col-image{
+  
+  .action-col-image {
     padding: 0;
   }
-
-  .action-col-image-set{
+  
+  .action-col-image-set {
     position: absolute;
     width: 130px;
     transform: translate(-50%, -50%);
@@ -103,17 +104,17 @@
     left: 50%;
     z-index: 1000;
   }
-  .menu-text{
+  
+  .menu-text {
     font-size: 10px;
-    /* font-weight: bold; */
     color: whitesmoke;
     white-space: nowrap;
   }
-
+  
   .menu-icon {
     font-size: 24px;
     color: #fff;
     margin-bottom: 5px;
-    }
+  }
   </style>
   
