@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { MemberDetail,SettingDF,GameMenuItem,News } from './typeMember';
+import type { MemberDetail,SettingDF,GameMenuItem,News,Game,GameRecommend,GameCategory } from './typeMember';
 
 
 export const memberStore = defineStore('member', {
@@ -11,6 +11,19 @@ export const memberStore = defineStore('member', {
     settingDefault: {} as SettingDF,
     menuBar: [] as GameMenuItem[],
     news: [] as News[],
+    allGame:[
+      { category: "CASINO", games: [] },
+      { category: "SLOT", games: [] },
+      { category: "FISH", games: [] },
+      { category: "SPORTSBOOK", games: [] },
+      { category: "TRADE", games: [] },
+      { category: "CARD", games: [] },
+      { category: "LOTTO", games: [] },
+      { category: "KENO", games: [] },
+      { category: "ESPORT", games: [] },
+      { category: "POKER", games: [] },
+    ] as GameCategory[] ,
+    gameReccommend:[] as GameRecommend[],
   }),
   actions: {
     setMemberDetail(data: MemberDetail) {
@@ -37,6 +50,9 @@ export const memberStore = defineStore('member', {
     },
     setMenuBar(data: GameMenuItem[]) {
       this.menuBar = data;
+    },
+    setGameRecommend(data: GameRecommend[]) {
+      this.gameReccommend = data;
     },
   },
 });

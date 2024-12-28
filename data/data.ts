@@ -44,6 +44,7 @@ export const menuList = [
     {name: 'คืนยอดเสีย',path:'/information/return-credit',icon: DollarOutlined,show:1},
     {name: 'ประวัติการทำรายการ',path:'/information/transaction',icon: ClockCircleOutlined,show:1 },
     {name: 'เเนะนำเพื่อน',path:'/information/recommend',icon: UsergroupAddOutlined,show:1 },
+    // {name: 'พันธมิตร',path:'/information/recommend',icon: UsergroupAddOutlined,show:1 },
     {name: 'ประกาศ',path:'/information/notify',icon:SoundOutlined,show:3},
     {name: 'ติดต่อเรา',icon: CommentOutlined,show:1},
     {name: 'ออกจากระบบ',path:'#',icon: LogoutOutlined,show:0 },

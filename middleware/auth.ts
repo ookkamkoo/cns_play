@@ -13,19 +13,24 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     console.log(to.path);
       if (to.path !== '/') {
         // console.log("aaaaaaaaaaa");
-          if (token) {
+          if(to.path.startsWith('/alliance')){
+
+          }else{
+            if (token) {
               const check = await checkToken(token);
               if(!check){
                   logout()
                   return navigateTo('/');
               }
-          } else {
+            } else {
               member.setShowLogin(true)
               return navigateTo('/');
+            }
           }
       } else {
-        // console.log("ssssssss");
+        console.log("ssssssss");
           if (token) {
+            console.log("aaaaaaaaaaa");
               const check = await checkToken(token);
               console.log(check);
               
@@ -33,14 +38,15 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 logout();
                 // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
               }else{
-                  // return navigateTo('/');
+                  // return navigateTo('/alliance/alliance');
               }
           }else{
+            console.log("dddddddddddddd");
             // member.setShowLogin(true)
           }
       }
   } catch (error) {
       // logout();
-      return navigateTo('/');
+      // return navigateTo('/');
   }
 });

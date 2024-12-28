@@ -139,3 +139,41 @@ export interface Marketing {
     updated_by_name: string;
     updated_at: string;
   }
+
+  export interface Game {
+    id: number;           // รหัสเกม
+    image: string;        // URL ของรูปภาพ
+    is_active: boolean;   // เกมเปิดใช้งานอยู่หรือไม่
+    loby: boolean;        // เป็นเกมในล็อบบี้หรือไม่
+    name: string;         // ชื่อเกม
+    priority: number;     // ลำดับความสำคัญของเกม
+    productCode: string;  // โค้ดของผลิตภัณฑ์
+    provider: string;     // ผู้ให้บริการเกม
+    type: string;         // ประเภทเกม เช่น SPORTSBOOK, CASINO
+  }
+
+  export interface GameRecommend {
+    id: number; // รหัสเกม
+    game_code: string; // โค้ดเกม
+    hot: boolean; // เกมยอดนิยมหรือไม่
+    image: string; // URL รูปภาพของเกม
+    is_active: boolean; // เกมเปิดใช้งานหรือไม่
+    launch_code: string; // โค้ดสำหรับการเปิดเกม
+    maintain: boolean; // อยู่ในสถานะบำรุงรักษาหรือไม่
+    name: string; // ชื่อเกม
+    pg_status: boolean; // สถานะ PG ของเกม
+    priority: number; // ลำดับความสำคัญ
+    product_code: string; // โค้ดของผลิตภัณฑ์
+    provider: string; // ผู้ให้บริการเกม
+    status: number; // สถานะเกม (เช่น 1 = Active, 2 = Inactive)
+    type: string; // ประเภทเกม เช่น SLOT, CASINO
+    updated_at: string; // วันที่และเวลาที่อัปเดตล่าสุด (ISO Format)
+    updated_by: number; // รหัสผู้ที่อัปเดต
+    updated_by_name: string; // ชื่อผู้ที่อัปเดต
+  }
+
+  export interface GameCategory {
+    category: string;
+    games: Game[];
+}
+  

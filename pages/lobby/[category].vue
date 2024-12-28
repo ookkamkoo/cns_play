@@ -7,6 +7,7 @@
         <a-row>
             <a-col :span="12" :md="8" :lg="6" :xl="3" class="game-recommend-item" v-for="game in gameRecommend">
                 <div class="game-recommend-item-detail" @click="goGameList(game.name)">
+                  <div :class="['overlay-image', { 'overlay-image-clear': isClear }]" ></div>
                     <a-image
                         width="100%"
                         :preview="false"
@@ -34,6 +35,7 @@ import { gameCategories } from '~/data/data';
 import { getProviderGameList } from '~/services/gameListServices';
 import { Grid } from 'ant-design-vue';
 import { memberStore } from '~/store/index';
+import type { Game } from '~/store/typeMember';
 const member = memberStore();
 
 interface GameMenuItem {
@@ -47,17 +49,23 @@ interface GameMenuItem {
     is_active: boolean;
   }
 
-interface GameList {
-  id: string;
-  image: string;
-  is_active: boolean;
-  loby: boolean;
-  name: string;
-  priority: number;
-  productCode: string;
-  provider: string;
-  type: string;
-}
+const isClear = ref(false); // ควบคุมสถานะของ overlay
+
+const clearOverlay = () => {
+  isClear.value = true; // ตั้งค่าให้ overlay ค่อยๆ หายไปเมื่อภาพโหลดเสร็จ
+};
+
+// interface GameList {
+//   id: string;
+//   image: string;
+//   is_active: boolean;
+//   loby: boolean;
+//   name: string;
+//   priority: number;
+//   productCode: string;
+//   provider: string;
+//   type: string;
+// }
 
 const route = useRoute();
 const category = ref<GameMenuItem>({ id: 0, name: '', name_th: '', ref: '', icon: '', image: '', priority: 0, is_active: false });
@@ -65,9 +73,9 @@ const category = ref<GameMenuItem>({ id: 0, name: '', name_th: '', ref: '', icon
 const useBreakpoint = Grid.useBreakpoint;
 const screens = useBreakpoint();
 
-const gameRecommend = ref<GameList[]>([])
+const gameRecommend = ref<Game[]>([])
 
-const updateCategory = async() => {
+const updateCategory = () => {
   const game = route.params.category;
   console.log(game);
   
@@ -81,16 +89,27 @@ const updateCategory = async() => {
     priority: 0,
     is_active: false,
   };
-  
-  var data = await getProviderGameList(category.value.ref)
-  console.log(data.data);
-  
-  if(data.status == "success"){
-    gameRecommend.value = data.data
-  }
+    const foundCategory = member.allGame.find((cat) => cat.category === category.value.ref);
+
+    if (foundCategory) {
+        gameRecommend.value = foundCategory.games;
+    } else {
+        console.error("Category not found for ref:", category.value.ref);
+        gameRecommend.value = []; // หรือกำหนดค่าเริ่มต้น
+    }
+    
+    setTimeout(() => {
+      clearOverlay();
+    }, 20);
+  // }
 };
 
-watch(route, updateCategory, { immediate: true });
+onMounted(() => {
+  updateCategory();
+});
+
+// watch(route, updateCategory, { immediate: true });
+
 
 const goGameList = (provider: string) => {
   return navigateTo('/list-game/' + provider)
@@ -148,6 +167,22 @@ const goGameList = (provider: string) => {
   z-index: 2;
   height: 100%;
 }
+.overlay-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  backdrop-filter: blur(8px); /* เริ่มต้นด้วยเบลอ */
+  opacity: 1; /* เริ่มต้นให้ overlay ปรากฏ */
+  transition: backdrop-filter 0.5s ease-in-out, opacity 0.5s ease-in-out; /* กำหนดระยะเวลา 1 วิ */
+}
+
+.overlay-image-clear {
+  backdrop-filter: blur(0); /* ภาพชัดเจนเมื่อใช้ class นี้ */
+  opacity: 0; /* ซ่อน overlay */
+}
 
 .overlay{
   background: #000000a9;
@@ -157,7 +192,7 @@ const goGameList = (provider: string) => {
   top: 0;
   left: 0;
   opacity:0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 }
 .game-recommend-item-detail:hover .overlay{
   opacity:1

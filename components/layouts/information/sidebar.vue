@@ -69,7 +69,30 @@
                         </a-col>
                     </a-flex>
                 </a>
-                <NuxtLink :to="item.path" v-if="item.show == 1 && item.name != 'ติดต่อเรา'" class="sidebar-menu-list-link">
+                <NuxtLink :to="item.path" v-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && !member.memberDetail.is_agent" class="sidebar-menu-list-link">
+                    <a-flex class="sidebar-menu-list-detail" :align="'center'" >
+                        <a-col :span="4" class="sidebar-menu-list-icon">
+                            <component :is="item.icon" />
+                        </a-col>
+                        <a-col :span="20">
+                            {{item.name}}
+                        </a-col>
+                    </a-flex>
+                </NuxtLink>
+                <a :href="`/alliance/dashboard?ref=${member.memberDetail.key_ref}&token=${getToken()}&status=alliance`" 
+                    v-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && member.memberDetail.is_agent" 
+                    target="_blank" 
+                    class="sidebar-menu-list-link">
+                        <a-flex class="sidebar-menu-list-detail" :align="'center'">
+                            <a-col :span="4" class="sidebar-menu-list-icon">
+                                <component :is="item.icon" />
+                            </a-col>
+                            <a-col :span="20">
+                                พันธมิตร
+                            </a-col>
+                        </a-flex>
+                </a>
+                <NuxtLink :to="item.path" v-if="item.show == 1 && item.name != 'ติดต่อเรา'  && item.name != 'เเนะนำเพื่อน'" class="sidebar-menu-list-link">
                     <a-flex class="sidebar-menu-list-detail" :align="'center'" >
                         <a-col :span="4" class="sidebar-menu-list-icon">
                             <component :is="item.icon" />
@@ -96,6 +119,7 @@
 <script lang="ts" setup>
 import { menuList } from '~/data/data';
 import { memberStore } from '~/store/index';
+import { getToken } from '~/auth/authToken'
 
 const member = memberStore();
 const config = useRuntimeConfig()

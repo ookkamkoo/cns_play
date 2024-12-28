@@ -17,12 +17,13 @@
                     </h2>
                     <div class="game-recommend my-4">
                         <a-row>
-                            <template v-for="game in gameRecommend">
+                            <template v-for="game in member.gameReccommend">
                                 <a-col :span="12" :md="8" :lg="6" :xl="4" class="game-recommend-item" v-if="game.is_active && (game.status == 1 || game.status == 3) ">
                                     <!-- && (game.status = 1 && game.pg_status = false) -->
                                     <!-- v-if="game.is_active && (game.status == 1 || game.status=3)" -->
                                     <!-- {{game}} -->
                                     <div class="game-recommend-item-detail" :class="{ 'maintain-detail': game.maintain }" @click="launchGame(game.game_code,provider,game.maintain,game.game_code)">
+                                        <div :class="['overlay-image', { 'overlay-image-clear': isClear }]" ></div>
                                         <a-image
                                             width="100%"
                                             :preview="false"
@@ -120,9 +121,17 @@
   import { memberStore } from '~/store/index';
   import { launchGameService } from '~/services/gameListServices';
   import { getToken,logout } from '../auth/authToken';
+  import type { Game,GameCategory } from '~/store/typeMember';
 
     const member = memberStore();
     const config = useRuntimeConfig()
+
+    const isClear = ref(false); // ควบคุมสถานะของ overlay
+
+    const clearOverlay = () => {
+    isClear.value = true; // ตั้งค่าให้ overlay ค่อยๆ หายไปเมื่อภาพโหลดเสร็จ
+    };
+
 
     interface GameList {
         is_active: boolean;
@@ -170,13 +179,39 @@
         }
     };
 
-    const getRecomend = async() =>{
-        var data = await getGameRecommend();
-        // console.log(data);
-        if(data.status="success"){
-            gameRecommend.value = data.data
+    const getRecomend = async () => {
+        try {
+            const data = await getGameRecommend();
+
+            if (data.status === "success") {
+                gameRecommend.value = data.data.gameRecommend;
+
+                // Clear existing game data in allGame
+                member.allGame.forEach((category) => {
+                    category.games = [];
+                });
+
+                // Populate the games array for each category
+                data.data.gameAll.forEach((item: Game) => {
+                    const category = member.allGame.find(
+                        (cat: GameCategory) => cat.category === item.type
+                    );
+                    if (category) {
+                        category.games.push(item);
+                    } else {
+                        console.warn(`No category found for game type: ${item.type}`);
+                    }
+                });
+
+                // Set the game recommendations
+                member.setGameRecommend(data.data.gameRecommend);
+            } else {
+                console.error("Failed to fetch game recommendations:", data.status);
+            }
+        } catch (error) {
+            console.error("Error in getRecomend:", error);
         }
-    }
+    };
 
     function getDeviceType() {
         return window.innerWidth < 768 ? "mobile" : "pc";
@@ -203,6 +238,9 @@
               return navigateTo('/');
           }
         }
+    setTimeout(() => {
+        clearOverlay();
+    }, 10);
   </script>
   <style scoped>
     .elementor-background-overlay{
@@ -367,6 +405,23 @@
         cursor: pointer;
     }
     
+    .overlay-image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+        backdrop-filter: blur(8px); /* เริ่มต้นด้วยเบลอ */
+        opacity: 1; /* เริ่มต้นให้ overlay ปรากฏ */
+        transition: backdrop-filter 0.5s ease-in-out, opacity 0.5s ease-in-out; /* กำหนดระยะเวลา 1 วิ */
+    }
+
+    .overlay-image-clear {
+        backdrop-filter: blur(0); /* ภาพชัดเจนเมื่อใช้ class นี้ */
+        opacity: 0; /* ซ่อน overlay */
+    }
+
   </style>
   <style>
   .ant-drawer-body{
