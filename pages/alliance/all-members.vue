@@ -131,6 +131,7 @@ const dynamicColumns = computed(() => {
     { title: 'ชื่อ-นามสกุล', width:80, dataIndex: 'name', key: 'name' },
     { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 50 },
     { title: 'เลขบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 80 },
+    { title: 'จำนวนเงินที่ฝากทั้งหมด', dataIndex: 'sum_deposit', key: 'sum_deposit', width: 80 },
     { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 80 },
   ] },
   ];
