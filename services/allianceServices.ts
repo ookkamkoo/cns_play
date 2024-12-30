@@ -22,9 +22,9 @@ export async function getListAliianceServices(data :any,ref :string,token :strin
     };
 
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
-    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:00');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,
@@ -56,9 +56,9 @@ export async function getMemberListAliianceServices(data :any,ref :string,token 
     };
 
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
-    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:00');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,
@@ -69,6 +69,7 @@ export async function getMemberListAliianceServices(data :any,ref :string,token 
         `ref=${ref}`,
         `token=${token}`,
         `permission=${permission}`,
+        `status=${data.status}`,
         
     ];
     const search = queryParams.join('&');
@@ -91,9 +92,9 @@ export async function getMemberProfitServices(data :any,ref :string,token :strin
     };
 
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
-    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:00');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,
@@ -104,6 +105,8 @@ export async function getMemberProfitServices(data :any,ref :string,token :strin
         `ref=${ref}`,
         `token=${token}`,
         `permission=${permission}`,
+        `status=${data.status}`,
+        `action=${data.action}`,
     ];
     const search = queryParams.join('&');
 
@@ -126,9 +129,9 @@ export async function getFirstDepositListAliianceServices(data :any,ref :string,
     };
 
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
-    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:00');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,
@@ -160,9 +163,9 @@ export async function getMemberListGameAliianceServices(data :any,ref :string,to
     };
 
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
-    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:00');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,

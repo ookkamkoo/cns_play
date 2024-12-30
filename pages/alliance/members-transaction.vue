@@ -1,4 +1,34 @@
 <template>
+  <a-row class="p-2 alliance-list">
+      <a-col :span="11">
+        <a-row >
+          <a-col class="p-1" :span="12">
+            <label>สถานะ</label>
+            <a-select
+              ref="select"
+              v-model:value="formData.status"
+              style="width: 100%"
+              @change="handleSelectChange"
+            >
+              <a-select-option value="all">ทั้งหมด</a-select-option>
+              <a-select-option value="deposit">รายการฝาก</a-select-option>
+              <a-select-option value="withdraw">รายการถอน</a-select-option>
+            </a-select>
+          </a-col>
+          <a-col class="p-1" :span="12" v-if="formData.status == 'deposit'">
+            <label>รายการ</label>
+            <a-select
+              ref="select"
+              v-model:value="formData.action"
+              style="width: 100%"
+            >
+              <a-select-option value="all">ทั้งหมด</a-select-option>
+              <a-select-option value="first_deposit">ฝากเเรก</a-select-option>
+            </a-select>
+          </a-col>
+        </a-row>
+      </a-col>
+    </a-row>
     <a-row class="p-2 alliance-list">
       <a-col :span="11">
         <a-row >
@@ -75,14 +105,14 @@
               <td><strong>{{sumBetWinLoss.toFixed(2)}}</strong></td>
               <td colspan=1></td>
           </tr>
-          <tr class="center">
+          <tr class="center" v-if="formData.status == 'all'">
               <td colspan=1><strong>Company</strong></td>
               <td colspan=1>{{Alliance.getCompany()}} %</td>
               <td colspan=1> = {{ Number(Alliance.getCompany()) / 100 }} * {{ sumBetWinLoss }}</td>
               <td colspan=1>{{ companyResult.toFixed(2) }}</td>
               <td><strong>{{ company.toFixed(2) }}</strong></td>
           </tr>
-          <tr class="center">
+          <tr class="center" v-if="formData.status == 'all'">
               <td colspan=1><strong>Commission</strong></td>
               <td colspan=1>{{Alliance.getPercent()}} %</td>
               <td colspan=1> = {{ Number(Alliance.getPercent()) / 100 }} * {{ companyResult.toFixed(2) }}</td>
@@ -100,6 +130,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { getMemberProfitServices } from '~/services/allianceServices';
 import { memberStore } from '~/store/index';
 import * as Alliance from '~/auth/alliance';
+// import { SelectTypes } from 'ant-design-vue/es/select';
 const member = memberStore();
 const route = useRoute()
 
@@ -116,7 +147,6 @@ const commission = ref<number>(0);
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
 const loading = ref(true);
-
 
 const dynamicColumns = computed(() => {
   return [
@@ -147,12 +177,14 @@ const formState = reactive<any>({
 
 let formData = reactive({
     dateSelect:ref<string>('Today'),
-    timeStart:ref(dayjs('00:00', 'HH:mm')),
-    timeEnd:ref(dayjs('23:59', 'HH:mm')),
+    timeStart:ref(dayjs('00:00:00', 'HH:mm')),
+    timeEnd:ref(dayjs('23:59:59', 'HH:mm')),
     dateStart:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
     dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
     page:ref<number>(1),
     pageSize:ref<number>(10),
+    status:"all",
+    action:"all",
   });
 
 const getDataAlliance = async() => {
@@ -195,7 +227,9 @@ const getDataAlliance = async() => {
 const search = () =>{
   getDataAlliance();
 }
-
+const handleSelectChange = () =>{
+  formData.action = "all"
+}
 const handleDateSelectChange = () => {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');

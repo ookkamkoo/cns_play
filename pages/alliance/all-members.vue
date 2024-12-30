@@ -2,6 +2,24 @@
     <a-row class="p-2 alliance-list">
       <a-col :span="11">
         <a-row >
+          <a-col class="p-1" :span="12">
+            <label>สถานะ</label>
+            <a-select
+              ref="select"
+              v-model:value="formData.status"
+              style="width: 100%"
+            >
+              <a-select-option value="all">ทั้งหมด</a-select-option>
+              <a-select-option value="memberDeposit">สมาชิกที่ฝากเงิน</a-select-option>
+              <a-select-option value="memberNotDeposit">สมาชิกที่ไม่ได้ฝากเงิน</a-select-option>
+            </a-select>
+          </a-col>
+        </a-row>
+      </a-col>
+    </a-row>
+    <a-row class="p-2 alliance-list">
+      <a-col :span="11">
+        <a-row >
           <a-col class="p-1" :span="15">
             <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="formData.dateStart" />
@@ -140,6 +158,7 @@ let formData = reactive({
     dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
     page:ref<number>(1),
     pageSize:ref<number>(10),
+    status:"all",
   });
 
 const getDataAlliance = async() => {

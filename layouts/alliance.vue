@@ -74,11 +74,11 @@
             <GiftOutlined /> ค่าคอมมิชชั่น
           </router-link>
         </li> -->
-        <li>
+        <!-- <li>
           <router-link :to="`/alliance/first-deposit?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
             <GiftOutlined /> ฝากแรก
           </router-link>
-        </li>
+        </li> -->
       </ul>
     </a-row>
   </a-drawer>
@@ -167,11 +167,11 @@
               <GiftOutlined /> ค่าคอมมิชชั่น
             </router-link>
           </li> -->
-          <li>
+          <!-- <li>
             <router-link :to="`/alliance/first-deposit?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
               <GiftOutlined /> ฝากแรก
             </router-link>
-          </li>
+          </li> -->
         </ul>
       </a-row>
     </a-col>
