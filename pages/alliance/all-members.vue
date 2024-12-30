@@ -97,6 +97,9 @@
             <template v-else-if="column.key === 'created_at'">
               <div class="text-center">{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
             </template>
+            <template v-else-if="column.key === 'sum_deposit'">
+              <div class="text-center">{{ record.sum_deposit.toFixed(2) }}</div>
+            </template>
             <template v-else-if="column.key === 'detail'">
               <a-button type="primary" class="sky" ghost>รายละเอียด</a-button>
             </template>
