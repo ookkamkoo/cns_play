@@ -96,6 +96,8 @@
             dataShow.value = response.data;
             allRecord.value = response.data.length;
         } else {
+            dataShow.value = [];
+            allRecord.value = 0
             console.error('Response data is not an array:', response.data);
         }
         } else {

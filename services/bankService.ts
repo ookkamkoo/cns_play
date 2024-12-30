@@ -50,7 +50,7 @@ export interface Bank {
   export interface Response {
     status: string;
     message: string;
-    data: BankSystem[];
+    data: any;
     error?: string;
     time: string;
   }

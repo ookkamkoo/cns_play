@@ -3,7 +3,7 @@
       <FormAddTruewallet :closeModal="closeModal"/>
     </a-modal>
     <h3>ฝากเงิน</h3>
-    <div class="center gray" v-if="member.settingDefault.depositStatus == 'true'">
+    <div class="center gray" v-if="member.settingDefault.depositStatus == 'false'">
         ระบบฝากเงินยังไม่ได้เปิดใช้งาน
     </div>
     <div class="my-2">
@@ -25,7 +25,7 @@
         - กรณีฝากเงิน ให้เข้าเมนูฝากเงินของระบบเพื่อคัดลอกเลขบัญชีเท่านั้น เมื่อระบบเปลี่ยนบัญชีใหม่แล้ว ห้ามโอนไปบัญชีเดิมเด็ดขาด
       </div>
     </div>
-    <a-row class="my-3" v-if="bankSystem && bankSystem.length > 0">
+    <a-row class="my-3" v-if="bankSystem && Number(record) > 0">
       <a-col :span="24" :md="24" :xl="12"  class="my-1" v-for="value in bankSystem">
           <a-flex class="info-bank mx-1" :align="'center'" :justify="'center'" wrap="wrap">
               <a-col :span="8" :md="12" :lg="8"  class="center info-image">
@@ -128,6 +128,7 @@ import { memberStore } from '~/store/index';
 const member = memberStore();
 
 const bankSystem = ref<BankSystem[]>([]);
+const record = ref<Number>(0);
 const openAddTrue = ref<boolean>(false);
 
 const showModalAddtrue = () => {
@@ -136,9 +137,9 @@ const showModalAddtrue = () => {
   
 onMounted( async() => {
   var data = await getBankSystem();
-  console.log(data);
   if(data.status="success"){
-    bankSystem.value = data.data
+    bankSystem.value = data.data.data
+    record.value = data.data.recordsTotal
   }
 });
 
