@@ -263,3 +263,9 @@ definePageMeta({
   }
 }
 </style>
+
+<style>
+.alliance-list label{
+  color: #141414 !important; 
+}
+</style>

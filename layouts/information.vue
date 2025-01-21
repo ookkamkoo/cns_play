@@ -1,24 +1,26 @@
 <template>
-    <a-modal v-model:open="member.notify" :footer="null" :class="{'login-small':!screens.md}">
-      <OtherNotify/>
-    </a-modal>
-    <a-layout>
-      <a-layout-header class="header" :class="{'small-header':!screens.md}">
-        <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
-      </a-layout-header>
-      <a-layout class="main" :style="mainBackgroundStyle">
-        <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
-        <a-layout-sider class="sidebar" :class="{'small-sidebar':!screens.md}" v-if="screens.md">
-          <LayoutsInformationSidebar/>
-        </a-layout-sider>
-        <a-layout style="padding: 0 0px 10px" class="main-detail" :class="{'small-main-detail':!screens.md}">
-            <div class="info-main-detail p-3">
-              <slot/>
-            </div>
-        </a-layout>
+  <a-modal v-model:open="member.notify" :footer="null" :class="{'login-small':!screens.md}">
+    <OtherNotify/>
+  </a-modal>
+  <a-layout>
+    <a-layout-header class="header" :class="{'small-header':!screens.md}">
+      <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
+    </a-layout-header>
+    <a-layout class="main" :style="mainBackgroundStyle">
+      <LayoutsSidebarMenu :onClose="onClose" :open="open"/>
+      <a-layout-sider class="sidebar" :class="{'small-sidebar':!screens.md}" v-if="screens.md">
+        <LayoutsInformationSidebar/>
+      </a-layout-sider>
+      <a-layout style="padding: 0 0px 10px" class="main-detail" :class="{'small-main-detail':!screens.md}">
+        <Transition name="fade">
+          <div class="info-main-detail p-3">
+            <slot/>
+          </div>
+        </Transition>
       </a-layout>
     </a-layout>
-    <LayoutsManuBar v-if="!screens.md"/>
+  </a-layout>
+  <LayoutsManuBar v-if="!screens.md"/>
 </template>
 <script lang="ts" setup>
   import { Grid } from 'ant-design-vue';  
@@ -37,6 +39,7 @@
   const socket = $socket as WebSocket;
   const member = memberStore();
   const mainBackgroundStyle = ref({});
+  
 
   const messageContent = ref('');
 
@@ -82,6 +85,7 @@
         mainBackgroundStyle.value = { backgroundColor: member.settingDefault.bgColor || 'transparent' };
       }
     });
+    
 
   // ปิดการเชื่อมต่อ WebSocket เมื่อ component ถูก unmount
   // onUnmounted(() => {
@@ -177,5 +181,20 @@
   }
   .ant-table-cell, .ant-table-cell-header {
   text-align: center !important;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+  }
+
+  .fade-enter-from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
   }
 </style>

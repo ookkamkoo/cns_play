@@ -38,8 +38,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 logout();
                 // Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
               }else{
+                  console.log("wwwwwwwwwwwwwww");
+                  
                   // return navigateTo('/alliance/alliance');
+                  // return navigateTo('/information/minigame');
               }
+              // }
           }else{
             console.log("dddddddddddddd");
             // member.setShowLogin(true)

@@ -30,8 +30,12 @@
         </a-row>
 
         <!-- ข้อความด้านล่าง -->
-        <div class="user-id text-center">{{Alliance.getUsername()}}</div>
-        <div class="user-name text-center">{{Alliance.getName()}}</div>
+        <div class="user-id text-center">{{Alliance.getUsername()}}</div> 
+        <a-flex :justify="'space-between'">
+          <a-col :span="12"><p class="user-id">Percent: {{Alliance.getPercent()}} %</p></a-col>
+          <a-col :span="12"><p class="user-id center">Company: {{Alliance.getCompany()}} %</p></a-col>
+        </a-flex>
+        <p class="user-id" v-if="Alliance.getAgentType() == '0'"><b>ประเภท :</b> ยอดเสีย</p><p class="user-id" v-else-if="Alliance.getAgentType() == '1'"><b>ประเภท :</b> ยอดฝากถอน</p>
       </a-flex>
       <ul>
         <li>
@@ -41,17 +45,17 @@
         </li>
         <li>
           <router-link :to="`/alliance/all-members?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-            <HomeOutlined /> สมาชิกทั้งหมด
+            <TeamOutlined /> สมาชิกทั้งหมด
           </router-link>
         </li>
         <li>
           <router-link :to="`/alliance/members-transaction?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-            <GiftOutlined /> รายการ ฝาก-ถอน
+            <SwapOutlined /> รายการ ฝาก-ถอน
           </router-link>
         </li>
         <li>
           <router-link :to="`/alliance/members-game?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-            <GiftOutlined /> รายการเกมส์
+            <TrophyOutlined /> รายการเกมส์
           </router-link>
         </li>
         <!-- <li>
@@ -101,15 +105,22 @@
           </div>
         </a-col>
         <a-col :span="24" :md="18">
-          <div class="user-details">
-            <p class="user-id">ชื่อผู้ใช้งาน: {{Alliance.getUsername()}}</p>
-            <a-flex :justify="'space-around'" wrap="wrap">
-              <p class="my-1">Percent : {{Alliance.getPercent()}} %</p>
-              <p class="my-1"> Company : {{Alliance.getCompany()}} %</p>
+          <div class="user-details" >
+            <p class="user-id">ผู้ใช้งาน: {{Alliance.getUsername()}}</p>
+            <p class="user-id">Percent: {{Alliance.getPercent()}} %</p>
+            <p class="user-id">Company: {{Alliance.getCompany()}} %</p>
+            <p class="user-id" v-if="Alliance.getAgentType() == '0'"><b>ประเภท :</b> ยอดเสีย</p>
+            <p class="user-id" v-else-if="Alliance.getAgentType() == '1'"><b>ประเภท :</b> ยอดฝากถอน</p>
+          </div>
+          <div class="user-details-mobile" >
+            <a-flex :justify="'space-around'">
+              <p >ผู้ใช้งาน: {{Alliance.getUsername()}}</p>
+              <p  v-if="Alliance.getAgentType() == '0'"><b>ประเภท :</b> ยอดเสีย</p><p  v-else-if="Alliance.getAgentType() == '1'"><b>ประเภท :</b> ยอดฝากถอน</p>
             </a-flex>
-            <span class="account-status">
-              <CheckCircleOutlined /> ยืนยันบัญชีแล้ว
-            </span>
+            <a-flex :justify="'space-around'">
+              <p >Percent: {{Alliance.getPercent()}} %</p>
+              <p >Percent: {{Alliance.getCompany()}} %</p>
+            </a-flex>
           </div>
         </a-col>
         <a-col :span="24" :md="24">
@@ -134,17 +145,17 @@
           </li>
           <li>
             <router-link :to="`/alliance/all-members?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-              <HomeOutlined /> สมาชิกทั้งหมด
+              <TeamOutlined /> สมาชิกทั้งหมด
             </router-link>
           </li>
           <li>
             <router-link :to="`/alliance/members-transaction?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-              <GiftOutlined /> รายการ ฝาก-ถอน
+              <SwapOutlined /> รายการ ฝาก-ถอน
             </router-link>
           </li>
           <li>
             <router-link :to="`/alliance/members-game?ref=${Alliance.getRef()}&token=${Alliance.getToken()}&status=${Alliance.getPermission()}`">
-              <GiftOutlined /> รายการเกมส์
+              <TrophyOutlined /> รายการเกมส์
             </router-link>
           </li>
           <!-- <li>
@@ -224,7 +235,7 @@ const onClose = () => {
 
 .user-id {
   font-size: 12px;
-  color: whitesmoke;
+  color: whitesmoke !important;
 }
 
 .account-name {
@@ -429,11 +440,17 @@ const onClose = () => {
   .sidebar-list {
     display: none !important;
   }
+  .user-details {
+    display: none !important;
+  }
 }
 
 /* ซ่อนปุ่มเมนู Drawer บนจอใหญ่ (> 767px) */
 @media (min-width: 767px) {
   .menu-list {
+    display: none !important;
+  }
+  .user-details-mobile {
     display: none !important;
   }
 }

@@ -77,7 +77,9 @@ const gameRecommend = ref<Game[]>([])
 
 const updateCategory = () => {
   const game = route.params.category;
-  console.log(game);
+  console.log(route.params.category);
+  
+  console.log(gameRecommend);
   
   category.value = member.menuBar.find((cat: GameMenuItem) => cat.name === game) || {
     id: 0,
@@ -93,6 +95,7 @@ const updateCategory = () => {
 
     if (foundCategory) {
         gameRecommend.value = foundCategory.games;
+        gameRecommend.value.sort((a, b) => a.priority - b.priority);
     } else {
         console.error("Category not found for ref:", category.value.ref);
         gameRecommend.value = []; // หรือกำหนดค่าเริ่มต้น
@@ -228,6 +231,9 @@ const goGameList = (provider: string) => {
   min-width: 80px;
   font-size: 14px;
 }
+.center{
+  justify-content:center
+}
 .hot {
   position: absolute;
   bottom: 0;
@@ -253,5 +259,6 @@ const goGameList = (provider: string) => {
   border-radius: 15px;
   overflow: hidden;
   cursor: pointer;
+  background: radial-gradient(circle at center, #130a34 0%, /* สีม่วงโทนหนึ่ง */ #0f092f 100% /* สีม่วงโทนใกล้เคียง */);
 }
 </style>

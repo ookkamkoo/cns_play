@@ -41,6 +41,7 @@ export const menuList = [
     // {name: 'ฝากประจำ',path:'/information/daily',icon:CarryOutOutlined,show:1},
     // {name: 'หมุนเสี่ยงโชค',path:'/information/',icon:RocketOutlined,show:1},
     {name: 'โปรโมชั่น',path:'/information/promotion',icon: GiftOutlined,show:1 },
+    {name: 'มินิเกมส์',path:'/information/mini-game/listMiniGame',icon: GiftOutlined,show:1 },
     {name: 'คืนยอดเสีย',path:'/information/return-credit',icon: DollarOutlined,show:1},
     {name: 'ประวัติการทำรายการ',path:'/information/transaction',icon: ClockCircleOutlined,show:1 },
     {name: 'เเนะนำเพื่อน',path:'/information/recommend',icon: UsergroupAddOutlined,show:1 },

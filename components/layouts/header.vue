@@ -1,8 +1,11 @@
 <template>
     <a-flex :justify="'space-between'" :align="'center'" class="header-detail">
         <div class="logo">
-            <MenuOutlined class="header-menu-list" v-if="!screens.lg && !member.login" @click="props.showDrawer"/>
-            <NuxtLink to="/" exact class="link-sidebar">
+            <!-- <MenuOutlined class="header-menu-list" v-if="!screens.lg && !member.login" @click="props.showDrawer"/> -->
+            <div class="navbar-brand" v-if="!screens.lg && !member.login" @click="props.showDrawer">
+                <span class="one"></span><span class="two"></span><span class="three"></span>
+            </div>
+            <NuxtLink to="/" exact class="link-sidebar img-branner">
                 <a-image
                 :width="120"
                 :preview="false"
@@ -171,6 +174,16 @@
     .menu{
         display: inline-block;
     }
+    .menu_icon {
+        margin: auto;
+        z-index: 10;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+        top: -13px;
+    }
     .login{
         display: inline-block;
         text-transform: uppercase;
@@ -256,5 +269,153 @@
     }
     .small-header{
         padding: 0 10px !important;
+    }
+    .logo{
+        display: flex;
+        align-items: center;
+    }
+    .navbar-brand {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        margin: 5px;
+        position: fixed;
+    }
+
+    .navbar-brand span {
+    display: block;
+    height: 3px;
+    background-color: #a5f3fc; /* สีเหมือนในรูป */
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    }
+
+    .navbar-brand span:nth-child(1) {
+        transform-origin: top left;
+    }
+
+    .navbar-brand span:nth-child(3) {
+    transform-origin: bottom left;
+    }
+
+    /* Animation เมื่อ active */
+    .navbar-brand.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .navbar-brand.active span:nth-child(2) {
+    opacity: 0; /* ซ่อน middle line */
+    }
+
+    .navbar-brand.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .navbar-brand span {
+        display: inline-block;
+        height: 5px;
+        background-color: #3498db;
+        border-radius: 5px;
+    }
+
+    .navbar-brand .one {
+        animation: pulseWidth 1s ease infinite;
+    }
+
+    .navbar-brand .two {
+        animation: pulseWidth1 1s ease infinite;
+    }
+
+    .navbar-brand .three {
+        animation: pulseWidth2 1s ease infinite;
+    }
+
+    span.one {
+        top: 16px;
+        width: 40px;
+    }
+
+    span.two {
+        top: 26px;
+        width: 30px;
+    }
+
+    span.three {
+        top: 35px;
+        width: 50px;
+    }
+
+    .img-branner{
+        position: fixed;
+        left: 60px;
+    }
+
+    @keyframes pulseWidth {
+        0% {
+            width: 25px;
+        }
+        25% {
+            width: 15px;
+        }
+        50% {
+            width: 20px;
+        }
+        75% {
+            width: 25px;
+        }
+        100% {
+            width: 30px;
+        }
+    }
+
+    @keyframes pulseWidth1 {
+        0% {
+            width: 30px;
+        }
+        25% {
+            width: 20px;
+        }
+        50% {
+            width: 25px;
+        }
+        75% {
+            width: 15px;
+        }
+        100% {
+            width: 30px;
+        }
+    }
+
+    @keyframes pulseWidth2 {
+        0% {
+            width: 25px;
+        }
+        25% {
+            width: 10px;
+        }
+        50% {
+            width: 20px;
+        }
+        75% {
+            width: 15px;
+        }
+        100% {
+            width: 20px;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .img-branner {
+            left: 90px; /* กำหนดตำแหน่งซ้าย */
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .img-branner {
+            left: 60px; /* กำหนดตำแหน่งซ้าย */
+        }
     }
 </style>

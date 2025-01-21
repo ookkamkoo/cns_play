@@ -70,6 +70,30 @@
                 </a-col>
               </a-flex>
             </a>
+            <NuxtLink :to="item.path" v-else-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && !member.memberDetail.is_agent" class="sidebar-menu-list-link">
+                <a-flex class="sidebar-menu-list-detail" :align="'center'" >
+                    <a-col :span="4" class="sidebar-menu-list-icon">
+                        <component :is="item.icon" />
+                    </a-col>
+                    <a-col :span="20">
+                        {{item.name}}
+                    </a-col>
+                </a-flex>
+            </NuxtLink>
+            <a :href="`/alliance/dashboard?ref=${member.memberDetail.key_ref}&token=${getToken()}&status=alliance`" 
+                    v-else-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && member.memberDetail.is_agent" 
+                    style="width: 100%;"
+                    target="_blank" 
+                    class="sidebar-menu-list-link">
+                  <a-flex :align="'center'" class="sidebar-menu-list-detail" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
+                    <a-col :span="6" class="sidebar-menu-list-icon">
+                      <component :is="item.icon" />
+                    </a-col>
+                    <a-col :span="18">
+                      พันธมิตร
+                    </a-col>
+                  </a-flex>
+              </a>
             <NuxtLink to="" exact class="link-sidebar" v-else-if="item.name == 'ประกาศ'" @click="handleNotifyClick">
               <a-flex :align="'center'" class="sidebar-menu-list-detail" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
                 <a-col :span="6" class="sidebar-menu-list-icon">
@@ -101,6 +125,7 @@
   import { logout } from '~/auth/authToken';
   const placement = ref<DrawerProps['placement']>('left');
   import { memberStore } from '~/store/index';
+  import { getToken } from '~/auth/authToken'
 
   const member = memberStore();
   const config = useRuntimeConfig()

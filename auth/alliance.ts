@@ -7,6 +7,7 @@ export interface TokenResponse {
     token: string;
     permission: string;
     credit: string;
+    agent_type: string;
   }
   
   // Generic function สำหรับ set ค่า
@@ -59,6 +60,10 @@ export interface TokenResponse {
   export function setCredit(credit: string): void {
     setItem('credit', credit);
   }
+
+  export function setAgentType(agentType: string): void {
+    setItem('agentType', agentType);
+  }
   
   // ฟังก์ชัน get สำหรับแต่ละฟิลด์ใน TokenResponse
   export function getName(): string | null {
@@ -91,5 +96,8 @@ export interface TokenResponse {
   
   export function getCredit(): string | null {
     return getItem('credit');
+  }
+  export function getAgentType(): string | null {
+    return getItem('agentType');
   }
   

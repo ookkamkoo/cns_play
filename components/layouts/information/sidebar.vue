@@ -83,14 +83,14 @@
                     v-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && member.memberDetail.is_agent" 
                     target="_blank" 
                     class="sidebar-menu-list-link">
-                        <a-flex class="sidebar-menu-list-detail" :align="'center'">
-                            <a-col :span="4" class="sidebar-menu-list-icon">
-                                <component :is="item.icon" />
-                            </a-col>
-                            <a-col :span="20">
-                                พันธมิตร
-                            </a-col>
-                        </a-flex>
+                    <a-flex class="sidebar-menu-list-detail" :align="'center'">
+                        <a-col :span="4" class="sidebar-menu-list-icon">
+                            <component :is="item.icon" />
+                        </a-col>
+                        <a-col :span="20">
+                            พันธมิตร
+                        </a-col>
+                    </a-flex>
                 </a>
                 <NuxtLink :to="item.path" v-if="item.show == 1 && item.name != 'ติดต่อเรา'  && item.name != 'เเนะนำเพื่อน'" class="sidebar-menu-list-link">
                     <a-flex class="sidebar-menu-list-detail" :align="'center'" >

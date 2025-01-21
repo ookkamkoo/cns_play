@@ -1,8 +1,8 @@
 <template>
     <a-row class="p-2 alliance-list">
-      <a-col :span="11">
+      <a-col :span="24" :md="8" >
         <a-row >
-          <a-col class="p-1" :span="12">
+          <a-col class="p-1" :span="24">
             <label>สถานะ</label>
             <a-select
               ref="select"
@@ -18,33 +18,33 @@
       </a-col>
     </a-row>
     <a-row class="p-2 alliance-list">
-      <a-col :span="11">
+      <a-col :span="24" :md="10">
         <a-row >
-          <a-col class="p-1" :span="15">
+          <a-col class="p-1" :span="14">
             <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="formData.dateStart" />
           </a-col>
-          <a-col class="p-1" :span="8">
+          <a-col class="p-1" :span="10">
             <label><br></label>
             <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
           </a-col>
         </a-row>
       </a-col>
-      <a-col :span="11">
+      <a-col :span="24" :md="10">
         <a-row>
-          <a-col class="p-1" :span="15">
+          <a-col class="p-1" :span="14">
             <label>ถึงวันที่</label>
             <a-date-picker v-model:value="formData.dateEnd" />
           </a-col>
-          <a-col class="p-1" :span="8">
+          <a-col class="p-1" :span="10">
             <label><br></label>
             <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
           </a-col>
         </a-row>
       </a-col>
-      <a-col class="p-1" :span="2">
+      <a-col class="p-1" :span="24" :md="4">
         <label><br></label>
-        <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
+        <a-button class="submit sky" type="primary" @click="search" style="width: 100%;"><SearchOutlined /> ค้นหา</a-button>
       </a-col>
     </a-row>
     <a-row class="p-2">
@@ -225,7 +225,17 @@ const handleDateSelectChange = () => {
       const lastDay = dayjs(`9999-12-31`, 'YYYY-MM-DD');
       formData.dateStart = firstDay;
       formData.dateEnd = lastDay;
+    }else if(formData.dateSelect === "NotToday"){
+      const yesterday = new Date(currentDate);
+      yesterday.setDate(currentDate.getDate() - 1);
+      const day = String(yesterday.getDate()).padStart(2, '0');
+
+      const firstDay = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+      const lastDay = dayjs(`9999-12-31`, 'YYYY-MM-DD');
+      formData.dateStart = firstDay;
+      formData.dateEnd = lastDay;
     }
+
 
     formData.timeStart = dayjs('00:00', 'HH:mm');
     formData.timeEnd = dayjs('23:59', 'HH:mm');
@@ -248,10 +258,19 @@ const handleTableChange = (pagination: any) => {
 
 onMounted( () => {
     const tick = route.query.tick || "";
+    const action = route.query.action || "";
     if(tick == "all"){
       formData.dateSelect = "all"
-    }else{
+    }else if(tick == "Today"){
       formData.dateSelect = "Today"
+    }else if(tick == "NotToday"){
+      formData.dateSelect = "NotToday"
+    }
+
+    if(action == "memberOldDeposit" || action == "memberNewDeposit"){
+      formData.status = "memberDeposit"
+    }else if(action == "memberNewNotDeposit"){
+      formData.status = "memberNotDeposit"
     }
     console.log("Tick:", tick);
     handleDateSelectChange();
@@ -336,5 +355,8 @@ definePageMeta({
 }
 :where(.css-dev-only-do-not-override-19iuou).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-19iuou).ant-table-wrapper .ant-table-thead >tr>td{
   text-align: center !important;
+}
+.alliance-list label{
+  color: #141414 !important; 
 }
 </style>
