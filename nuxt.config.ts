@@ -1,6 +1,9 @@
 import type { NuxtPage } from 'nuxt/schema'
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
   modules: ["@pinia/nuxt","@ant-design-vue/nuxt"],
   css: ['~/assets/scss/_sets.scss'],
 

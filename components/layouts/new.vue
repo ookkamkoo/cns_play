@@ -25,7 +25,7 @@
   }
   .newsboxhead-icon-container{
     background: #000000E6;
-    padding: 5px;
+    padding: 4px;
     position: absolute;
     z-index: 4;
   }

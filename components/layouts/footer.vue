@@ -50,7 +50,7 @@
     <div class="elementor-background-overlay-dark">
             <a-row justify="center">
                 <a-col :span="16">
-                    <div class="center my-2">
+                    <div class="center my-2 footer-md">
                         <h2>
                             {{member.settingDefault.title}} เว็บคาสิโนออนไลน์ 
                         </h2>
@@ -91,6 +91,13 @@
   const config = useRuntimeConfig()
   
 </script>
+<style scoped>
+  @media (max-width: 767px) {
+    .footer-md {
+      padding-bottom: 45px;
+    }
+  }
+</style>
 <style>
 .elementor-background-overlay-dark{
     background-color: rgba(0, 0, 0, 0.811);

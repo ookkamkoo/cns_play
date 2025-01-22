@@ -11,7 +11,7 @@
                         <div class="menu-list-item-detail">
                         <a-flex :align="'center'" :vertical="!screens.md">
                             <a-col class="logo-menu-sidebar" :class="{'small-logo-menu-sidebar-img':!screens.md}">
-                                <a-image :width="60" :preview="false" src="/img/home.png" :class="{'logo-menu-sidebar-img':!screens.md}"/>
+                                <a-image :width="60" :preview="false" src="/img/home.webp" :class="{'logo-menu-sidebar-img':!screens.md}"/>
                             </a-col>
                             <div class="detail-menu-sidebar">
                                 <span>หน้าเเรก</span>

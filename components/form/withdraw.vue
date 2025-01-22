@@ -123,11 +123,10 @@ const toggleClass = (colNum: number) => {
 
 const amountChange = () => {
   console.log(member.settingDefault.withdrawDetail);
-  
   const withdrawDetail = typeof member.settingDefault.withdrawDetail === 'string'
       ? JSON.parse(member.settingDefault.withdrawDetail)
       : member.settingDefault.withdrawDetail;
-    console.log(withdrawDetail.fee);
+    console.log(withdrawDetail);
   if(member.settingDefault.typeWithdrawFee == '1'){
     if(member.settingDefault.typeWithdrawFeeAmountOrPerCent == '1'){
       formState.amount_vat = (Number(formState.amount) * (Number(withdrawDetail.fee) / 100))

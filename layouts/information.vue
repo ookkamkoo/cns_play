@@ -178,6 +178,7 @@
     border-radius: 10px;
     padding: 1rem;
     margin: 5px !important;
+    min-height: 400px;
   }
   .ant-table-cell, .ant-table-cell-header {
   text-align: center !important;

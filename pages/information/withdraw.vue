@@ -19,18 +19,20 @@
                 </a-col>
             </div>
         </a-col>
-        <!-- <a-col :span="24" :md="12" :xl="8">
+        <a-col :span="24" :md="12" :xl="8">
             <div class="m-1 info-withdrow-list">
                 <div class="info-withdrow-title">จำนวนเหรียญ</div>
                 <div class="info-withdrow-amount-title my-1">คงเหลือ</div>
                 <div class="info-withdrow-amount center my-1"> {{ member.memberDetail.balance_event }}</div>
                 <a-col :span="24">
+                  <NuxtLink to="/information/mini-game/listMiniGame" exact class="nav-link">
                     <div class="info-bank-coppy center my-2">
                         <CopyOutlined /> เล่นเกมส์
                     </div>
+                  </NuxtLink>
                 </a-col>
             </div>
-        </a-col> -->
+        </a-col>
     </a-flex>
     <h3>บัญชีที่ลูกค้าลงทะเบียน</h3>
     <a-flex wrap="wrap">
@@ -106,6 +108,8 @@ import { memberStore } from "~/store/index";
   const member = memberStore();
 
   const showModal = () => {
+    // console.log(member.settingDefault.withdrawStatus);
+    
     if(member.settingDefault.withdrawStatus == "false"){
       Alert("error","ระบบเงินยังไม่พร้อมใช้งาน.")
     }else{

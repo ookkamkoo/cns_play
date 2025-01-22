@@ -1,5 +1,5 @@
 // import { memberStore } from '~/store/index';
-import { HomeOutlined,UserOutlined,CarryOutOutlined,GiftOutlined,RocketOutlined,DollarOutlined,ClockCircleOutlined,UsergroupAddOutlined,CommentOutlined,SoundOutlined,LogoutOutlined } from '@ant-design/icons-vue';
+import { HomeOutlined,UserOutlined,CarryOutOutlined,GiftOutlined,RocketOutlined,DollarOutlined,ClockCircleOutlined,UsergroupAddOutlined,CommentOutlined,SoundOutlined,LogoutOutlined,CrownOutlined } from '@ant-design/icons-vue';
 // const member = memberStore();
 
 export const gameCategories = [
@@ -40,8 +40,8 @@ export const menuList = [
     {name: 'ข้อมูลส่วนตัว',path:'/information/profile',icon:UserOutlined,show:1 },
     // {name: 'ฝากประจำ',path:'/information/daily',icon:CarryOutOutlined,show:1},
     // {name: 'หมุนเสี่ยงโชค',path:'/information/',icon:RocketOutlined,show:1},
-    {name: 'โปรโมชั่น',path:'/information/promotion',icon: GiftOutlined,show:1 },
-    {name: 'มินิเกมส์',path:'/information/mini-game/listMiniGame',icon: GiftOutlined,show:1 },
+    {name: 'โปรโมชั่น',path:'/information/promotion',icon: CrownOutlined,show:1 },
+    {name: 'กิจกรรม',path:'/information/mini-game/listMiniGame',icon: GiftOutlined,show:1 },
     {name: 'คืนยอดเสีย',path:'/information/return-credit',icon: DollarOutlined,show:1},
     {name: 'ประวัติการทำรายการ',path:'/information/transaction',icon: ClockCircleOutlined,show:1 },
     {name: 'เเนะนำเพื่อน',path:'/information/recommend',icon: UsergroupAddOutlined,show:1 },

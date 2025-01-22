@@ -1,5 +1,5 @@
 <template>
-    <a-modal v-model:open="open" width="650px">
+    <a-modal v-model:open="open" width="650px" class="models-dark">
         <h3>รายละเอียดโปรโมชั่น</h3>
         <a-row :justify="'center'">
             <a-image
@@ -473,4 +473,10 @@
         padding: 10px;
         margin-top: 20px;
     }
+    .models-dark .ant-modal-content{
+        background: #303030f2 !important;
+    }
+    /* .ant-modal-mask {
+
+    } */
 </style>

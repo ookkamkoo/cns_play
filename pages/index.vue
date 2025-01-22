@@ -15,11 +15,6 @@
                         <h2 class="mx-1">
                             เกมยอดนิยม
                         </h2>
-                        <NuxtLink to="/information/mini-game/spinWheel" exact class="link-sidebar">
-                            <div class="withdraw">
-                                ถอนเงิน
-                            </div>
-                        </NuxtLink>
                         <div class="game-recommend my-4">
                             <a-row>
                                 <template v-for="game in member.gameReccommend">

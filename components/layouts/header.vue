@@ -5,7 +5,7 @@
             <div class="navbar-brand" v-if="!screens.lg && !member.login" @click="props.showDrawer">
                 <span class="one"></span><span class="two"></span><span class="three"></span>
             </div>
-            <NuxtLink to="/" exact class="link-sidebar img-branner">
+            <NuxtLink to="/" exact class="link-sidebar img-branner" style="width: 120px;">
                 <a-image
                 :width="120"
                 :preview="false"
@@ -22,6 +22,58 @@
             </a-button>
         </a-space>
         <a-space v-else>
+                <a-space class="desktop-header-view" v-if="screens.xl">
+                    <ul class="headerContent">
+                        <li class="item">
+                            <NuxtLink to="/information/recommend" exact class="nav-link">
+                                <div>
+                                    <a-image
+                                        :width="50"
+                                        :preview="false"
+                                        src="/img/เเนะนำเพื่อน.webp"
+                                    />
+                                </div>
+                                <div class="text">แนะนำเพื่อน</div>
+                            </NuxtLink>
+                        </li>
+                        <li class="item">
+                            <NuxtLink to="/information/return-credit" exact class="nav-link">
+                                <div>
+                                    <a-image
+                                        :width="50"
+                                        :preview="false"
+                                        src="/img/คืนยอดเสีย.webp"
+                                    />
+                                </div>
+                                <div class="text">คืนยอดเสีย</div>
+                            </NuxtLink>
+                        </li>
+                        <li class="item">
+                            <NuxtLink to="/information/mini-game/listMiniGame" exact class="nav-link">
+                                <div>
+                                    <a-image
+                                        :width="50"
+                                        :preview="false"
+                                        src="/img/กิจกรรม.webp"
+                                    />
+                                </div>
+                                <div class="text">กิจกรรม</div>
+                            </NuxtLink>
+                        </li>
+                        <li class="item">
+                            <NuxtLink to="/information/promotion" exact class="nav-link">
+                                <div>
+                                    <a-image
+                                        :width="50"
+                                        :preview="false"
+                                        src="/img/โปรโมชั่น.webp"
+                                    />
+                                </div>
+                                <div class="text">โปรโมชั่น</div>
+                            </NuxtLink>
+                        </li>
+                    </ul>
+                </a-space>
                 <a-space class="desktop-header-view" v-if="screens.lg">
                     <div class="header-detail">
                         <div class="header-detail">
@@ -44,9 +96,9 @@
                     </div>
                     <div class="vertical-line"></div>
                         <NuxtLink to="/information/withdraw" exact class="link-sidebar">
-                            <div class="withdraw">
+                            <!-- <div class="withdraw"> -->
                                 ถอนเงิน
-                            </div>
+                            <!-- </div> -->
                         </NuxtLink>
                     <div class="vertical-line"></div>
                     <NuxtLink to="/information/deposit" exact class="link-sidebar">
@@ -165,11 +217,50 @@
     }>();
 
     const LogoutSystem = () => {
+        const router = useRouter();
         logout();
+        router.push('/');
     }
 
 
 </script>
+<style scoped> 
+    .headerContent {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
+    }
+    .nav{
+        display: flex;
+    }
+    .nav-link{
+        text-align: center;
+        height: 10px;
+    }
+    .nav-link img{
+        margin: 0 auto;
+    }
+    .headerContent li{
+        list-style-type: none;
+        width: 85px;
+        padding: 2px;
+        margin: 0 4px;
+        background-clip: content-box, border-box;
+        background-image: linear-gradient(180deg, #3a3a3a, #101010), linear-gradient(180deg, #ffe068, #151515);
+    }
+    .headerContent li:hover{
+        background: radial-gradient(100% 100% at 50% 0, #ff7373 0, #d61a28 44%, #7d0508 100%) !important;
+    }
+    .text{
+        font-size: 12px;
+        color: whitesmoke;
+    }
+    .nav-link div{
+        line-height: 55px;
+    }
+</style>
 <style >
     .menu{
         display: inline-block;
@@ -350,7 +441,10 @@
 
     .img-branner{
         position: fixed;
-        left: 60px;
+    }
+    .item{
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
     }
 
     @keyframes pulseWidth {

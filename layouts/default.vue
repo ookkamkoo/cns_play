@@ -1,4 +1,5 @@
-<template>
+
+  <template>
     <a-modal v-model:open="member.notify" :footer="null" :class="{'login-small':!screens.md}">
       <OtherNotify/>
     </a-modal>
@@ -8,180 +9,122 @@
     <a-modal v-model:open="openRegister" :footer="null" :class="{'login-small':!screens.md}">
       <FormRegister :closeModal="closeModalRegister"/>
     </a-modal>
-    <a-layout>
-      <a-layout-header class="header" :class="{'small-header':!screens.md}">
-        <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister"/>
+    <a-layout class="page-layout">
+      <!-- Header -->
+      <a-layout-header class="header" :class="{'small-header': !screens.md}">
+        <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister" />
       </a-layout-header>
-      <a-layout class="main" :style="mainBackgroundStyle">
+  
+      <!-- Main Content -->
+      <a-layout class="main">
         <LayoutsSidebarMenu :onClose="onClose" :open="open" />
-
+  
+        <!-- Sidebar -->
         <a-layout-sider class="sidebar" v-if="screens.md">
-            <LayoutsSidebar />
+          <LayoutsSidebar />
         </a-layout-sider>
+  
+        <!-- Main Details -->
         <a-layout class="main-detail">
-            <LayoutsNew/>
-            <a-row style="width: 100%;">
-              <a-flex style="width: 100%;">
-                <LayoutsSidebar v-if="!screens.md" :class="{ 'disabled-sidebar':   $route.path === '/'}"/>
-                  <slot/>
-              </a-flex>
-            </a-row>
-            <LayoutsFooter/>
+          <LayoutsNew />
+          <a-row style="width: 100%;" :style="{ minHeight: 'calc(100vh - 380px)' }">
+            <a-flex style="width: 100%;">
+              <LayoutsSidebar v-if="!screens.md" :class="{ 'disabled-sidebar': $route.path === '/' }" />
+              <slot />
+            </a-flex>
+          </a-row>
+                <!-- Footer -->
+        <a-layout-footer class="footer" >
+          <LayoutsFooter />
+        </a-layout-footer>
         </a-layout>
       </a-layout>
         <LayoutsManuBar v-if="!screens.md"/>
     </a-layout>
   </template>
+  
   <script lang="ts" setup>
-    import { Grid } from 'ant-design-vue';
-    import type { NotificationPlacement } from 'ant-design-vue';
-    import { memberStore } from '~/store/index';
-    import { getSettingServices } from "~/services/settingServices";
-
-    // const openLogin = ref<boolean>(false);
-    const openRegister = ref<boolean>(false);
-    const useBreakpoint = Grid.useBreakpoint;
-    const open = ref<boolean>(false);
-    const screens = useBreakpoint();
-    const mainBackgroundStyle = ref({});
-    const config = useRuntimeConfig()
-
-    const { $socket } = useNuxtApp();
-    const socket = $socket as WebSocket;
-    const member = memberStore();
-
-    const messageContent = ref('');
-
-    const openNotification = (placement: NotificationPlacement, amount: string) => {
-      notification.success({
-        message: `เเจ้งเตือนรายการ ฝาก - ถอน`,
-        description: `ฝากถอนสำเร็จ ยอดเงินปัจจุบันของคุณ คือ ${amount}`,
-        placement,
-      });
-    };
-    
-
-    onMounted(() => {
-      getSetting();
-      // ตรวจสอบการเชื่อมต่อ WebSocket และจัดการข้อความ
-      if (socket) {
-        socket.onmessage = (event: MessageEvent) => {
-          try {
-            // แปลงข้อความ JSON ที่ได้รับเป็น object
-            const data = JSON.parse(event.data);
-            
-            // เก็บข้อมูลข้อความใน messageContent
-            messageContent.value = data;
-            
-            console.log("ข้อความจากเซิร์ฟเวอร์:", data);
-            console.log(data.status); // เข้าถึง status จาก object ที่แปลงแล้ว
-            
-            if (data.status === "success") {
-              // เรียก openNotification และแปลง data.data เป็นสตริงหากจำเป็น
-              openNotification('bottomRight', String(data.data));
-              member.memberDetail.balance = data.data
-            }
-          } catch (error) {
-            console.error("Error parsing WebSocket message:", error);
-          }
-        };
+  import { Grid } from 'ant-design-vue';
+  import { ref, onMounted } from 'vue';
+  import { memberStore } from '~/store/index';
+  import { getSettingServices } from '~/services/settingServices';
+  
+  const useBreakpoint = Grid.useBreakpoint;
+  const screens = useBreakpoint();
+  const mainBackgroundStyle = ref({});
+  const open = ref<boolean>(false);
+  const openRegister = ref<boolean>(false);
+  const member = memberStore();
+  const config = useRuntimeConfig();
+  
+  const showDrawer = () => {
+    open.value = true;
+  };
+  
+  const onClose = () => {
+    open.value = false;
+  };
+  
+  const showModalLogin = () => {
+    member.setShowLogin(true);
+  };
+  
+  const closeModalLogin = () => {
+    member.setShowLogin(false);
+  };
+  
+  const showModalRegister = () => {
+    openRegister.value = true;
+  };
+  
+  const closeModalRegister = () => {
+    openRegister.value = false;
+  };
+  
+  const getSetting = async () => {
+    const data = await getSettingServices();
+    if (data.status === 'success') {
+      member.settingDefault = data.data.setting;
+      member.menuBar = data.data.menu;
+      member.news = data.data.news;
+  
+      if (data.data.setting.bgImageSw === 'true') {
+        const url = `${config.public.apiServer}/${member.settingDefault.bgImage}`;
+        mainBackgroundStyle.value = { backgroundImage: `url(${url})` };
       } else {
-        console.warn("ไม่สามารถเชื่อมต่อ WebSocket ได้");
+        mainBackgroundStyle.value = { backgroundColor: member.settingDefault.bgColor || 'transparent' };
       }
-    });
-
-
-    const getSetting = async () => {
-        const data = await getSettingServices();
-        if (data.status === 'success') {
-          member.settingDefault = data.data.setting;
-          member.menuBar = data.data.menu;
-          member.news = data.data.news;
-          // member.menuBar = data.data.menu;
-          // if(!member.login){
-          //   member.setMemberNotify(true);
-          // }
-          console.log("bgImageSw:",member.settingDefault.bgImageSw);
-          if (data.data.setting.bgImageSw == "true") {
-            member.settingDefault.bgImageSw = "true"
-            var url = config.public.apiServer +'/' + member.settingDefault.bgImage
-            mainBackgroundStyle.value = { backgroundImage: `url(${url})` };
-          } else {
-            member.settingDefault.bgImageSw = "false"
-            mainBackgroundStyle.value = { backgroundColor: member.settingDefault.bgColor || 'transparent' };
-          }
-        } else {
-            console.error("Failed to fetch setting.");
-        }
-    };
-
-    const showDrawer = () => {
-      console.log("open");
-      open.value = true;
-    };
-    
-    const onClose = () => {
-      console.log("close");
-      open.value = false;
-    };
-
-    const showModalLogin = () => {
-      console.log("sssssssssssssss");
-      member.setShowLogin(true);
-    };
-
-    function closeModalLogin() {
-        // openLogin.value = false;
-        member.setShowLogin(false);
+    } else {
+      console.error('Failed to fetch settings.');
     }
-
-    const showModalRegister = () => {
-      openRegister.value = true;
-    };
-
-    function closeModalRegister() {
-        openRegister.value = false;
-    }
-
-    const route = useRoute()
-    if(route.query.register === 'true'){
-      showModalRegister();
-    }
-
-    if(route.query.login === 'true'){
-      showModalLogin();
-    }
+  };
+  
+  onMounted(() => {
+    getSetting();
+  });
   </script>
-  <style>
-  #components-layout-demo-top-side-2 .logo {
-    float: left;
-    width: 120px;
-    height: 31px;
-    margin: 16px 24px 16px 0;
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .sidebar,.main-detail{
-    background: none !important;
-  }
-
-  .main-detail{
-    color: whitesmoke  !important;
-  }
-  .small-header{
-    padding: 0 0.5rem;
-  }
-
-  .ant-row-rtl #components-layout-demo-top-side-2 .logo {
-    float: right;
-    margin: 16px 0 16px 24px;
+  
+  <style scoped>
+  .page-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* ครอบคลุมทั้งหน้าจอ */
   }
   
-  .site-layout-background {
-    background: #fff;
+  .main {
+    flex: 1; /* ใช้พื้นที่ว่างที่เหลือทั้งหมด */
+    display: flex;
   }
-
-  .header{
+  
+  .footer {
+    flex-shrink: 0;
+    background-color: #f5f5f5;
+    padding: 0 !important;
+    text-align: center;
+    color: whitesmoke;
+  }
+  
+  .header {
     height: 100px !important;
     position: sticky;
     top: 0;
@@ -190,35 +133,95 @@
     width: 100%;
     z-index: 999;
   }
-
-  .main{
-    background-repeat: repeat;
-    background-attachment: fixed;
-    background-position: center;
-    width: 100%;
-  }
-
-  .ant-modal-content{
-    background: linear-gradient(#4B0082FF, #663399FF);
-    padding: 5px;
-    border: 1px solid transparent;
-    width: 500px; /* Could be more or less, depending on screen size */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transform-origin: top center;
-    transition: transform 2s, opacity 2s;
-    border-radius: 15px;
-    margin: 0 5px;
-    color: whitesmoke;
-  }
-  .login-size{
-    width: 100% !important;
-  }
-  .login-small{
-    margin: 0 auto;
-    max-width:100vw !important;
-  }
-  .disabled-sidebar{
-    display: none;
+  
+  .main-detail {
+    color: whitesmoke !important;
   }
   
+  .sidebar,
+  .main-detail {
+    background: none !important;
+  }
+  
+  .disabled-sidebar {
+    display: none;
+  }
+
   </style>
+
+<style>
+#components-layout-demo-top-side-2 .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar,.main-detail{
+  background: none !important;
+}
+
+.main-detail{
+  color: whitesmoke  !important;
+}
+.small-header{
+  padding: 0 0.5rem;
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.header{
+  height: 100px !important;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.main{
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-position: center;
+  width: 100%;
+}
+
+.ant-modal-content{
+  background: linear-gradient(#4B0082FF, #663399FF);
+  padding: 5px;
+  border: 1px solid transparent;
+  width: 500px; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transform-origin: top center;
+  transition: transform 2s, opacity 2s;
+  border-radius: 15px;
+  margin: 0 5px;
+  color: whitesmoke;
+}
+
+.models-dark .ant-modal-content{
+    background: #303030f2 !important;
+}
+
+.login-size{
+  width: 100% !important;
+}
+.login-small{
+  margin: 0 auto;
+  max-width:100vw !important;
+}
+.disabled-sidebar{
+  display: none;
+}
+
+</style>
+  
