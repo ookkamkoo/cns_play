@@ -51,7 +51,9 @@
                   <CopyOutlined /> คัดลอก
                 </div>
               </a-col>
-              ( กรุณาโอนเงินด้วยบัญชีที่ลูกค้าลงทะเบียนเท่านั้น )
+              <div class="notify-deposit-text">
+                ( กรุณาโอนเงินด้วยบัญชีที่ลูกค้าลงทะเบียนเท่านั้น )
+              </div>
           </a-flex>
       </a-col>
     </a-row>
@@ -193,4 +195,25 @@ definePageMeta({
 .gray{
   color: #ffffff94;
 }
+
+
+@media screen and (max-width: 512px) {
+  .bank{
+    font-size: 13px !important;
+  }
+  .name{
+    font-size: 14px !important;
+  }
+  .bank-number{
+    font-size: 13px !important;
+  }
+  .notify-deposit-text{
+    font-size: 13px !important;
+  }
+}
+
 </style>
+
+<!-- <style scoped>
+
+</style> -->

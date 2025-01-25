@@ -86,6 +86,7 @@ export interface Marketing {
     registerStatus: string;
     registerTruewallet: string;
     serverStatus: string;
+    textSlide: string;
     title: string;
     tranferAuto: string;
     turnWithdrawNormal: string;

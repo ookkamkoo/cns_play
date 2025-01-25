@@ -10,41 +10,90 @@
             </div>
         </a-flex>
         <br>
-        <h2 class="m-2 center">กิจกรรมกงล้อ</h2>
+        <h2 class="m-2 center jackpot">🎉 กิจกรรมกงล้อ 🎉</h2>
         <canvas ref="wheelRef" :width="canvasSize" :height="canvasSize" class="spin-wheel"></canvas>
         <div class="text-center">
             เหรียญที่ต้องใช้เล่นเกมส์ {{coin}} เหรียญ
         </div>
-        <h3>ประวัติกิจกรรมกงล้อ</h3>
-        <a-row>
-            <a-table 
-                :columns="dynamicColumns"
-                :data-source="dataShow"
-                bordered
-                :scroll="{ x: 800, y: 700 }"
-                :pagination="false"
-                class="my-2"
-                >
-                    <template #bodyCell="{ column, record,index }">
-                        <template v-if="column.key === 'id'">
-                            <div>{{ index + 1 }}</div>
-                        </template>
-                        <template v-else-if="column.key === 'Coin'">
-                            <div>{{ record.Coin }}</div>
-                        </template>
-                        <template v-else-if="column.key === 'result_detail'">
-                            <div>{{ record.result_detail }}</div>
-                        </template>
-                        <template v-else-if="column.key === 'status'">
-                            <a-tag color="green" v-if="record.status == 2">สำเร็จ</a-tag>
-                            <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
-                        </template>
-                        <template v-else-if="column.key === 'created_at'">
-                            <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
-                        </template>
+        <a-flex :justify="'center'">
+            <!-- <a-table 
+            :columns="dynamicColumns"
+            :data-source="dataShow"
+            bordered
+            :scroll="{ x: 800, y: 700 }"
+            :pagination="false"
+            class="my-2"
+            >
+                <template #bodyCell="{ column, record,index }">
+                    <template v-if="column.key === 'id'">
+                        <div>{{ index + 1 }}</div>
                     </template>
-                </a-table>
-        </a-row>
+                    <template v-else-if="column.key === 'Coin'">
+                        <div>{{ record.Coin }}</div>
+                    </template>
+                    <template v-else-if="column.key === 'result_detail'">
+                        <div>{{ record.result_detail }}</div>
+                    </template>
+                    <template v-else-if="column.key === 'status'">
+                        <a-tag color="green" v-if="record.status == 2">สำเร็จ</a-tag>
+                        <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
+                    </template>
+                    <template v-else-if="column.key === 'created_at'">
+                        <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
+                    </template>
+                </template>
+            </a-table> -->
+            <a-col :span="24" :md="24" class="p-1">
+                <h3>ประวัติกิจกรรมกงล้อ</h3>
+                <div class="list-container my-2">
+                    <a-row class="list">
+                    <a-col :span="24" class="center">
+                        เเสดง 10 รายการ ล่าสุด
+                    </a-col>
+                    <a-col :span="24" class="my-1">
+                        <a-flex :justify="'space-around'">
+                        <a-col :span="4" class="center">เกมส์</a-col>
+                        <a-col :span="4" class="center">เหรียญที่ใช้</a-col>
+                        <a-col :span="4" class="center">ผลที่ออก</a-col>
+                        <a-col :span="4" class="center">สถานะ</a-col>
+                        <a-col :span="4" class="center">วันที่</a-col>
+
+                        </a-flex>
+                    </a-col>
+                    <a-col :span="24">
+                        <hr />
+                    </a-col>
+                    <a-col :span="24" class="text-12">
+                        <a-flex
+                            :justify="'space-around'"
+                            :align="'center'"
+                            v-for="(data, index) in dataShow"
+                            :key="data.id || index"
+                            class="my-1"
+                            >
+                            <a-col :span="4" class="center">
+                                <div>กงล้อ</div>
+                            </a-col>
+                            <a-col :span="4" class="center">
+                                <div>{{ data.Coin }}</div>
+                            </a-col>
+                            <a-col :span="4" class="center">
+                                <div>{{ data.result_detail }}</div>
+                            </a-col>
+                            <a-col :span="4" class="center">
+                                <a-tag color="green" v-if="data.status == 2">สำเร็จ</a-tag>
+                                <a-tag color="red" v-else-if="data.status == 3">ยกเลิก</a-tag>
+                            </a-col>
+                            <a-col :span="4" class="center">
+                                <div>{{ dayjs(data.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
+                            </a-col>
+                        </a-flex>
+                        <!-- <hr /> -->
+                    </a-col>
+                    </a-row>
+                </div>
+            </a-col>
+        </a-flex>
     </div>
   </template>
   
@@ -62,21 +111,6 @@
     const dataShow = ref<any[]>([]);
     const allRecord = ref<number>(0);
     const coin = ref<number>(0);
-
-    const dynamicColumns = computed(() => {
-        return [
-        { 
-            title: `ทั้งหมด ${allRecord.value} รายการ`, 
-            children: [
-            { title: 'รายการที่', dataIndex: 'id', key: 'id', width: 30 },
-            { title: 'เหรียญที่ใช้', key: 'Coin', width: 40},
-            { title: 'ผลที่ออก', key: 'result_detail', width: 30},
-            { title: 'สถานะ', key: 'status', width: 30 },
-            { title: 'วันที่', key: 'created_at', width: 40 },
-            ] 
-        },
-        ];
-    });
   
     const spinGame = async () => {
         const data = await spinWheelServices();
@@ -553,6 +587,45 @@ const resizeCanvas = () => {
         border: 1px solid #ddd;
         padding: 8px;
         text-align: center;
+    }
+    .list{
+        background: linear-gradient(#2c002c, #100f4e) !important;
+        border-radius: 10px;
+        padding: 1rem 1rem;
+    }
+
+    .text-12 div{
+        font-size: 12px !important;
+    }
+
+    .jackpot {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #ffd700; /* สีทอง */
+        text-shadow: 0 0 10px #ffd700, 0 0 20px #ffa500, 0 0 30px #ff4500;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 1100px) {
+        .list-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .list{
+            width: 600px;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .list{
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .list{
+            width: 600px;
+        }
     }
     /* th {
         background-color: #f4b400;

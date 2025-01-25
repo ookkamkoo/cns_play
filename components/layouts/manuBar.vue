@@ -6,14 +6,24 @@
             <!-- Deposit -->
             <a-col class="action-col" span="12">
               <NuxtLink to="/information/deposit">
-                <DollarCircleOutlined class="menu-icon" />
+                <!-- <DollarCircleOutlined class="menu-icon" /> -->
+                <a-image
+                    :width="30"
+                    :preview="false"
+                    src="/img/icon/deposit.webp"
+                />
                 <div class="menu-text">ฝาก</div>
               </NuxtLink>
             </a-col>
             <!-- Withdraw -->
             <a-col class="action-col" span="12">
               <NuxtLink to="/information/withdraw">
-                <DollarCircleOutlined class="menu-icon" />
+                <!-- <DollarCircleOutlined class="menu-icon" /> -->
+                <a-image
+                    :width="30"
+                    :preview="false"
+                    src="/img/icon/withdraw.webp"
+                />
                 <div class="menu-text">ถอน</div>
               </NuxtLink>
             </a-col>
@@ -36,14 +46,24 @@
             <!-- Promotion -->
             <a-col class="action-col" span="12">
               <NuxtLink to="/information/promotion">
-                <CrownOutlined class="menu-icon" />
+                <!-- <CrownOutlined class="menu-icon" /> -->
+                <a-image
+                    :width="30"
+                    :preview="false"
+                    src="/img/icon/กิจกรรม.webp"
+                />
                 <div class="menu-text">โปรโมชั่น</div>
               </NuxtLink>
             </a-col>
             <!-- Contact -->
             <a-col class="action-col" span="12">
               <a :href="`https://line.me/R/ti/p/${member.settingDefault.websiteLine}?oat_content=url`" target="_blank">
-                <CommentOutlined class="menu-icon" />
+                <!-- <CommentOutlined class="menu-icon" /> -->
+                <a-image
+                    :width="30"
+                    :preview="false"
+                    src="/img/icon/contact.webp"
+                />
                 <div class="menu-text">ติดต่อเรา</div>
               </a>
             </a-col>

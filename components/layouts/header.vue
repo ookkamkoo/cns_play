@@ -30,7 +30,7 @@
                                     <a-image
                                         :width="50"
                                         :preview="false"
-                                        src="/img/เเนะนำเพื่อน.webp"
+                                        src="/img/icon/เเนะนำเพื่อน.webp"
                                     />
                                 </div>
                                 <div class="text">แนะนำเพื่อน</div>
@@ -42,7 +42,7 @@
                                     <a-image
                                         :width="50"
                                         :preview="false"
-                                        src="/img/คืนยอดเสีย.webp"
+                                        src="/img/icon/คืนยอดเสีย.webp"
                                     />
                                 </div>
                                 <div class="text">คืนยอดเสีย</div>
@@ -54,7 +54,7 @@
                                     <a-image
                                         :width="50"
                                         :preview="false"
-                                        src="/img/กิจกรรม.webp"
+                                        src="/img/icon/กิจกรรม.webp"
                                     />
                                 </div>
                                 <div class="text">กิจกรรม</div>
@@ -66,7 +66,7 @@
                                     <a-image
                                         :width="50"
                                         :preview="false"
-                                        src="/img/โปรโมชั่น.webp"
+                                        src="/img/icon/โปรโมชั่น.webp"
                                     />
                                 </div>
                                 <div class="text">โปรโมชั่น</div>
@@ -442,9 +442,14 @@
     .img-branner{
         position: fixed;
     }
+    
     .item{
         border-bottom-right-radius: 15px;
         border-bottom-left-radius: 15px;
+    }
+
+    .topBar-username,.textCreditMainBalance{
+        font-size: 16px;
     }
 
     @keyframes pulseWidth {

@@ -14,7 +14,16 @@
                 <div class="info-withdrow-amount center my-1">{{ member.memberDetail.balance.toFixed(2) }}</div>
                 <a-col :span="24">
                     <div class="info-bank-coppy center my-2" @click="showModal()">
-                        <CopyOutlined /> ถอนเงิน
+                      <a-flex :justify="'center'" :align="'center'">
+                        <a-image
+                          :width="25"
+                          :preview="false"
+                          src="/img/icon/withdraw.webp"
+                        />
+                        <div style="padding: 0 5px;">
+                          ถอนเงิน
+                        </div>
+                      </a-flex>
                     </div>
                 </a-col>
             </div>
@@ -27,7 +36,12 @@
                 <a-col :span="24">
                   <NuxtLink to="/information/mini-game/listMiniGame" exact class="nav-link">
                     <div class="info-bank-coppy center my-2">
-                        <CopyOutlined /> เล่นเกมส์
+                      <a-flex :justify="'center'" :align="'center'">
+                        <div style="padding: 2px 5px;">
+                          เล่นกิจกรรม
+                        </div> 
+                        <RightOutlined />
+                      </a-flex>
                     </div>
                   </NuxtLink>
                 </a-col>
@@ -101,14 +115,14 @@
 </template>
 <script setup lang="ts">
   import { Alert } from "~/components/alert/alertComponent";
-import { memberStore } from "~/store/index";
+  import { memberStore } from "~/store/index";
   const open = ref<boolean>(false);
   const openAddTrue = ref<boolean>(false);
 
   const member = memberStore();
 
   const showModal = () => {
-    // console.log(member.settingDefault.withdrawStatus);
+    console.log(member.settingDefault.withdrawStatus);
     
     if(member.settingDefault.withdrawStatus == "false"){
       Alert("error","ระบบเงินยังไม่พร้อมใช้งาน.")
@@ -136,6 +150,7 @@ import { memberStore } from "~/store/index";
 
 </script>
 <style scoped>
+
 .info-withdrow-list{
     background: linear-gradient(#2c002c, #100f4e) !important;
     border-radius: 10px;

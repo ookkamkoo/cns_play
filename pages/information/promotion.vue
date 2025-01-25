@@ -17,7 +17,7 @@
             <a-col :span="24">
                 <h4>ประเภทโปรโมชั่น</h4>
             </a-col>
-            <a-col :span="24">
+            <a-col :span="24" class="m-1">
                 <a-row v-if="detail.type=='1'">
                     <a-col :span="12" class="center-checkbox">
                         <a-checkbox v-model:checked="isNewMember1" class="smoky-checkbox" disabled>สมาชิกใหม่</a-checkbox>
@@ -44,8 +44,8 @@
                 </a-row>
             </a-col>
 
-            <a-col :span="24">
-                <h4>วันที่สามารถรับโปรโมชั่น</h4>
+            <h4>วันที่สามารถรับโปรโมชั่น</h4>
+            <a-col :span="24" class="m-1">
                 <span v-if="detail.type_open=='1'">
                     <p class="left-spacing">รับได้ทุกวัน</p>
                 </span>
@@ -60,7 +60,7 @@
             <a-col :span="24">
                 <h4>เวลารับโปรโมชั่น</h4>
             </a-col>
-            <a-col :span="24">
+            <a-col :span="24" class="m-1">
                 <a-row v-if="detail.time_open_close=='1'">
                     <a-col :span="12" class="center-checkbox">
                         เวลาเปิด 00:00:00
@@ -82,17 +82,17 @@
             </a-col>
             <a-col :span="24">
                 <h4>ฝากขั้นต่ำ</h4>
-                <p class="left-spacing">จำนวนฝากขั้นต่ำ คือ {{detail.low_deposit}}</p>
+                <p class="left-spacing my-1" >จำนวนฝากขั้นต่ำ คือ {{detail.low_deposit}}</p>
             </a-col>
             <a-col :span="24">
                 <h4>ประเภทถอนสูงสุด</h4>
-                <p v-if="detail.type_max_withDraw == 1" class="left-spacing">จำนวนเงิน</p>
-                <p v-else-if="detail.type_max_withDraw == 2" class="left-spacing">จำนวนเท่า ยอดฝาก</p>
-                <p v-else-if="detail.type_max_withDraw == 3" class="left-spacing">จำนวนเท่า ยอดฝาก + โบนัส</p>
+                <p v-if="detail.type_max_withDraw == 1" class="left-spacing my-1">จำนวนเงิน</p>
+                <p v-else-if="detail.type_max_withDraw == 2" class="left-spacing my-1">จำนวนเท่า ยอดฝาก</p>
+                <p v-else-if="detail.type_max_withDraw == 3" class="left-spacing my-1">จำนวนเท่า ยอดฝาก + โบนัส</p>
             </a-col>
             <a-col :span="24">
                 <h4>ประเภทรายการฝาก</h4>
-                <a-row v-if="detail.type_deposit == 1">
+                <a-row v-if="detail.type_deposit == 1" class="my-1">
                     <a-col :span="8" v-if="detail.bonus_type == 1" class="center-checkbox">
                         เปอร์เซ็น
                     </a-col>

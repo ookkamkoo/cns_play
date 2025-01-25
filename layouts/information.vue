@@ -198,4 +198,9 @@
     opacity: 0;
     transform: translateY(20px);
   }
+  @media screen and (max-width: 766px ) {
+    .info-main-detail{
+      padding-bottom: 70px;
+    }
+  }
 </style>

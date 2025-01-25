@@ -18,7 +18,7 @@
     </a-flex>
 
     <a-flex class="p-1">
-        <a-col :span="24" :lg="12">
+        <a-col :span="24" :md="24" :lg="24" :xl="13">
             <h3>รหัสเเนะนำเพื่อน</h3>
             <a-flex class="p-1" :justify="'center'" wrap="wrap">
                 <a-col :span="24" :md="24" :lg="24" :xl="13">
@@ -30,9 +30,9 @@
                         <br>
                     </a-flex>
                     <a-input-group compact class="coppy-link">
-                        <a-input v-model:value="linkRecommand" style="width: calc(100% - 40px); border-radius: 6px 0 0 6px ;" />
+                        <a-input v-model:value="linkRecommand" style="width: calc(100% - 40px); border-radius: 6px 0 0 6px ; font-size: 12px;" />
                         <a-tooltip title="copy link" @click="coppy()">
-                            <a-button>
+                            <a-button style="height: 29px;">
                             <template #icon><CopyOutlined /></template>
                             </a-button>
                         </a-tooltip>
@@ -76,7 +76,7 @@
         </a-col>
         <a-col :span="24" :xl="12">
             <h3>รายการเเนะนำเพื่อน</h3>
-            <a-table 
+            <!-- <a-table 
             :columns="dynamicColumns"
             :data-source="dataList"
             bordered
@@ -106,7 +106,60 @@
                         <a-tag color="red" v-else-if="record.status == 2">หมดเวลา</a-tag>
                     </template>
                 </template>
-            </a-table>
+            </a-table> -->
+            <div class="list-container">
+                <a-row class="list m-1" style="height: 90%;">
+                    <div style="width: 100%;">
+                        <a-col :span="24" class="center">
+                            เเสดง 10 รายการ ล่าสุด
+                        </a-col>
+                        <a-col :span="24" class="my-1">
+                            <a-flex :justify="'space-around'">
+                                <a-col :span="4" class="center">
+                                    รายการ
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    รหัสลูกค้า
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    วันที่
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    สถานะ
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    ยอดโบนัสสะสม
+                                </a-col>
+                            </a-flex>
+                        </a-col>
+                        <a-col :span="24">
+                            <hr>
+                        </a-col>
+                        <a-col :span="24" class="text-12">
+                            <a-flex :justify="'space-around'" :align="'center'" v-for="data in dataList" class="my-1">
+                                <a-col :span="4" class="center">
+                                    <a-tag color="cyan">เเนะนำเพื่อน</a-tag>
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    <div>{{data.username_send_id}}</div>
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    <div>{{ dayjs(data.date).format('YYYY-MM-DD') }}</div>
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    <a-tag color="orange" v-if="data.status == 0">ยังไม่ได้รับ</a-tag>
+                                    <a-tag color="green" v-else-if="data.status == 1">รับเเล้ว</a-tag>
+                                    <a-tag color="red" v-else-if="data.status == 2">หมดเวลา</a-tag>
+                                </a-col>
+                                <a-col :span="4" class="center">
+                                    <div>{{data.refund_amount}}</div>
+                                </a-col>
+                            </a-flex>
+                            <!-- <hr> -->
+                        </a-col>
+                    </div>
+                </a-row>
+            </div>
         </a-col>
     </a-flex>
     <contextHolder />
@@ -136,7 +189,7 @@
     console.log(member);
     
     definePageMeta({
-    layout: 'information'
+        layout: 'information'
     })
 
     const dynamicColumns = computed(() => {
@@ -240,5 +293,48 @@
 }
 .coppy-link{
     text-align: center;
+}
+
+.text-12 div{
+    font-size: 12px !important;
+}
+.list{
+    background: linear-gradient(#2c002c, #100f4e) !important;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+}
+
+@media screen and (max-width: 1650px) {
+  .list-container {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .list{
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .list{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .list{
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .list{
+    width: 100%
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .list{
+    width: 600px;
+  }
 }
 </style>

@@ -6,6 +6,7 @@ export interface RefundItem {
     user_id: number;
     username: string;
     refund_amount: number;
+    status: number;
     date: string;
     is_active: boolean;
     created_by: number;

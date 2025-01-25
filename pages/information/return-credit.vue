@@ -34,31 +34,51 @@
             </div>
         </a-col>
         <a-col :span="24" :xl="12" class="p-1">
-            <a-table 
-            :columns="dynamicColumns"
-            :data-source="dataList"
-            bordered
-            :scroll="{ x: 500, y: 700 }"
-            :pagination="false"
-            class="my-1"
-            >
-                <template #bodyCell="{ column, record,index }">
-                    <template v-if="column.key === 'action'">
-                        <a-tag color="cyan">คืนยอดเสีย</a-tag>
-                    </template>
-                    <template v-if="column.key === 'refund_amount'">
-                        <div>{{ Math.abs(record.refund_amount) }}</div>
-                    </template>
-                    <template v-else-if="column.key === 'date'">
-                        <div>{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
-                    </template>
-                    <template v-else-if="column.key === 'status'">
-                        <a-tag color="orange" v-if="record.status == 0">ยังไม่ได้รับ</a-tag>
-                        <a-tag color="green" v-else-if="record.status == 1">รับเเล้ว</a-tag>
-                        <a-tag color="red" v-else-if="record.status == 2">หมดเวลา</a-tag>
-                    </template>
-                </template>
-            </a-table>
+            <a-row class="list m-1" style="height: 100%;">
+                <div style="width: 100%;">
+                    <a-col :span="24" class="center">
+                        เเสดง 10 รายการ ล่าสุด
+                    </a-col>
+                    <a-col :span="24" class="my-1">
+                        <a-flex :justify="'space-around'">
+                            <a-col :span="6" class="center">
+                                รายการ
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                จำนวนเงิน
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                สถานะ
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                วันที่
+                            </a-col>
+                        </a-flex>
+                    </a-col>
+                    <a-col :span="24">
+                        <hr>
+                    </a-col>
+                    <a-col :span="24" class="text-12">
+                        <a-flex :justify="'space-around'" :align="'center'" v-for="data in dataList" class="my-1">
+                            <a-col :span="6" class="center">
+                                <a-tag color="cyan">คืนยอดเสีย</a-tag>
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                <div>{{ Math.abs(data.refund_amount) }}</div>
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                <a-tag color="orange" v-if="data.status == 0">ยังไม่ได้รับ</a-tag>
+                                <a-tag color="green" v-else-if="data.status == 1">รับเเล้ว</a-tag>
+                                <a-tag color="red" v-else-if="data.status == 2">หมดเวลา</a-tag>
+                            </a-col>
+                            <a-col :span="6" class="center">
+                                <div>{{ dayjs(data.date).format('YYYY-MM-DD') }}</div>
+                            </a-col>
+                        </a-flex>
+                        <!-- <hr> -->
+                    </a-col>
+                </div>
+            </a-row>
         </a-col>
         <contextHolder />
     </a-flex>
@@ -159,5 +179,13 @@
         background-color: #FF9100FF;
         opacity: 0.5;  
         cursor: not-allowed;
+    }
+    .text-12 div{
+        font-size: 12px !important;
+    }
+    .list{
+        background: linear-gradient(#2c002c, #100f4e) !important;
+        border-radius: 10px;
+        padding: 1rem 1rem;
     }
 </style>

@@ -5,11 +5,15 @@
                 <SoundOutlined />
             </span>
             <span class="newsboxhead-text-containe">
-                เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ
+                {{member.settingDefault.textSlide}}
             </span>
         </a-flex>
     </div>
 </template>
+<script  setup lang="ts">
+import { memberStore } from "~/store/index";
+const member = memberStore();
+</script>
 <style>
   .newsboxhead {
     width: 100%;
@@ -24,7 +28,7 @@
     color: whitesmoke;
   }
   .newsboxhead-icon-container{
-    background: #000000E6;
+    /* background: transparent; */
     padding: 4px;
     position: absolute;
     z-index: 4;

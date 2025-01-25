@@ -3,9 +3,37 @@
   <a-flex wrap="wrap">
       <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
         <NuxtLink to="/information/mini-game/spinWheel" exact class="link-sidebar">
-          <div class="image-container p-1" @click="promotionDetail(noPromotion)">
+          <div class="image-container p-1">
               <a-image
-                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/pg-game/%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%9B%E0%B8%A3%E0%B9%82%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99.webp"
+                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%87%E0%B8%A5%E0%B9%89%E0%B8%AD.jpg"
+                  style="border-radius: 5px;"
+                  :preview="false"
+              />
+              <div class="overlay">
+                  <p class="detail-promotion">เลือกกิจกรรม</p>
+              </div>
+          </div>
+        </NuxtLink>
+      </a-col>
+      <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
+        <NuxtLink to="/information/mini-game/card" exact class="link-sidebar">
+          <div class="image-container p-1">
+              <a-image
+                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B9%84%E0%B8%9E%E0%B9%88.jpg"
+                  style="border-radius: 5px;"
+                  :preview="false"
+              />
+              <div class="overlay">
+                  <p class="detail-promotion">เลือกกิจกรรม</p>
+              </div>
+          </div>
+        </NuxtLink>
+      </a-col>
+      <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
+        <NuxtLink to="/information/mini-game/dailyLogin" exact class="link-sidebar">
+          <div class="image-container p-1">
+              <a-image
+                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%8A%E0%B9%87%E0%B8%84%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%A7%E0%B8%B1%E0%B8%99.jpg"
                   style="border-radius: 5px;"
                   :preview="false"
               />
@@ -75,10 +103,10 @@
       open.value = true;
   };
 
-  const promotionDetail = (data:any) => {
-      showModal()
-      detail.value = data
-  };
+//   const promotionDetail = (data:any) => {
+//       showModal()
+//       detail.value = data
+//   };
   
 //   const getPromotion = async () => {
 //       const data = await getPromotionServices();

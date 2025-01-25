@@ -24,7 +24,7 @@
                       :width="50"
                       :preview="false"
                       class="sidbar-menu-icon"
-                      :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
+                      src="/img/icon/personal.webp"
                   />
                 </a-col>
                 <a-col :span="18">
@@ -70,12 +70,12 @@
                 </a-col>
               </a-flex>
             </a>
-            <NuxtLink :to="item.path" v-else-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && !member.memberDetail.is_agent" class="sidebar-menu-list-link">
-                <a-flex class="sidebar-menu-list-detail" :align="'center'" >
-                    <a-col :span="4" class="sidebar-menu-list-icon">
+            <NuxtLink :to="item.path" v-else-if="item.show == 1 && item.name == 'เเนะนำเพื่อน' && !member.memberDetail.is_agent" class="link-sidebar" style="width: 100%;">
+                <a-flex class="sidebar-menu-list-detail" :align="'center'" :class="{ 'sidebar-menu-list-detail-active': item.path === $route.path }">
+                    <a-col :span="6" class="sidebar-menu-list-icon">
                         <component :is="item.icon" />
                     </a-col>
-                    <a-col :span="20">
+                    <a-col :span="18">
                         {{item.name}}
                     </a-col>
                 </a-flex>

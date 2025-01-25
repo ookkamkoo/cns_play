@@ -13,11 +13,16 @@ import { getToken } from '~/auth/authToken'
     percent: number;
     refund_amount: number;
     date: string;
+    bank: Bank;
     status: number;
     created_by: number;
     created_at: string;
     updated_by: number;
     updated_at: string;
+  }
+
+  export interface Bank {
+      image: string;
   }
 
   // Define the structure of the response data

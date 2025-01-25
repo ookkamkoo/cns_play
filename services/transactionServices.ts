@@ -4,15 +4,18 @@ import { getToken } from '~/auth/authToken'
 export interface TransactionData {
     id: number;
     member_id: number;
-    Trasaction_id: number;
+    trasaction_id: number;
     username: string;
     action: number;
+    type: number;
     amount_before: number;
     amount: number;
     amount_after: number;
     image: string;
     bank_id: number;
+    bank: Bank;
     date_bank: string; 
+    promotion: string; 
     bank_no: string;
     bank_slip: string; 
     remark: string;
@@ -22,6 +25,10 @@ export interface TransactionData {
     created_at: string;
     updated_by: number;
     updated_at: string;
+}
+
+export interface Bank {
+    image: string;
 }
 
   export interface GetTrasactionResponse {

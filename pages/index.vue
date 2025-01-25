@@ -8,13 +8,16 @@
         <iframe ref="gameIframe" :src="urlGame" width="100%" height="100%" style="border: none;"></iframe>
         </a-drawer>
         <a-col>
-            <a-row>
+            <a-row style="width:100%;min-height:calc(100vh - 380px);">
                 <a-flex>
                     <LayoutsSidebar v-if="!screens.md"/>
                     <a-col :class="{'small-main':!screens.md}">
                         <h2 class="mx-1">
                             เกมยอดนิยม
                         </h2>
+                        <NuxtLink to="/information/mini-game/dailyLogin" exact class="link-sidebar">
+                            <div style="color: aquamarine;">asdasd</div>
+                        </NuxtLink>
                         <div class="game-recommend my-4">
                             <a-row>
                                 <template v-for="game in member.gameReccommend">

@@ -56,6 +56,52 @@
                         </a-button>
                     </a-flex>
                 </a-col>
+                <a-col :span="24" class="my-1">
+                    <div class="text-center my-1">
+                        ภาษา
+                    </div>
+                    <a-flex :justify="'center'" :align="'space-evenly'">
+                        <a-avatar
+                        size="large"
+                        class="languageToggle mx-1"
+                        :class="{ active: activeAvatar === 1 }"
+                        @click="setActive(1)"
+                        >
+                        <template #icon>
+                            <a-image
+                            :preview="false"
+                            src="/img/language/Thai.webp"
+                            />
+                        </template>
+                        </a-avatar>
+                        <!-- <a-avatar
+                        size="large"
+                        class="languageToggle mx-1"
+                        :class="{ active: activeAvatar === 2 }"
+                        @click="setActive(2)"
+                        >
+                        <template #icon>
+                            <a-image
+                            :preview="false"
+                            src="https://imagedelivery.net/g1yWpHq5ZqQxQIXvcCDaOA/08ef9747-bd58-4185-6331-7441b89cf000/public"
+                            />
+                        </template>
+                        </a-avatar>
+                        <a-avatar
+                        size="large"
+                        class="languageToggle mx-1"
+                        :class="{ active: activeAvatar === 3 }"
+                        @click="setActive(3)"
+                        >
+                        <template #icon>
+                            <a-image
+                            :preview="false"
+                            src="https://imagedelivery.net/g1yWpHq5ZqQxQIXvcCDaOA/a50a5057-212d-4e4d-f94b-8d1f02173600/public"
+                            />
+                        </template>
+                        </a-avatar> -->
+                    </a-flex>
+                </a-col>
             </a-form>
         </a-row>
     </a-form>
@@ -72,11 +118,16 @@
         username: '0623373061',
         password: 'asdf123456',
     });
+    const activeAvatar = ref(1);
     
 
     const props = defineProps<{
         closeModal:Function
     }>();
+
+    const setActive = (id:number) => {
+        activeAvatar.value = id;
+    };
 
     const handleSubmit = async () => {
         try {
@@ -115,5 +166,25 @@
 .ant-modal-content{
     width: 100% !important; 
     margin: 0 auto !important;
+}
+.text-center{
+    text-align: center;
+    color: whitesmoke;
+}
+
+.languageToggle {
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.languageToggle:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 255, 0.4);
+}
+
+.languageToggle.active {
+  box-shadow: 0 2px 15px rgba(0, 0, 255, 0.8); /* เงาเข้ม */
+  transform: scale(1.1); /* ขยายขนาดเล็กน้อยเมื่อ active */
+  border: 2px solid rgba(0, 0, 255, 0.8); /* เส้นขอบ */
+  border-radius: 50%; /* ให้เป็นวงกลม */
 }
 </style>

@@ -1,13 +1,12 @@
 <template>
     <div class="sidebar-info">
         <div class="sidebar-info-detail">
-            <a-flex>
+            <a-flex class="m-2">
                 <a-col :span="6" class="center">
                     <a-image
                         :width="60"
                         :preview="false"
-                        class="sidbar-menu-icon"
-                        :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
+                        src="/img/icon/personal.webp"
                     />
                 </a-col>
                 <a-col :span="18">
@@ -41,18 +40,32 @@
             <a-flex :justify="'center'" class="button-info-list">
                 <NuxtLink to="/information/deposit" class="button-info-link">
                     <div class="button-info button-info-deposit">
-                        <BankOutlined />
-                        <span>
-                            ฝากเงิน
-                        </span>
+                        <!-- <BankOutlined /> -->
+                         <a-flex :justify="'center'" :align="'center'">
+                            <a-image
+                                :width="25"
+                                :preview="false"
+                                src="/img/icon/deposit.webp"
+                            />
+                            <span>
+                                ฝากเงิน
+                            </span>
+                         </a-flex>
                     </div>
                 </NuxtLink>
                 <NuxtLink to="/information/withdraw" class="button-info-link">
                     <div class="button-info button-info-withdrow">
-                        <AuditOutlined />
-                        <span>
-                            ถอนเงิน
-                        </span>
+                        <!-- <AuditOutlined /> -->
+                         <a-flex :justify="'center'" :align="'center'">
+                            <a-image
+                                :width="25"
+                                :preview="false"
+                                src="/img/icon/withdraw.webp"
+                            />
+                            <span>
+                                ถอนเงิน
+                            </span>
+                         </a-flex>
                     </div>
                 </NuxtLink>
             </a-flex>
