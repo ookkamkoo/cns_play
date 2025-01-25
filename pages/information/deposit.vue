@@ -11,17 +11,17 @@
       <div>
         - ฝากเงินขั้นต่ำ {{member.settingDefault.depositMin}} - {{member.settingDefault.depositMax}} บาท ต่อครั้ง
       </div>
-      <div v-if="member.settingDefault.depositFee == '1'">
+      <div v-if="member.settingDefault.depositFee == '1'" class="text-12">
         - ค่าธรรมเนียมการฝาก {{member.settingDefault.typeDepositFeeAmountOrPerCent}} <span v-if="member.settingDefault.typeDepositFeeAmountOrPerCent == '1'">%</span> <span v-else>บาท</span>  ต่อครั้ง
         - ค่าธรรมเนียมการฝาก {{member.settingDefault.depostDetail}}
       </div>
     </div>
     <div class="my-2 info-warning">
       <h4>คำเตือน</h4>
-      <div>
+      <div class="text-12">
         - ฝากเงินด้วยบัญชีที่ท่านลงทะเบียนไว้เท่านั้น
       </div>
-      <div>
+      <div class="text-12">
         - กรณีฝากเงิน ให้เข้าเมนูฝากเงินของระบบเพื่อคัดลอกเลขบัญชีเท่านั้น เมื่อระบบเปลี่ยนบัญชีใหม่แล้ว ห้ามโอนไปบัญชีเดิมเด็ดขาด
       </div>
     </div>
@@ -194,6 +194,9 @@ definePageMeta({
 }
 .gray{
   color: #ffffff94;
+}
+.text-12{
+  font-size: 12px;
 }
 
 
