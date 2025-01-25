@@ -14,7 +14,6 @@
       <a-layout-header class="header" :class="{'small-header': !screens.md}">
         <LayoutsHeader :showDrawer="showDrawer" :showModalLogin="showModalLogin" :showModalRegister="showModalRegister" />
       </a-layout-header>
-  
       <!-- Main Content -->
       <a-layout class="main" :style="mainBackgroundStyle">
         <LayoutsSidebarMenu :onClose="onClose" :open="open" />
@@ -27,6 +26,7 @@
         <!-- Main Details -->
         <a-layout class="main-detail">
           <LayoutsNew />
+
           <a-row style="width: 100%;" :style="{ minHeight: 'calc(100vh - 380px)' }">
             <a-flex style="width: 100%;">
               <LayoutsSidebar v-if="!screens.md" :class="{ 'disabled-sidebar': $route.path === '/' }" />

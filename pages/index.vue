@@ -1,5 +1,7 @@
     <template>
-        <LayoutsNewsboxhead/>
+        <!-- <LayoutsNewsboxhead/> -->
+        <LayoutsNewsboxheadnew class="my-2"/>
+
         <a-drawer width="100%"  height="100vh"  :title="nameGame" :placement="'right'" :open="openGame" @close="onClose">
         <template #extra>
             <!-- <a-button style="margin-right: 8px" @click="onClose">Cancel</a-button> -->
