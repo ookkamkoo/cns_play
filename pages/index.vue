@@ -16,7 +16,7 @@
                             เกมยอดนิยม
                         </h2>
                         <NuxtLink to="/information/mini-game/dailyLogin" exact class="link-sidebar">
-                            <div style="color: aquamarine;">asdasd</div>
+                            <!-- <div style="color: aquamarine;">asdasd</div> -->
                         </NuxtLink>
                         <div class="game-recommend my-4">
                             <a-row>

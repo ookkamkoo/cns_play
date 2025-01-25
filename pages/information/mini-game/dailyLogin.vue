@@ -12,7 +12,7 @@
       </a-flex>
       <br />
       <h2 class="m-2 center jackpot">🎉 กิจกรรมล็อกอิน 🎉</h2>
-      <div @click="getSettingDailyLogin()">asdasd</div>
+      <!-- <div @click="getSettingDailyLogin()">asdasd</div> -->
       <a-flex style="max-width: 1100px; margin: 0 auto;" wrap="wrap">
         <a-col
           :span="12" :md="8" :xl="4"
