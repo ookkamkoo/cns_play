@@ -1,6 +1,6 @@
     <template>
         <!-- <LayoutsNewsboxhead/> -->
-        <LayoutsNewsboxheadnew class="my-2"/>
+        <LayoutsNewsboxheadnew style="margin-top: 1rem;"/>
 
         <a-drawer width="100%"  height="100vh"  :title="nameGame" :placement="'right'" :open="openGame" @close="onClose">
         <template #extra>
