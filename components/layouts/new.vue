@@ -29,6 +29,8 @@ const member = memberStore();
   }
   .newsboxhead-icon-container{
     /* background: transparent; */
+    background: black;
+    background: #000000E6;
     padding: 4px;
     position: absolute;
     z-index: 4;

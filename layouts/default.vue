@@ -91,10 +91,8 @@
       if (data.data.setting.bgImageSw === 'true') {
         const url = `${config.public.apiServer}/${member.settingDefault.bgImage}`;
         mainBackgroundStyle.value = { backgroundImage: `url(${url})` };
-        console.log(mainBackgroundStyle.value);
       } else {
         mainBackgroundStyle.value = { backgroundColor: member.settingDefault.bgColor || 'transparent' };
-        console.log(mainBackgroundStyle.value);
       }
     } else {
       console.error('Failed to fetch settings.');
