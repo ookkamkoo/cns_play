@@ -373,7 +373,7 @@
         height: 20px;
         cursor: pointer;
         margin: 5px;
-        position: fixed;
+        /* position: fixed; */
     }
 
     .navbar-brand span {
@@ -439,9 +439,9 @@
         width: 50px;
     }
 
-    .img-branner{
+    /* .img-branner{
         position: fixed;
-    }
+    } */
     
     .item{
         border-bottom-right-radius: 15px;
