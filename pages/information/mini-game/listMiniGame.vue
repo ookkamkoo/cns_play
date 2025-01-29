@@ -1,8 +1,8 @@
 <template>
   <h3>กิจกรรมทั้งหมด</h3>
   <a-flex wrap="wrap">
-      <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
-        <NuxtLink to="/information/mini-game/spinWheel" exact class="link-sidebar">
+      <a-col :span="12" :sm="12" :xl="6" class="promotion-item" v-for="data in miniGame">
+        <NuxtLink to="/information/mini-game/spinWheel" exact class="link-sidebar" v-if="data.game_name == 'spinWheel' && data.status">
           <div class="image-container p-1">
               <a-image
                   src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%81%E0%B8%87%E0%B8%A5%E0%B9%89%E0%B8%AD.jpg"
@@ -14,8 +14,32 @@
               </div>
           </div>
         </NuxtLink>
+        <NuxtLink to="/information/mini-game/card" exact class="link-sidebar" v-if="data.game_name == 'card' && data.status">
+          <div class="image-container p-1">
+              <a-image
+                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B9%84%E0%B8%9E%E0%B9%88.jpg"
+                  style="border-radius: 5px;"
+                  :preview="false"
+              />
+              <div class="overlay">
+                  <p class="detail-promotion">เลือกกิจกรรม</p>
+              </div>
+          </div>
+        </NuxtLink>
+        <NuxtLink to="/information/mini-game/dailyLogin" exact class="link-sidebar" v-if="data.game_name == 'dailyLogin' && data.status">
+          <div class="image-container p-1">
+              <a-image
+                  src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/menu-game/miniGame/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%8A%E0%B9%87%E0%B8%84%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%A7%E0%B8%B1%E0%B8%99.jpg"
+                  style="border-radius: 5px;"
+                  :preview="false"
+              />
+              <div class="overlay">
+                  <p class="detail-promotion">เลือกกิจกรรม</p>
+              </div>
+          </div>
+        </NuxtLink>
       </a-col>
-      <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
+      <!-- <a-col :span="12" :sm="12" :xl="6" class="promotion-item">
         <NuxtLink to="/information/mini-game/card" exact class="link-sidebar">
           <div class="image-container p-1">
               <a-image
@@ -42,13 +66,13 @@
               </div>
           </div>
         </NuxtLink>
-      </a-col>
+      </a-col> -->
   </a-flex>
 </template>
 
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
-  import { getPromotionServices,confirmPromotionServices } from "~/services/promotion";
+  import { getSettingMiniGameServices } from "~/services/miniGameServices";
   import type { Promotion } from "~/services/promotion";
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import { createVNode } from 'vue';
@@ -94,7 +118,7 @@
       updated_at: "2024-10-28T00:22:01.769606+07:00"
   };
   
-  const promotion = ref<Promotion[]>([]);
+  const miniGame = ref<any[]>([]);
   const promotionMember = ref<Promotion>(noPromotion);
   const open = ref<boolean>(false);
   const detail = ref<any>();
@@ -108,21 +132,14 @@
 //       detail.value = data
 //   };
   
-//   const getPromotion = async () => {
-//       const data = await getPromotionServices();
-//       if (data.status === 'success') {
-//           promotion.value = data.data.promotions;
-//           if(data.data.promotionsMember != null){
-//               promotionMember.value = data.data.promotionsMember
-//               console.log(promotionMember);
-              
-//           }else{
-//               promotionMember.value = noPromotion
-//           }
-//       } else {
-//           console.error("Failed to fetch promotions.");
-//       }
-//   };
+  const getMiniGame = async () => {
+      const data = await getSettingMiniGameServices();
+      if (data.status === 'success') {
+        miniGame.value = data.data
+      } else {
+          console.error("Failed to fetch promotions.");
+      }
+  };
 
 //   const confirmPromotion = async (id: number,name:string) => {
 //       Modal.confirm({
@@ -152,7 +169,7 @@
 //   };
   
   onMounted(() => {
-    //   getPromotion();
+    getMiniGame();
   });
   
   definePageMeta({
