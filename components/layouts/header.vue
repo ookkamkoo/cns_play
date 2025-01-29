@@ -10,6 +10,7 @@
                 :width="120"
                 :preview="false"
                 :src="config.public.apiServer + '/' + member.settingDefault.imageLogoWebsite"
+                style="max-width: 120px; width: 100%;"
             />
             </NuxtLink>
         </div>
