@@ -67,7 +67,7 @@
                             <a-image
                                 :width="screens.md ? '400px' : '100%'"
                                 :preview="false"
-                                :src="config.public.apiServer + '/' +member.settingDefault.imageWebsite"
+                                :src="config.public.apiServer + '/' +member.settingDefault.imageLogoWebsite"
                             />
                         </div>
                         <h4>
