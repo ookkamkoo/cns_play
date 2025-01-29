@@ -5,11 +5,11 @@
             <div class="navbar-brand" v-if="!screens.lg && !member.login" @click="props.showDrawer">
                 <span class="one"></span><span class="two"></span><span class="three"></span>
             </div>
-            <NuxtLink to="/" exact class="link-sidebar img-branner" style="width: 120px;">
+            <NuxtLink to="/" exact class="link-sidebar img-branner" style="max-width: 120px;">
                 <a-image
                 :width="120"
                 :preview="false"
-                :src="config.public.apiServer + '/' + member.settingDefault.imageWebsite"
+                :src="config.public.apiServer + '/' + member.settingDefault.imageLogoWebsite"
             />
             </NuxtLink>
         </div>
