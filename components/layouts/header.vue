@@ -439,9 +439,9 @@
         width: 50px;
     }
 
-    .img-branner{
+    /* .img-branner{
         position: fixed;
-    }
+    } */
     
     .item{
         border-bottom-right-radius: 15px;
