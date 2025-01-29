@@ -373,7 +373,7 @@
         height: 20px;
         cursor: pointer;
         margin: 5px;
-        position: fixed;
+        /* position: fixed; */
     }
 
     .navbar-brand span {
