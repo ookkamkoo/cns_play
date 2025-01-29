@@ -72,7 +72,7 @@ const config = useRuntimeConfig();
   height: 35px;
   font-size: 25px;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.5); /* ปรับพื้นหลังให้โดดเด่น */
+  /* background-color: rgba(0, 0, 0, 0.5); */
   border-radius: 50%; /* เพิ่มความโค้ง */
   display: flex;
   justify-content: center;
@@ -83,7 +83,7 @@ const config = useRuntimeConfig();
 }
 
 :deep(.slick-arrow.custom-slick-arrow:hover) {
-  background-color: rgba(0, 0, 0, 0.8);
+  /* background-color: rgba(0, 0, 0, 0.8); */
   color: #ffd700; /* เปลี่ยนสีตอน hover */
 }
 
