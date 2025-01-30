@@ -41,28 +41,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ Install doctl (DigitalOcean CLI)
-      - name: Install doctl
-        run: |
-          sudo snap install doctl --classic
-          doctl version
-
-      # ✅ Authenticate doctl
-      - name: Authenticate doctl
-        run: |
-          doctl auth init --access-token "${{ secrets.DO_ACCESS_TOKEN }}"
-
-      # ✅ Create ~/.kube directory and set permissions
-      - name: Create kubeconfig directory
-        run: |
-          mkdir -p $HOME/.kube
-          sudo snap connect doctl:kube-config || true
-
-      # ✅ Fetch Kubernetes Kubeconfig from DigitalOcean
-      - name: Fetch Kubernetes Kubeconfig
-        run: |
-          doctl kubernetes cluster kubeconfig save "${{ secrets.DO_CLUSTER_ID }}"
-
       # ✅ Install kubectl
       - name: Install kubectl
         run: |
@@ -70,6 +48,13 @@ jobs:
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
           kubectl version --client
+
+      # ✅ Set up Kubeconfig จาก GitHub Secrets
+      - name: Set up Kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
 
       # ✅ Test Kubernetes Connection
       - name: Test Kubernetes Connection
