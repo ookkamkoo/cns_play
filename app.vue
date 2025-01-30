@@ -41,7 +41,8 @@ const member = memberStore();
 
 const currentPage = ref(1);
 
-if (member?.settingDefault?.serverStatus == "false") {
+{{member.settingDefault.serverStatus}}
+if (member.settingDefault.serverStatus == "false") {
   throw createError({
     statusCode: 404,
     statusMessage: 'Server error - service unavailable',
