@@ -1,5 +1,5 @@
 <template>
-  <div v-if="member.settingDefault.serverStatus=='true'">
+  <div v-if="member.settingDefault.serverStatus == 'true'">
     <!-- Overlay Loader -->
     <transition name="overlay" @after-leave="onOverlayHidden">
       <div v-if="isOverlayVisible" class="overlay-layout">
@@ -36,18 +36,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { memberStore } from '~/store/index';
+// import { getSettingServices } from '~/services/settingServices';
+
 const member = memberStore();
 
-
 const currentPage = ref(1);
-
-{{member.settingDefault.serverStatus}}
-if (member.settingDefault.serverStatus == "false") {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Server error - service unavailable',
-  });
-}
 
 const togglePage = () => {
   currentPage.value = currentPage.value === 1 ? 2 : 1;
@@ -66,6 +59,7 @@ const onOverlayHidden = () => {
 };
 
 onMounted(() => {
+  // getSetting();
   const hideLoader = () => {
     setTimeout(hideOverlay, 200); // เพิ่ม delay 200ms
   };

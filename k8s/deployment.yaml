@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: littleweb14766/project_csn:frontend_play
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: "500m"       # จำกัด CPU ไม่เกิน 0.5 Core
+              memory: "512Mi"   # จำกัด Memory ไม่เกิน 512MB
+            requests:
+              cpu: "250m"       # ขอ CPU ขั้นต่ำ 0.25 Core
+              memory: "256Mi"   # ขอ Memory ขั้นต่ำ 256MB

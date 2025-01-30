@@ -8,7 +8,9 @@ export const memberStore = defineStore('member', {
     showLogin: false,
     notify: false,
     memberDetail: {} as MemberDetail,
-    settingDefault: {} as SettingDF,
+    settingDefault: {
+      serverStatus:"true"
+    } as SettingDF,
     menuBar: [] as GameMenuItem[],
     news: [] as News[],
     allGame:[
