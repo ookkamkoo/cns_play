@@ -35,7 +35,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    # needs: build
 
     steps:
       - name: Checkout code
@@ -56,6 +55,12 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
 
+      # ✅ Debug KUBECONFIG
+      - name: Debug KUBECONFIG
+        run: |
+          echo "Checking KUBECONFIG content..."
+          cat $HOME/.kube/config
+
       # ✅ Test Kubernetes Connection
       - name: Test Kubernetes Connection
         run: |
@@ -67,6 +72,7 @@ jobs:
         run: |
           kubectl set image deployment/frontend frontend=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
           kubectl rollout status deployment/frontend
+
 
 
 # name: Build and Deploy
