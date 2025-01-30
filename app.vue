@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store.setting.serverStatus=='true'">
+  <div v-if="member.settingDefault.serverStatus=='true'">
     <!-- Overlay Loader -->
     <transition name="overlay" @after-leave="onOverlayHidden">
       <div v-if="isOverlayVisible" class="overlay-layout">
