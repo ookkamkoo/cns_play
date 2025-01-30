@@ -40,10 +40,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ ติดตั้ง doctl (DigitalOcean CLI)
+      # ✅ ติดตั้ง `doctl`
       - name: Install doctl
         run: |
           sudo snap install doctl --classic
+          sudo snap connect doctl:kube-config || true
           doctl version
 
       # ✅ Authenticate doctl
@@ -51,16 +52,22 @@ jobs:
         run: |
           doctl auth init --access-token "${{ secrets.DO_ACCESS_TOKEN }}"
 
-      # ✅ ดึง `KUBECONFIG` โดยตรงจาก DigitalOcean
+      # ✅ สร้างโฟลเดอร์ ~/.kube และแก้ไขสิทธิ์
+      - name: Fix Kubeconfig Permissions
+        run: |
+          sudo mkdir -p /home/runner/.kube
+          sudo chmod -R 777 /home/runner/.kube
+
+      # ✅ ดึง KUBECONFIG จาก DigitalOcean
       - name: Fetch Kubernetes Kubeconfig
         run: |
-          mkdir -p $HOME/.kube
           doctl kubernetes cluster kubeconfig save "${{ secrets.DO_CLUSTER_ID }}"
 
-      # ✅ ตรวจสอบว่า `KUBECONFIG` ไม่มี `exec plugin`
+      # ✅ Debug KUBECONFIG
       - name: Debug KUBECONFIG
         run: |
-          cat $HOME/.kube/config
+          ls -la /home/runner/.kube/
+          cat /home/runner/.kube/config || echo "No Kubeconfig file found"
 
       # ✅ ติดตั้ง `kubectl`
       - name: Install kubectl
