@@ -52,23 +52,29 @@ jobs:
         run: |
           doctl auth init --access-token "${{ secrets.DO_ACCESS_TOKEN }}"
       
-      # Install kubectl
+      # ✅ ดึง KUBECONFIG ใหม่จาก DigitalOcean
+      - name: Fetch Kubernetes Kubeconfig
+        run: |
+          doctl kubernetes cluster kubeconfig save "${{ secrets.DO_CLUSTER_ID }}"
+
+      # ✅ ติดตั้ง kubectl
       - name: Install kubectl
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
+          kubectl version --client
 
-      # Set up Kubeconfig (จาก Secrets)
-      - name: Set up Kubeconfig
+      # ✅ ทดสอบการเชื่อมต่อ Kubernetes
+      - name: Test Kubernetes Connection
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+          kubectl get nodes
+          kubectl get deployments
 
-      # Deploy to Kubernetes
+      # ✅ Deploy to Kubernetes
       - name: Update Kubernetes Deployment
         run: |
-          kubectl set image deployment/frontend frontend=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play --record
+          kubectl set image deployment/frontend frontend=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
           kubectl rollout status deployment/frontend
 
 
