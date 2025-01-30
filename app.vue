@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="store.setting.serverStatus=='true'">
     <!-- Overlay Loader -->
     <transition name="overlay" @after-leave="onOverlayHidden">
       <div v-if="isOverlayVisible" class="overlay-layout">
@@ -35,9 +35,18 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { memberStore } from '~/store/index';
+const member = memberStore();
 
 
 const currentPage = ref(1);
+
+if (member.settingDefault.serverStatus == "false") {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Server error - service unavailable',
+  });
+}
 
 const togglePage = () => {
   currentPage.value = currentPage.value === 1 ? 2 : 1;
