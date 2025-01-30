@@ -41,13 +41,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install doctl (DigitalOcean CLI)
+      # ✅ ติดตั้ง doctl ผ่าน Snap (วิธีที่เสถียรที่สุด)
       - name: Install doctl
         run: |
-          curl -sL https://github.com/digitalocean/doctl/releases/latest/download/doctl-$(uname -s)-amd64.tar.gz -o doctl.tar.gz
-          tar -xzf doctl.tar.gz
-          sudo mv doctl /usr/local/bin/
-          doctl version 
+          sudo snap install doctl --classic
+          doctl version
       
       # Authenticate doctl
       - name: Authenticate doctl
