@@ -37,13 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     # needs: build
 
-    strategy:
-      matrix:
-        cluster: 
-          - dev-cluster
-          - staging-cluster
-          - prod-cluster
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,33 +48,14 @@ jobs:
           echo "${{ secrets.KUBECONFIG_ALL_CLUSTERS }}" | base64 --decode > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
           chmod 600 $HOME/.kube/config
+          echo "✅ KUBECONFIG set up successfully."
+
+      # ✅ แสดง Context ทั้งหมด
+      - name: Show available Kubernetes contexts
+        run: |
+          echo "🔍 Available Kubernetes Contexts:"
           kubectl config get-contexts
 
-      # ✅ อัปเดตเฉพาะ Cluster เดียวในแต่ละครั้ง
-      - name: Deploy to ${{ matrix.cluster }}
-        run: |
-          echo "------------------------------------"
-          echo "🚀 Deploying to Cluster: ${{ matrix.cluster }}"
-          echo "------------------------------------"
-
-          # สลับไปที่ Cluster เป้าหมาย
-          kubectl config use-context ${{ matrix.cluster }}
-          
-          # อัปเดต Image ของ Deployment
-          if kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play; then
-            echo "✅ Successfully updated deployment in ${{ matrix.cluster }}"
-          else
-            echo "❌ Failed to update deployment in ${{ matrix.cluster }}"
-            exit 1
-          fi
-
-          # รอให้ Deployment อัปเดตสำเร็จ
-          if kubectl rollout status deployment/play; then
-            echo "🎉 Successfully rolled out in ${{ matrix.cluster }}"
-          else
-            echo "⚠️ Rollout failed in ${{ matrix.cluster }}"
-            exit 1
-          fi
 
 
 
