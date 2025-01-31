@@ -42,6 +42,7 @@ import { memberStore } from '~/store/index';
 const member = memberStore();
 
 console.log("serverStatus");
+console.log("aaaaaaaaaaaaaaaaaa");
 console.log(member.settingDefault.serverStatus);
 
 const isOverlayVisible = ref(true); // ควบคุมการแสดง Overlay
