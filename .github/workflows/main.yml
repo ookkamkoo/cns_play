@@ -41,20 +41,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ ใช้ KUBECONFIG จาก Secret
+      # ✅ ใช้ KUBECONFIG จาก Secret (Cluster เดียว)
       - name: Set up KUBECONFIG
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_ALL_CLUSTERS }}" | base64 --decode > $HOME/.kube/config
+          echo "${{ secrets.KUBECONFIG_SINGLE_CLUSTER }}" | base64 --decode > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
           chmod 600 $HOME/.kube/config
+          kubectl config use-context ${{ secrets.K8S_CONTEXT }}
           kubectl config get-contexts
 
-      # ✅ อัปเดต Image ในทุก Cluster
-      - name: Deploy to all clusters
+      # ✅ อัปเดต Image ใน Cluster เดียว
+      - name: Deploy to single cluster
         run: |
-            kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
-            kubectl rollout status deployment/play
+          kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
+          kubectl rollout status deployment/play
 
 
 
