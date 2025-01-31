@@ -52,10 +52,10 @@ jobs:
           
 
       # # ✅ อัปเดต Image ในทุก Cluster
-      # - name: Deploy to all clusters
-      #   run: |
-      #       kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
-      #       kubectl rollout status deployment/play
+      - name: Deploy to all clusters
+        run: |
+            kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
+            kubectl rollout status deployment/play
 
         # ✅ ตรวจสอบ Context และเชื่อมต่อ Kubernetes
       - name: Check Kubernetes Connection
