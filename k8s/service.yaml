@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: play-service
 spec:
   selector:
-    app: frontend
+    app: play
   ports:
     - protocol: TCP
       port: 80
       targetPort: 3000
-  type: ClusterIP  # ใช้ภายในคลัสเตอร์เท่านั้น (ให้ Ingress จัดการ External Traffic)
+  type: ClusterIP  # เปลี่ยนจาก NodePort เป็น ClusterIP

@@ -86,8 +86,8 @@ jobs:
       # ✅ Deploy to Kubernetes
       - name: Update Kubernetes Deployment
         run: |
-          kubectl set image deployment/frontend frontend=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
-          kubectl rollout status deployment/frontend
+          kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
+          kubectl rollout status deployment/play
 
 
 
