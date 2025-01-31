@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: play-config
-data:
-  NUXT_PUBLIC_API_SERVER: "https://apis.scbbbb.com"
