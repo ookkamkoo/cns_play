@@ -53,21 +53,9 @@ jobs:
       # ✅ อัปเดต Image ในทุก Cluster
       - name: Deploy to all clusters
         run: |
-          for context in $(kubectl config get-contexts -o name); do
-            echo "Switching to context: $context"
-            kubectl config use-context $context
             kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
             kubectl rollout status deployment/play
-          done
 
-      # ✅ บังคับให้ Kubernetes Pull Image ใหม่ (ลบ Pod เก่า)
-      - name: Force Pod to Pull Latest Image
-        run: |
-          for context in $(kubectl config get-contexts -o name); do
-            echo "Restarting Pods in context: $context"
-            kubectl config use-context $context
-            kubectl delete pod -l app=play
-          done
 
 
 
