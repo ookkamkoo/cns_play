@@ -41,21 +41,41 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ ใช้ KUBECONFIG จาก Secret (Cluster เดียว)
+      # ✅ ใช้ KUBECONFIG จาก Secret
       - name: Set up KUBECONFIG
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_SINGLE_CLUSTER }}" | base64 --decode > $HOME/.kube/config
+          echo "${{ secrets.KUBECONFIG_ALL_CLUSTERS }}" | base64 --decode > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
           chmod 600 $HOME/.kube/config
-          kubectl config use-context ${{ secrets.K8S_CONTEXT }}
           kubectl config get-contexts
 
-      # ✅ อัปเดต Image ใน Cluster เดียว
-      - name: Deploy to single cluster
+      # ✅ อัปเดต Image ในทุก Cluster และแสดงผล
+      - name: Deploy to all clusters
         run: |
-          kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
-          kubectl rollout status deployment/play
+          for context in $(kubectl config get-contexts -o name); do
+            echo "------------------------------------"
+            echo "🚀 Deploying to Cluster: $context"
+            echo "------------------------------------"
+
+            # สลับไปที่ Cluster เป้าหมาย
+            kubectl config use-context $context
+            
+            # อัปเดต Image ของ Deployment
+            if kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play; then
+              echo "✅ Successfully updated deployment in $context"
+            else
+              echo "❌ Failed to update deployment in $context"
+              continue
+            fi
+
+            # รอให้ Deployment อัปเดตสำเร็จ
+            if kubectl rollout status deployment/play; then
+              echo "🎉 Successfully rolled out in $context"
+            else
+              echo "⚠️ Rollout failed in $context"
+            fi
+          done
 
 
 
