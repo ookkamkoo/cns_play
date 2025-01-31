@@ -40,54 +40,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ ติดตั้ง `doctl`
-      - name: Install doctl
+      # 🔥 ใช้ KUBECONFIG จาก Secret
+      - name: Set up KUBECONFIG
         run: |
-          sudo snap install doctl --classic
-          sudo snap connect doctl:kube-config || true
-          doctl version
+          echo "${{ secrets.KUBECONFIG_ALL_CLUSTERS }}" | base64 --decode > $HOME/.kube/config
+          export KUBECONFIG=$HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+          kubectl config get-contexts
 
-      # ✅ Authenticate doctl
-      - name: Authenticate doctl
+      # 🚀 Loop อัปเดตทุก Cluster
+      - name: Deploy to all clusters
         run: |
-          doctl auth init --access-token "${{ secrets.DO_ACCESS_TOKEN }}"
-
-      # ✅ สร้างโฟลเดอร์ ~/.kube และแก้ไขสิทธิ์
-      - name: Fix Kubeconfig Permissions
-        run: |
-          sudo mkdir -p /home/runner/.kube
-          sudo chmod -R 777 /home/runner/.kube
-
-      # ✅ ดึง KUBECONFIG จาก DigitalOcean
-      - name: Fetch Kubernetes Kubeconfig
-        run: |
-          doctl kubernetes cluster kubeconfig save "${{ secrets.DO_CLUSTER_ID }}"
-
-      # ✅ Debug KUBECONFIG
-      - name: Debug KUBECONFIG
-        run: |
-          ls -la /home/runner/.kube/
-          cat /home/runner/.kube/config || echo "No Kubeconfig file found"
-
-      # ✅ ติดตั้ง `kubectl`
-      - name: Install kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-          kubectl version --client
-
-      # ✅ Test Kubernetes Connection
-      - name: Test Kubernetes Connection
-        run: |
-          kubectl get nodes
-          kubectl get deployments
-
-      # ✅ Deploy to Kubernetes
-      - name: Update Kubernetes Deployment
-        run: |
-          kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
-          kubectl rollout status deployment/play
+          for context in $(kubectl config get-contexts -o name); do
+            echo "Switching to context: $context"
+            kubectl config use-context $context
+            kubectl set image deployment/play play=${{ secrets.DOCKER_NAME }}/project_csn:frontend_play
+            kubectl rollout status deployment/play
+          done
 
 
 
