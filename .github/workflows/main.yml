@@ -43,7 +43,7 @@ jobs:
       # 🔥 ใช้ KUBECONFIG จาก Secret
       - name: Set up KUBECONFIG
         run: |
-        mkdir -p $HOME/.kube  # ✅ สร้างโฟลเดอร์หากไม่มี
+          mkdir -p $HOME/.kube  # ✅ สร้างโฟลเดอร์หากไม่มี
           echo "${{ secrets.KUBECONFIG_ALL_CLUSTERS }}" | base64 --decode > $HOME/.kube/config
           export KUBECONFIG=$HOME/.kube/config
           chmod 600 $HOME/.kube/config
