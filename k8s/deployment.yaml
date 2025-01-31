@@ -18,6 +18,9 @@ spec:
         - name: play
           image: littleweb14766/project_csn:frontend_play
           imagePullPolicy: Always # ✅ บังคับให้ดึง Image ใหม่เสมอ
+          envFrom:
+            - configMapRef:
+                name: play-config  # ✅ ดึงค่าจาก ConfigMap (เช่น API URL, PORT)
           ports:
             - containerPort: 3000
           resources:
