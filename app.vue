@@ -48,6 +48,8 @@ const togglePage = () => {
   
 };
 
+console.log(member.settingDefault.serverStatus);
+
 const isOverlayVisible = ref(true); // ควบคุมการแสดง Overlay
 
 const hideOverlay = () => {
