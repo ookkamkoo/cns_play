@@ -22,3 +22,8 @@ logs
 .env
 .env.*
 !.env.example
+
+# k8s
+# Ignore ConfigMap files
+configmap.yaml
+*.config.yaml
