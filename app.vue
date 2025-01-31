@@ -40,14 +40,7 @@ import { memberStore } from '~/store/index';
 
 const member = memberStore();
 
-const currentPage = ref(1);
-
-const togglePage = () => {
-  currentPage.value = currentPage.value === 1 ? 2 : 1;
-  console.log("sssssss");
-  
-};
-
+console.log("serverStatus");
 console.log(member.settingDefault.serverStatus);
 
 const isOverlayVisible = ref(true); // ควบคุมการแสดง Overlay
